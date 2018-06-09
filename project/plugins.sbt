@@ -1,0 +1,7 @@
+addSbtPlugin("com.eed3si9n"      % "sbt-unidoc"          % "0.4.1")
+addSbtPlugin("com.eed3si9n"      % "sbt-assembly"        % "0.14.6")
+addSbtPlugin("com.eed3si9n"      % "sbt-buildinfo"       % "0.7.0")
+addSbtPlugin("com.typesafe.sbt"  % "sbt-site"            % "1.3.1")
+addSbtPlugin("com.typesafe.sbt"  % "sbt-native-packager" % "1.3.3")
+addSbtPlugin("org.lyranthe.sbt"  % "partial-unification" % "1.1.0")
+addSbtPlugin("org.foundweekends" % "sbt-bintray"         % "0.5.3")
