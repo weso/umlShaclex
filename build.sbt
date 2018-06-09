@@ -24,6 +24,8 @@ scalafmt: {
 }
  */
 
+lazy val shaclexVersion        = "0.0.85"
+
 // Dependency versions
 lazy val catsVersion           = "1.1.0"
 lazy val scalacticVersion      = "3.0.5"
@@ -48,7 +50,7 @@ lazy val scalaLogging      = "com.typesafe.scala-logging" %% "scala-logging"    
 lazy val scallop           = "org.rogach"                 %% "scallop"             % scallopVersion
 lazy val scalactic         = "org.scalactic"              %% "scalactic"           % scalacticVersion
 lazy val scalaTest         = "org.scalatest"              %% "scalatest"           % scalaTestVersion
-
+lazy val shex              = "es.weso"                    % "shex_2.12"            % shaclexVersion
 lazy val plantuml          = "net.sourceforge.plantuml"   % "plantuml"             % plantumlVersion
 
 // Compiler plugin modules
@@ -69,7 +71,8 @@ lazy val umlShaclex = project
     libraryDependencies ++= Seq(
       logbackClassic,
       scalaLogging,
-      scallop
+      scallop,
+      shex
     ),
     cancelable in Global      := true,
     fork                      := true,
