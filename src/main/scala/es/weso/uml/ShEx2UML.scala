@@ -1,4 +1,5 @@
 package es.weso.uml
+
 import cats.implicits._
 import es.weso.shex.implicits.eqShEx._
 import cats.data.{EitherT, State}
@@ -8,8 +9,16 @@ import es.weso.rdf.PREFIXES._
 import es.weso.shex._
 import es.weso.uml.UMLDiagram._
 import es.weso.shex.implicits.showShEx._
+import RDF2UML._
 
 object ShEx2UML {
+
+  def schema2Uml(schema: Schema): Either[String,UML] = {
+    val (state, maybe) =
+      cnvSchema(schema).value.run(StateValue(UML.empty,0)).value
+    maybe.map(_ => state.uml)
+  }
+
 
   type Id = Int
   case class StateValue(uml: UML, currentId: Id)
@@ -43,7 +52,7 @@ object ShEx2UML {
   }
 
   private def cnvList[A,B](vs: List[A], cnv: A => Converter[B]): Converter[List[B]] =
-    vs.map(cnv(_)).sequence
+    vs.map(cnv(_)).sequence[Converter,B]
 
   private def newLabel(maybeLbl: Option[ShapeLabel]): Converter[NodeId] =
     maybeLbl match {
@@ -61,11 +70,6 @@ object ShEx2UML {
     }
 
 
-  def schema2Uml(schema: Schema): Either[String,UML] = {
-    val (state, maybe) = cnvSchema(schema).value.run(StateValue(UML.empty,0)).value
-    maybe.map(_ => state.uml)
-  }
-
   private def cnvSchema(schema: Schema): Converter[Unit] = {
     schema.shapes match {
       case None => err(s"No shapes in schema")
@@ -73,7 +77,6 @@ object ShEx2UML {
         def cmb(x: Unit, s: ShapeExpr): Converter[Unit] = for {
           id <- newLabel(s.id)
           cls <- {
-            println(s"Before converting: $s")
             cnvShapeExpr(id, s, schema.prefixMap)
           }
           _ <- updateUML(_.addClass(cls))
@@ -88,14 +91,8 @@ object ShEx2UML {
     case sa: ShapeAnd => for {
       entries <- cnvListShapeExprEntries(sa.shapeExprs, id, pm)
     } yield {
-      val (label,href) = se.id match {
-        case None => ("?", None)
-        case Some(lbl) => lbl match {
-          case i: IRILabel => (iri2Label(i.iri,pm), Some(i.iri.str))
-          case b: BNodeLabel => (b.bnode.id, None)
-        }
-      }
-      UMLClass(id, label, href, entries)
+      val (label,href) = mkLabelHref(se.id,pm)
+      UMLClass(id, label, href, entries, List())
     }
     case sn: ShapeNot => err(s"Not implemented UML representation of Not yet")
     case s: Shape => {
@@ -103,14 +100,14 @@ object ShEx2UML {
         entries <- cnvShape(s,id,pm)
       } yield {
         val (label,href) = mkLabel(se.id, pm)
-        UMLClass(id,label,href,entries)
+        UMLClass(id,label,href,entries, List())
       }
     }
     case s: NodeConstraint => for {
       entries <- cnvNodeConstraint(s,pm)
     } yield {
       val (label,href) = mkLabel(s.id, pm)
-      UMLClass(id, label, href, entries)
+      UMLClass(id, label, href, entries, List())
     }
     case s: ShapeExternal => err(s"Not implemented shapeExternal yet")
     case sr: ShapeRef => err(s"Not implemented ShapeRef yet")
@@ -124,15 +121,6 @@ object ShEx2UML {
         case b: BNodeLabel => (b.bnode.id, None)
       }
     }
-
-  private def iri2Label(iri: IRI, pm: PrefixMap): String = {
-    // It changes <uri> by [uri] to avoid problems visualizing SVG in HTML
-    val ltgt = "<(.*)>".r
-    pm.qualify(iri) match {
-      case ltgt(s) => s"$s"
-      case s => s
-    }
-  }
 
   private def cnvListShapeExprEntries(se: List[ShapeExpr],id: NodeId, pm: PrefixMap): Converter[List[List[UMLEntry]]] = {
     def cmb(xss: List[List[UMLEntry]], se: ShapeExpr): Converter[List[List[UMLEntry]]] = for {
@@ -158,16 +146,25 @@ object ShEx2UML {
   }
 
   private def cnvShape(s: Shape, id: NodeId, pm: PrefixMap): Converter[List[List[UMLEntry]]] = for {
-    closedEntries <- if (s.closed.getOrElse(false)) ok(List(List(UML.umlClosed))) else ok(List())
+    closedEntries <- if (s.closed.getOrElse(false))
+      ok(List(List(UML.umlClosed)))
+    else ok(List())
     // TODO Extra
     // TODO virtual
-    // TODO inherit
+    inheritedEntries <- s._extends match {
+      case None => ok(List())
+      case Some(ls) => cnvExtends(ls,id)
+    }
     exprEntries <- s.expression match {
       case None => ok(List())
       case Some(e) => cnvTripleExpr(e, id, pm)
     }
-  } yield mkList(closedEntries, exprEntries)
+  } yield mkList(closedEntries, inheritedEntries, exprEntries)
 
+  private def cnvExtends(ls: List[ShapeLabel],
+                         id: NodeId
+                        ): Converter[List[List[UMLEntry]]] =
+    ok(List())
 
   private def cnvNodeConstraint(nc: NodeConstraint, pm: PrefixMap): Converter[List[List[ValueConstraint]]] = for {
     nks <- cnvNodeKind(nc.nodeKind)
@@ -248,6 +245,7 @@ object ShEx2UML {
     case eo: EachOf => cnvEachOf(eo,id,pm)
     case oo: OneOf => ok(List(List(Constant(s"Not supported oneOf yet $oo"))))
     case i: Inclusion => err(s"Not supported inclusion yet")
+    case e: Expr => err(s"Not supported Expr $e yet")
     case tc: TripleConstraint => cnvTripleConstraint(tc,id,pm)
   }
 
@@ -286,7 +284,7 @@ object ShEx2UML {
           sid <- newLabel(s.id)
           entries <- cnvShape(s, sid, pm)
           (labelShape,hrefShape) = mkLabel(s.id, pm)
-          cls = UMLClass(sid,labelShape,hrefShape,entries)
+          cls = UMLClass(sid,labelShape,hrefShape,entries, List())
           _ <- updateUML(_.addClass(cls))
           _ <- updateUML(_.addLink(UMLLink(id,sid,label,href,card)))
         } yield
@@ -306,7 +304,10 @@ object ShEx2UML {
   }
 
   private def cnvFlat(pm: PrefixMap)(sr: ShapeExpr): Converter[ValueConstraint] = sr match {
-    case sr:ShapeRef => ok(DatatypeConstraint(iri2Label(sr.reference.toRDFNode.toIRI,pm),sr.reference.toRDFNode.toIRI.str))
+    case sr:ShapeRef => sr.reference.toRDFNode.toIRI match {
+      case Left(e) => err(e)
+      case Right(iri) => ok(DatatypeConstraint(iri2Label(iri,pm),iri.str))
+    }
     case nc:NodeConstraint => for {
       vs <- cnvNodeConstraint(nc,pm)
       single <- vs match {

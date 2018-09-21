@@ -4,9 +4,12 @@ import java.io.ByteArrayOutputStream
 import java.nio.charset.Charset
 
 import es.weso.shex.ShapeLabel
-// import es.weso.uml.UMLDiagram.UML
-// import net.sourceforge.plantuml.SourceStringReader
-// import net.sourceforge.plantuml.api.PlantumlUtils
+import es.weso.uml.UMLDiagram.UML
+import net.sourceforge.plantuml.SourceStringReader
+import net.sourceforge.plantuml.api.PlantumlUtils
+import net.sourceforge.plantuml.FileFormat
+import net.sourceforge.plantuml.FileFormatOption
+
 
 object UMLDiagram {
 
@@ -63,15 +66,28 @@ object UMLDiagram {
                        es: List[UMLField]
                       ) extends UMLEntry
 
-  case class UMLClass(id: NodeId, label: Name, href: Option[HRef], entries: List[List[UMLEntry]])
+  case class UMLClass(id: NodeId,
+                      label: Name,
+                      href: Option[HRef],
+                      entries: List[List[UMLEntry]],
+                      _extends: List[NodeId]
+                     )
 
-  case class UMLLink(source: NodeId, target: NodeId, label: Name, href: HRef, card: UMLCardinality)
+  case class UMLLink(source: NodeId,
+                     target: NodeId,
+                     label: Name,
+                     href: HRef,
+                     card: UMLCardinality
+                    )
 
   /**
     * Represents an UML class diagram that can be serialized to PlantUML syntax
     *
     */
-  case class UML(labels: Map[ShapeLabel,NodeId], classes: Map[NodeId, UMLClass], links: List[UMLLink]) {
+  case class UML(labels: Map[ShapeLabel,NodeId],
+                 classes: Map[NodeId, UMLClass],
+                 links: List[UMLLink]
+                ) {
 
     /**
       * Adds a label to a UML diagram
@@ -153,11 +169,9 @@ object UMLDiagram {
     }
 
     def toSVG: String = {
-//      import net.sourceforge.plantuml.FileFormat
-//      import net.sourceforge.plantuml.FileFormatOption
-//      val reader: SourceStringReader = new SourceStringReader(this.toPlantUML)
+      val reader: SourceStringReader = new SourceStringReader(this.toPlantUML)
       val os: ByteArrayOutputStream = new ByteArrayOutputStream()
-      // val desc = reader.generateImage(os, new FileFormatOption(FileFormat.SVG))
+      val desc = reader.generateImage(os, new FileFormatOption(FileFormat.SVG))
       os.close
       val svg: String = new String(os.toByteArray(), Charset.forName("UTF-8"))
       svg

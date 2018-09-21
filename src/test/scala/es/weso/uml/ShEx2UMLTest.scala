@@ -47,7 +47,8 @@ class ShExUMLTest extends FunSpec with Matchers {
       maybe.fold(
         e => fail(s"Error converting to UML: $e"),
         uml => {
-          info(s"Converted to SVG:\n${uml.toSVG}")
+          info(s"UML: $uml")
+          uml.toSVG should include ("<svg")
         }
       )
     }
@@ -71,7 +72,7 @@ class ShExUMLTest extends FunSpec with Matchers {
       maybe.fold(
         e => fail(s"Error converting to UML: $e"),
         uml => {
-          println(s"Converted to SVG:\n${uml.toSVG}")
+          uml.toSVG should include("<svg")
         }
       )
     }
@@ -86,7 +87,7 @@ class ShExUMLTest extends FunSpec with Matchers {
       maybe.fold(
         e => fail(s"Error converting to UML: $e"),
         uml => {
-          println(s"Converted to SVG:\n${uml.toSVG}")
+          uml.toSVG should include("<svg")
         }
       )
     }
