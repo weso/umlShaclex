@@ -1,0 +1,31 @@
+PREFIX : <http://example.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+:User extends :Person {
+    :name xsd:string maxlength 10 ;
+    :age xsd:integer minInclusive 0 maxInclusive 30 ;
+    :code /\\d{2}/
+}
+
+:Person {
+ :name xsd:string ;
+ :age  xsd:integer ;
+}
+
+:Student extends :Person {
+ :enrolledIn @:Course ;    
+}
+:Teacher extends :Person {
+ :teaches @:Course ;   
+ :worksFor @:University 
+}
+
+:Course {
+   :name xsd:string
+}
+:University extends :Organization {
+   :name xsd:string
+}
+:Organization {
+    :isPartOf @:Organization
+}

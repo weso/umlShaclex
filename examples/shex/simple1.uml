@@ -1,0 +1,15 @@
+@startuml
+class ":User" as 0 <<(S,#FF7700)>> [[http://example.org/User :User]] {
+}
+class ":Person" as 2 <<(S,#FF7700)>> [[http://example.org/Person :Person]] {
+[[http://example.org/age :age]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  {1,1}
+--
+[[http://example.org/name :name]] : [[http://www.w3.org/2001/XMLSchema#string xsd:string]]  {1,1}
+--
+}
+class ":Course" as 1 <<(S,#FF7700)>> [[http://example.org/Course :Course]] {
+[[http://example.org/name :name]] : [[http://www.w3.org/2001/XMLSchema#string xsd:string]]  {1,1}
+--
+}
+0 --> "{1,1}" 1 : [[http://example.org/enrolledIn :enrolledIn]]
+@enduml

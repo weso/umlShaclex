@@ -9,6 +9,7 @@ import es.weso.rdf.PREFIXES._
 import es.weso.shex._
 import es.weso.uml.UMLDiagram._
 import es.weso.shex.implicits.showShEx._
+import es.weso.rdf.operations.Comparisons._
 import RDF2UML._
 
 object ShEx2UML {
@@ -56,11 +57,8 @@ object ShEx2UML {
 
   private def newLabel(maybeLbl: Option[ShapeLabel]): Converter[NodeId] =
     maybeLbl match {
-      case Some(lbl) => for {
-        uml <- getUML
-        (uml1, id) = uml.newLabel(lbl)
-        _ <- setUML(uml1)
-      } yield id
+      case Some(lbl) =>
+        mkLabel(lbl)
       case None => for {
         uml <- getUML
         newId <- generateId
@@ -69,6 +67,14 @@ object ShEx2UML {
       } yield id
     }
 
+  private def mkLabel(lbl: ShapeLabel): Converter[NodeId] = for {
+    uml <- getUML
+    (uml1, id) = uml.newLabel(lbl)
+    _ <- setUML(uml1)
+  } yield id
+
+  private def newLabels(lbls: List[ShapeLabel]): Converter[List[NodeId]] =
+    lbls.map(mkLabel(_)).sequence[Converter,NodeId]
 
   private def cnvSchema(schema: Schema): Converter[Unit] = {
     schema.shapes match {
@@ -98,9 +104,10 @@ object ShEx2UML {
     case s: Shape => {
       for {
         entries <- cnvShape(s,id,pm)
+        _extends <- newLabels(s._extends.getOrElse(List()))
       } yield {
         val (label,href) = mkLabel(se.id, pm)
-        UMLClass(id,label,href,entries, List())
+        UMLClass(id,label,href,entries, _extends)
       }
     }
     case s: NodeConstraint => for {
@@ -122,7 +129,10 @@ object ShEx2UML {
       }
     }
 
-  private def cnvListShapeExprEntries(se: List[ShapeExpr],id: NodeId, pm: PrefixMap): Converter[List[List[UMLEntry]]] = {
+  private def cnvListShapeExprEntries(se: List[ShapeExpr],
+                                      id: NodeId,
+                                      pm: PrefixMap
+                                     ): Converter[List[List[UMLEntry]]] = {
     def cmb(xss: List[List[UMLEntry]], se: ShapeExpr): Converter[List[List[UMLEntry]]] = for {
       fs <- cnvShapeExprEntries(se,id,pm)
     } yield fs ++ xss
@@ -194,16 +204,22 @@ object ShEx2UML {
   }
 
   private def cnvFacet(facet: XsFacet, pm:PrefixMap): Converter[ValueConstraint] = facet match {
-    case MinLength(v) => ok(Constant(s"MinLength $v"))
-    case MaxLength(v) => ok(Constant(s"MaxLength $v"))
-    case Length(v) => ok(Constant(s"Length $v"))
-    case Pattern(r,flags) => ok(Constant(s"/$r/$flags"))
-    case MinInclusive(n) => ok(Constant(s"MinInclusive $n"))
-    case MaxInclusive(n) => ok(Constant(s"MaxInclusive $n"))
-    case MinExclusive(n) => ok(Constant(s"MinExclusive $n"))
-    case MaxExclusive(n) => ok(Constant(s"MaxExclusive $n"))
-    case TotalDigits(n) => ok(Constant(s"TotalDigits $n"))
-    case FractionDigits(n) => ok(Constant(s"FractionDigits $n"))
+    case MinLength(v) => ok(Constant(s"MinLength($v)"))
+    case MaxLength(v) => ok(Constant(s"MaxLength($v)"))
+    case Length(v) => ok(Constant(s"Length($v)"))
+    case Pattern(r,flags) => ok(Constant(s"/$r/${flags.getOrElse("")}"))
+    case MinInclusive(n) => ok(Constant(s">= ${cnvNumericLiteral(n)}"))
+    case MaxInclusive(n) => ok(Constant(s"<= ${cnvNumericLiteral(n)}"))
+    case MinExclusive(n) => ok(Constant(s"> ${cnvNumericLiteral(n)}"))
+    case MaxExclusive(n) => ok(Constant(s"< ${cnvNumericLiteral(n)}"))
+    case TotalDigits(n) => ok(Constant(s"TotalDigits($n)"))
+    case FractionDigits(n) => ok(Constant(s"FractionDigits($n)"))
+  }
+
+  private def cnvNumericLiteral(l: NumericLiteral): String = l match {
+    case NumericInt(n) => n.toString
+    case NumericDouble(_,repr) => repr
+    case NumericDecimal(_,repr) => repr
   }
 
   private def cnvValues(vs: Option[List[ValueSetValue]], pm:PrefixMap): Converter[List[ValueConstraint]] =
@@ -254,7 +270,7 @@ object ShEx2UML {
     def cmb(next: List[List[UMLEntry]], te: TripleExpr): Converter[List[List[UMLEntry]]] = for {
       es <- cnvTripleExpr(te,id,pm)
     } yield es ++ next
-    eo.expressions.foldM(zero)(cmb)
+    eo.expressions.reverse.foldM(zero)(cmb)
   }
 
   private def cnvTripleConstraint(tc: TripleConstraint,
@@ -296,8 +312,6 @@ object ShEx2UML {
           vso <- cnvShapeAndInline(so.shapeExprs,pm)
         } yield List(List(UMLField(label, Some(href), vso.flatten, card)))
 
-
-
         case _ => err(s"Complex shape $se in triple constraint with predicate ${label} not implemented yet")
       }
     }
@@ -332,6 +346,7 @@ object ShEx2UML {
     case (0,es.weso.shex.Star) => UMLDiagram.Star
     case (1,es.weso.shex.Star) => UMLDiagram.Plus
     case (0, es.weso.shex.IntMax(1)) => UMLDiagram.Optional
+    case (1, es.weso.shex.IntMax(1)) => UMLDiagram.NoCard
     case (m, es.weso.shex.Star) => UMLDiagram.Range(m,Unbounded)
     case (m,es.weso.shex.IntMax(n)) => UMLDiagram.Range(m,UMLDiagram.IntMax(n))
   }

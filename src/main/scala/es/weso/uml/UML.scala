@@ -1,14 +1,12 @@
 package es.weso.uml
 
-import java.io.ByteArrayOutputStream
-import java.nio.charset.Charset
+//import java.io.ByteArrayOutputStream
+//import java.nio.charset.Charset
 
 import es.weso.shex.ShapeLabel
-import es.weso.uml.UMLDiagram.UML
-import net.sourceforge.plantuml.SourceStringReader
-import net.sourceforge.plantuml.api.PlantumlUtils
-import net.sourceforge.plantuml.FileFormat
-import net.sourceforge.plantuml.FileFormatOption
+//import net.sourceforge.plantuml.SourceStringReader
+//import net.sourceforge.plantuml.FileFormat
+//import net.sourceforge.plantuml.FileFormatOption
 
 
 object UMLDiagram {
@@ -38,7 +36,7 @@ object UMLDiagram {
     override def toString: String = v.toString
   }
   case object NoCard extends UMLCardinality {
-    override def toString = ""
+    override def toString = " "
   }
 
   sealed abstract class UMLEntry
@@ -147,35 +145,52 @@ object UMLDiagram {
     def cnvField(field: UMLField): String =
       s"${strHref(field.href,field.name)} : ${field.valueConstraints.map(cnvValueConstraint(_)).mkString(" ")} ${field.card}"
 
+    def cnvClass(cls: UMLClass): String = {
+      val sb = new StringBuilder
+      sb.append(s"""class "${cls.label}" as ${cls.id} <<(S,#FF7700)>> ${strHref(cls.href, cls.label)} {\n""")
+      cls.entries.foreach { entryLs =>
+        entryLs.foreach { entry =>
+          sb.append(cnvEntry(entry))
+          sb.append("\n")
+        }
+        sb.append("--\n")
+      }
+      sb.append("}\n")
+      sb.toString
+    }
+
+    def cnvExtends(cls: UMLClass): String = {
+      val sb = new StringBuilder
+      cls._extends.foreach(s => {
+        sb.append(s"""$s <|--${cls.id}\n""")
+      })
+      sb.toString
+    }
+
     def toPlantUML: String = {
       val sb = new StringBuilder
       sb.append("@startuml\n")
-      classes.values.foreach { cls =>
-        sb.append(s"""class "${cls.label}" as ${cls.id} <<(S,#FF7700)>> ${strHref(cls.href,cls.label)} {\n""")
-        cls.entries.foreach { entryLs =>
-          entryLs.foreach { entry =>
-            sb.append(cnvEntry(entry))
-            sb.append("\n")
-          }
-          sb.append("--\n")
-        }
-        sb.append("}\n")
+      classes.values.foreach {
+        cls => sb.append(cnvClass(cls))
       }
       links.foreach { link =>
         sb.append(s"""${link.source} --> "${link.card}" ${link.target} : [[${link.href} ${link.label}]]\n""")
+      }
+      classes.values.foreach {
+        cls => sb.append(cnvExtends(cls))
       }
       sb.append("@enduml\n")
       sb.toString
     }
 
-    def toSVG: String = {
+    /* def toSVG: String = {
       val reader: SourceStringReader = new SourceStringReader(this.toPlantUML)
       val os: ByteArrayOutputStream = new ByteArrayOutputStream()
-      val desc = reader.generateImage(os, new FileFormatOption(FileFormat.SVG))
+      // val desc = reader.generateImage(os, new FileFormatOption(FileFormat.SVG))
       os.close
       val svg: String = new String(os.toByteArray(), Charset.forName("UTF-8"))
       svg
-    }
+    } */
   }
 
   object UML {

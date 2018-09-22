@@ -1,0 +1,11 @@
+PREFIX : <http://example.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+:User {
+    :name xsd:string maxlength 10 ;
+    :age xsd:integer minInclusive 0 maxInclusive 30 ;
+    :code /\\d{2}/
+} AND {
+    :firstName xsd:string ;
+    :lastName xsd:string
+}
