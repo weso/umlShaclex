@@ -25,30 +25,57 @@ class ShExUMLTest extends FunSpec with Matchers {
   }
 
   describe(s"ShEx2UML") {
-    it(s"Should convert simple Shape with self-reference") {
+    it(s"Should convert simple Shape with IRI") {
       val shexStr =
         """|prefix : <http://example.org/>
            |
-           |:User IRI {
+           |:User {
            | :name IRI ;
-           | :knows @:User ;
-           | :worksFor @:Company
-           |}
-           |
-           |:Company IRI {
-           | :name IRI ;
-           | :employee @:User *
            |}
         """.stripMargin
+      val ex = IRI(s"http://example.org/")
+      val umlField = UMLField(":name", Some((ex + "name").str), List(Constant("IRI")), NoCard)
+      val umlClass = UMLClass(0,":User", Some((ex + "User").str), List(List(umlField)), List())
+      val uml = UML(Map(IRILabel(ex + "User") -> 0), Map(0 -> umlClass), List())
       val maybe = for {
         shex <- Schema.fromString(shexStr,"ShExC",None,RDFAsJenaModel.empty)
         uml <- ShEx2UML.schema2Uml(shex)
       } yield uml
       maybe.fold(
         e => fail(s"Error converting to UML: $e"),
-        uml => {
-          info(s"UML: $uml")
+        umlConverted => {
+          info(s"Expected: \n$uml\nObtained:\n$umlConverted")
+          uml should be(umlConverted)
           uml.toSVG should include ("<svg")
+        }
+      )
+    }
+
+    it(s"Should convert simple Shape with self-reference") {
+      val shexStr =
+        """|prefix : <http://example.org/>
+           |
+           |:User {
+           | :knows @:User ;
+           |}
+        """.stripMargin
+      val ex = IRI(s"http://example.org/")
+      val umlClass = UMLClass(0,":User", Some((ex + "User").str), List(), List())
+      val uml = UML(
+        Map(IRILabel(ex + "User") -> 0),
+        Map(0 -> umlClass),
+        List(UMLLink(0,0,":knows",(ex + "knows").str, NoCard))
+      )
+      val maybe = for {
+        shex <- Schema.fromString(shexStr,"ShExC",None,RDFAsJenaModel.empty)
+        uml <- ShEx2UML.schema2Uml(shex)
+      } yield uml
+      maybe.fold(
+        e => fail(s"Error converting to UML: $e"),
+        umlConverted => {
+          info(s"Expected: \n$uml\nObtained:\n$umlConverted")
+          uml should be(umlConverted)
+          // uml.toSVG should include ("<svg")
         }
       )
     }
@@ -72,7 +99,8 @@ class ShExUMLTest extends FunSpec with Matchers {
       maybe.fold(
         e => fail(s"Error converting to UML: $e"),
         uml => {
-          uml.toSVG should include("<svg")
+          info(s"Converted")
+          // uml.toSVG should include("<svg")
         }
       )
     }
@@ -87,7 +115,7 @@ class ShExUMLTest extends FunSpec with Matchers {
       maybe.fold(
         e => fail(s"Error converting to UML: $e"),
         uml => {
-          uml.toSVG should include("<svg")
+          info(s"FHIR schema converted to UML")
         }
       )
     }

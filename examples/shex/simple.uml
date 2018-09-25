@@ -1,15 +1,9 @@
 @startuml
-class ":User" as 0 <<(S,#FF7700)>> [[http://example.org/User :User]] {
-[[http://example.org/firstName :firstName]] : [[http://www.w3.org/2001/XMLSchema#string xsd:string]]   
---
-[[http://example.org/lastName :lastName]] : [[http://www.w3.org/2001/XMLSchema#string xsd:string]]   
---
-[[http://example.org/name :name]] : MaxLength(10) [[http://www.w3.org/2001/XMLSchema#string xsd:string]]   
---
-[[http://example.org/age :age]] : <= 30 >= 0 [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]   
---
-[[http://example.org/code :code]] : /\\d{2}/  
---
+class "?" as 1 <<(S,#FF7700)>>  {
+[[http://example.org/q :q]] : .  
 --
 }
+class ":User" as 0 <<(S,#FF7700)>> [[http://example.org/User :User]] {
+}
+0 --> " " 1 : [[http://example.org/p :p]]
 @enduml

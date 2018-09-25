@@ -1,0 +1,898 @@
+@startuml
+class "fhirvs:all-types" as 69 <<(S,#FF7700)>> [[http://hl7.org/fhir/ValueSet/all-types fhirvs:all-types]] {
+[ "Address"^^xsd:string "Age"^^xsd:string "Annotation"^^xsd:string "Attachment"^^xsd:string "BackboneElement"^^xsd:string "CodeableConcept"^^xsd:string "Coding"^^xsd:string "ContactDetail"^^xsd:string "ContactPoint"^^xsd:string "Contributor"^^xsd:string "Count"^^xsd:string "DataRequirement"^^xsd:string "Distance"^^xsd:string "Dosage"^^xsd:string "Duration"^^xsd:string "Element"^^xsd:string "ElementDefinition"^^xsd:string "Extension"^^xsd:string "HumanName"^^xsd:string "Identifier"^^xsd:string "MarketingStatus"^^xsd:string "Meta"^^xsd:string "Money"^^xsd:string "Narrative"^^xsd:string "ParameterDefinition"^^xsd:string "Period"^^xsd:string "ProdCharacteristic"^^xsd:string "ProductShelfLife"^^xsd:string "Quantity"^^xsd:string "Range"^^xsd:string "Ratio"^^xsd:string "Reference"^^xsd:string "RelatedArtifact"^^xsd:string "SampledData"^^xsd:string "Signature"^^xsd:string "SimpleQuantity"^^xsd:string "SubstanceAmount"^^xsd:string "SubstanceMoiety"^^xsd:string "Timing"^^xsd:string "TriggerDefinition"^^xsd:string "UsageContext"^^xsd:string "base64Binary"^^xsd:string "boolean"^^xsd:string "canonical"^^xsd:string "code"^^xsd:string "date"^^xsd:string "dateTime"^^xsd:string "decimal"^^xsd:string "id"^^xsd:string "instant"^^xsd:string "integer"^^xsd:string "markdown"^^xsd:string "oid"^^xsd:string "positiveInt"^^xsd:string "string"^^xsd:string "time"^^xsd:string "unsignedInt"^^xsd:string "uri"^^xsd:string "url"^^xsd:string "uuid"^^xsd:string "xhtml"^^xsd:string "Account"^^xsd:string "ActivityDefinition"^^xsd:string "AdverseEvent"^^xsd:string "AllergyIntolerance"^^xsd:string "Appointment"^^xsd:string "AppointmentResponse"^^xsd:string "AuditEvent"^^xsd:string "Basic"^^xsd:string "Binary"^^xsd:string "BiologicallyDerivedProduct"^^xsd:string "BodyStructure"^^xsd:string "Bundle"^^xsd:string "CapabilityStatement"^^xsd:string "CarePlan"^^xsd:string "CareTeam"^^xsd:string "ChargeItem"^^xsd:string "ChargeItemDefinition"^^xsd:string "Claim"^^xsd:string "ClaimResponse"^^xsd:string "ClinicalImpression"^^xsd:string "CodeSystem"^^xsd:string "Communication"^^xsd:string "CommunicationRequest"^^xsd:string "CompartmentDefinition"^^xsd:string "Composition"^^xsd:string "ConceptMap"^^xsd:string "Condition"^^xsd:string "Consent"^^xsd:string "Contract"^^xsd:string "Coverage"^^xsd:string "DetectedIssue"^^xsd:string "Device"^^xsd:string "DeviceComponent"^^xsd:string "DeviceMetric"^^xsd:string "DeviceRequest"^^xsd:string "DeviceUseStatement"^^xsd:string "DiagnosticReport"^^xsd:string "DocumentManifest"^^xsd:string "DocumentReference"^^xsd:string "DomainResource"^^xsd:string "EligibilityRequest"^^xsd:string "EligibilityResponse"^^xsd:string "Encounter"^^xsd:string "Endpoint"^^xsd:string "EnrollmentRequest"^^xsd:string "EnrollmentResponse"^^xsd:string "EntryDefinition"^^xsd:string "EpisodeOfCare"^^xsd:string "EventDefinition"^^xsd:string "ExampleScenario"^^xsd:string "ExpansionProfile"^^xsd:string "ExplanationOfBenefit"^^xsd:string "FamilyMemberHistory"^^xsd:string "Flag"^^xsd:string "Goal"^^xsd:string "GraphDefinition"^^xsd:string "Group"^^xsd:string "GuidanceResponse"^^xsd:string "HealthcareService"^^xsd:string "ImagingStudy"^^xsd:string "Immunization"^^xsd:string "ImmunizationEvaluation"^^xsd:string "ImmunizationRecommendation"^^xsd:string "ImplementationGuide"^^xsd:string "Invoice"^^xsd:string "ItemInstance"^^xsd:string "Library"^^xsd:string "Linkage"^^xsd:string "List"^^xsd:string "Location"^^xsd:string "Measure"^^xsd:string "MeasureReport"^^xsd:string "Media"^^xsd:string "Medication"^^xsd:string "MedicationAdministration"^^xsd:string "MedicationDispense"^^xsd:string "MedicationKnowledge"^^xsd:string "MedicationRequest"^^xsd:string "MedicationStatement"^^xsd:string "MedicinalProduct"^^xsd:string "MedicinalProductAuthorization"^^xsd:string "MedicinalProductClinicals"^^xsd:string "MedicinalProductDeviceSpec"^^xsd:string "MedicinalProductIngredient"^^xsd:string "MedicinalProductPackaged"^^xsd:string "MedicinalProductPharmaceutical"^^xsd:string "MessageDefinition"^^xsd:string "MessageHeader"^^xsd:string "NamingSystem"^^xsd:string "NutritionOrder"^^xsd:string "Observation"^^xsd:string "ObservationDefinition"^^xsd:string "OccupationalData"^^xsd:string "OperationDefinition"^^xsd:string "OperationOutcome"^^xsd:string "Organization"^^xsd:string "OrganizationRole"^^xsd:string "Parameters"^^xsd:string "Patient"^^xsd:string "PaymentNotice"^^xsd:string "PaymentReconciliation"^^xsd:string "Person"^^xsd:string "PlanDefinition"^^xsd:string "Practitioner"^^xsd:string "PractitionerRole"^^xsd:string "Procedure"^^xsd:string "ProcessRequest"^^xsd:string "ProcessResponse"^^xsd:string "ProductPlan"^^xsd:string "Provenance"^^xsd:string "Questionnaire"^^xsd:string "QuestionnaireResponse"^^xsd:string "RelatedPerson"^^xsd:string "RequestGroup"^^xsd:string "ResearchStudy"^^xsd:string "ResearchSubject"^^xsd:string "Resource"^^xsd:string "RiskAssessment"^^xsd:string "Schedule"^^xsd:string "SearchParameter"^^xsd:string "Sequence"^^xsd:string "ServiceRequest"^^xsd:string "Slot"^^xsd:string "Specimen"^^xsd:string "SpecimenDefinition"^^xsd:string "StructureDefinition"^^xsd:string "StructureMap"^^xsd:string "Subscription"^^xsd:string "Substance"^^xsd:string "SubstancePolymer"^^xsd:string "SubstanceReferenceInformation"^^xsd:string "SubstanceSpecification"^^xsd:string "SupplyDelivery"^^xsd:string "SupplyRequest"^^xsd:string "Task"^^xsd:string "TerminologyCapabilities"^^xsd:string "TestReport"^^xsd:string "TestScript"^^xsd:string "UserSession"^^xsd:string "ValueSet"^^xsd:string "VerificationResult"^^xsd:string "VisionPrescription"^^xsd:string "Type"^^xsd:string "Any"^^xsd:string ]
+--
+}
+class "http://hl7.org/fhir/shape/Observation" as 0 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Observation http://hl7.org/fhir/shape/Observation]] {
+Closed
+--
+[[http://www.w3.org/1999/02/22-rdf-syntax-ns#type a]] : [ [[http://hl7.org/fhir/Observation fhir:Observation]] ]  
+--
+[[http://hl7.org/fhir/nodeRole fhir:nodeRole]] : [ [[http://hl7.org/fhir/treeRoot fhir:treeRoot]] ] ?
+--
+[[http://hl7.org/fhir/Observation.status fhir:Observation.status]] : [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]]  AND Complex shape: Shape(-, -, false, -, TripleConstraint(-, -, -, <http://hl7.org/fhir/value>, Some(ShapeRef(<http://hl7.org/fhir/ValueSet/observation-status>)), -, -, -, -), -, -)  
+--
+Not supported oneOf yet OneOf(None,List(TripleConstraint(None,None,None,<http://hl7.org/fhir/Observation.effectiveDateTime>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/dateTime>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Observation.effectivePeriod>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Period>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Observation.effectiveTiming>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Timing>))),None,None,None,None,None)),Some(0),Some(IntMax(1)),None,None)
+--
+Not supported oneOf yet OneOf(None,List(TripleConstraint(None,None,None,<http://hl7.org/fhir/Observation.valueQuantity>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Quantity>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Observation.valueCodeableConcept>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/CodeableConcept>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Observation.valueString>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/string>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Observation.valueBoolean>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/boolean>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Observation.valueInteger>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/integer>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Observation.valueRange>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Range>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Observation.valueRatio>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Ratio>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Observation.valueSampledData>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/SampledData>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Observation.valueTime>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/time>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Observation.valueDateTime>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/dateTime>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Observation.valuePeriod>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Period>))),None,None,None,None,None)),Some(0),Some(IntMax(1)),None,None)
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/string" as 5 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/string http://hl7.org/fhir/shape/string]] {
+Closed
+--
+[[http://hl7.org/fhir/value fhir:value]] : MaxLength(1048576) [[http://www.w3.org/2001/XMLSchema#string xsd:string]]  ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/Narrative" as 10 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Narrative http://hl7.org/fhir/shape/Narrative]] {
+Closed
+--
+[[http://hl7.org/fhir/Narrative.status fhir:Narrative.status]] : [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]]  AND Complex shape: Shape(-, -, false, -, TripleConstraint(-, -, -, <http://hl7.org/fhir/value>, Some(ShapeRef(<http://hl7.org/fhir/ValueSet/narrative-status>)), -, -, -, -), -, -)  
+--
+[[http://hl7.org/fhir/Narrative.div fhir:Narrative.div]] : [[http://www.w3.org/2001/XMLSchema#string xsd:string]]   
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/markdown" as 56 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/markdown http://hl7.org/fhir/shape/markdown]] {
+Closed
+--
+[[http://hl7.org/fhir/value fhir:value]] : [[http://www.w3.org/2001/XMLSchema#string xsd:string]]  ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/Dosage" as 42 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Dosage http://hl7.org/fhir/shape/Dosage]] {
+Closed
+--
+Not supported oneOf yet OneOf(None,List(TripleConstraint(None,None,None,<http://hl7.org/fhir/Dosage.asNeededBoolean>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/boolean>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Dosage.asNeededCodeableConcept>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/CodeableConcept>))),None,None,None,None,None)),Some(0),Some(IntMax(1)),None,None)
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/boolean" as 24 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/boolean http://hl7.org/fhir/shape/boolean]] {
+Closed
+--
+[[http://hl7.org/fhir/value fhir:value]] : [[http://www.w3.org/2001/XMLSchema#boolean xsd:boolean]]  ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/Count" as 37 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Count http://hl7.org/fhir/shape/Count]] {
+Closed
+--
+[[http://hl7.org/fhir/Quantity.comparator fhir:Quantity.comparator]] : [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]]  AND Complex shape: Shape(-, -, false, -, TripleConstraint(-, -, -, <http://hl7.org/fhir/value>, Some(ShapeRef(<http://hl7.org/fhir/ValueSet/quantity-comparator>)), -, -, -, -), -, -) ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/SampledData" as 25 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/SampledData http://hl7.org/fhir/shape/SampledData]] {
+Closed
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/oid" as 52 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/oid http://hl7.org/fhir/shape/oid]] {
+Closed
+--
+[[http://hl7.org/fhir/value fhir:value]] : [[http://www.w3.org/2001/XMLSchema#string xsd:string]]  ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/id" as 14 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/id http://hl7.org/fhir/shape/id]] {
+Closed
+--
+[[http://hl7.org/fhir/value fhir:value]] : [[http://www.w3.org/2001/XMLSchema#string xsd:string]]  ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/decimal" as 20 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/decimal http://hl7.org/fhir/shape/decimal]] {
+Closed
+--
+[[http://hl7.org/fhir/value fhir:value]] : [[http://www.w3.org/2001/XMLSchema#decimal xsd:decimal]]  ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/Duration" as 46 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Duration http://hl7.org/fhir/shape/Duration]] {
+Closed
+--
+[[http://hl7.org/fhir/Quantity.comparator fhir:Quantity.comparator]] : [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]]  AND Complex shape: Shape(-, -, false, -, TripleConstraint(-, -, -, <http://hl7.org/fhir/value>, Some(ShapeRef(<http://hl7.org/fhir/ValueSet/quantity-comparator>)), -, -, -, -), -, -) ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/Age" as 57 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Age http://hl7.org/fhir/shape/Age]] {
+Closed
+--
+[[http://hl7.org/fhir/Quantity.comparator fhir:Quantity.comparator]] : [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]]  AND Complex shape: Shape(-, -, false, -, TripleConstraint(-, -, -, <http://hl7.org/fhir/value>, Some(ShapeRef(<http://hl7.org/fhir/ValueSet/quantity-comparator>)), -, -, -, -), -, -) ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "fhirvs:observation-status" as 78 <<(S,#FF7700)>> [[http://hl7.org/fhir/ValueSet/observation-status fhirvs:observation-status]] {
+[ "registered"^^xsd:string "preliminary"^^xsd:string "final"^^xsd:string "amended"^^xsd:string "corrected"^^xsd:string "cancelled"^^xsd:string "entered-in-error"^^xsd:string "unknown"^^xsd:string ]
+--
+}
+class "http://hl7.org/fhir/shape/Timing.repeat" as 29 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Timing.repeat http://hl7.org/fhir/shape/Timing.repeat]] {
+Closed
+--
+Not supported oneOf yet OneOf(None,List(TripleConstraint(None,None,None,<http://hl7.org/fhir/Timing.repeat.boundsDuration>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Duration>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Timing.repeat.boundsRange>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Range>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Timing.repeat.boundsPeriod>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Period>))),None,None,None,None,None)),Some(0),Some(IntMax(1)),None,None)
+--
+[[http://hl7.org/fhir/Timing.repeat.durationUnit fhir:Timing.repeat.durationUnit]] : [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]]  AND Complex shape: Shape(-, -, false, -, TripleConstraint(-, -, -, <http://hl7.org/fhir/value>, Some(ShapeRef(<http://hl7.org/fhir/ValueSet/units-of-time>)), -, -, -, -), -, -) ?
+--
+[[http://hl7.org/fhir/Timing.repeat.periodUnit fhir:Timing.repeat.periodUnit]] : [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]]  AND Complex shape: Shape(-, -, false, -, TripleConstraint(-, -, -, <http://hl7.org/fhir/value>, Some(ShapeRef(<http://hl7.org/fhir/ValueSet/units-of-time>)), -, -, -, -), -, -) ?
+--
+[[http://hl7.org/fhir/Timing.repeat.dayOfWeek fhir:Timing.repeat.dayOfWeek]] : [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]]  AND Complex shape: Shape(-, -, false, -, TripleConstraint(-, -, -, <http://hl7.org/fhir/value>, Some(ShapeRef(<http://hl7.org/fhir/ValueSet/days-of-week>)), -, -, -, -), -, -) *
+--
+[[http://hl7.org/fhir/Timing.repeat.when fhir:Timing.repeat.when]] : [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]]  AND Complex shape: Shape(-, -, false, -, TripleConstraint(-, -, -, <http://hl7.org/fhir/value>, Some(ShapeRef(<http://hl7.org/fhir/ValueSet/event-timing>)), -, -, -, -), -, -) *
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/Signature" as 61 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Signature http://hl7.org/fhir/shape/Signature]] {
+Closed
+--
+Not supported oneOf yet OneOf(None,List(TripleConstraint(None,None,None,<http://hl7.org/fhir/Signature.whoUri>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/uri>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Signature.whoReference>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Reference>))),None,None,None,None,None)),None,None,None,None)
+--
+Not supported oneOf yet OneOf(None,List(TripleConstraint(None,None,None,<http://hl7.org/fhir/Signature.onBehalfOfUri>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/uri>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Signature.onBehalfOfReference>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Reference>))),None,None,None,None,None)),Some(0),Some(IntMax(1)),None,None)
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/Observation.component" as 1 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Observation.component http://hl7.org/fhir/shape/Observation.component]] {
+Closed
+--
+Not supported oneOf yet OneOf(None,List(TripleConstraint(None,None,None,<http://hl7.org/fhir/Observation.component.valueQuantity>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Quantity>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Observation.component.valueCodeableConcept>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/CodeableConcept>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Observation.component.valueString>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/string>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Observation.component.valueBoolean>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/boolean>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Observation.component.valueInteger>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/integer>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Observation.component.valueRange>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Range>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Observation.component.valueRatio>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Ratio>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Observation.component.valueSampledData>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/SampledData>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Observation.component.valueTime>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/time>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Observation.component.valueDateTime>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/dateTime>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Observation.component.valuePeriod>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Period>))),None,None,None,None,None)),Some(0),Some(IntMax(1)),None,None)
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "fhirvs:related-artifact-type" as 74 <<(S,#FF7700)>> [[http://hl7.org/fhir/ValueSet/related-artifact-type fhirvs:related-artifact-type]] {
+[ "documentation"^^xsd:string "justification"^^xsd:string "citation"^^xsd:string "predecessor"^^xsd:string "successor"^^xsd:string "derived-from"^^xsd:string "depends-on"^^xsd:string "composed-of"^^xsd:string ]
+--
+}
+class "http://hl7.org/fhir/shape/instant" as 6 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/instant http://hl7.org/fhir/shape/instant]] {
+Closed
+--
+[[http://hl7.org/fhir/value fhir:value]] : [[http://www.w3.org/2001/XMLSchema#dateTime xsd:dateTime]]  ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/Annotation" as 60 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Annotation http://hl7.org/fhir/shape/Annotation]] {
+Closed
+--
+Not supported oneOf yet OneOf(None,List(TripleConstraint(None,None,None,<http://hl7.org/fhir/Annotation.authorReference>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Reference>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Annotation.authorString>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/string>))),None,None,None,None,None)),Some(0),Some(IntMax(1)),None,None)
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/Timing" as 28 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Timing http://hl7.org/fhir/shape/Timing]] {
+Closed
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/DataRequirement" as 38 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/DataRequirement http://hl7.org/fhir/shape/DataRequirement]] {
+Closed
+--
+[[http://hl7.org/fhir/DataRequirement.type fhir:DataRequirement.type]] : [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]]  AND Complex shape: Shape(-, -, false, -, TripleConstraint(-, -, -, <http://hl7.org/fhir/value>, Some(ShapeRef(<http://hl7.org/fhir/ValueSet/all-types>)), -, -, -, -), -, -)  
+--
+Not supported oneOf yet OneOf(None,List(TripleConstraint(None,None,None,<http://hl7.org/fhir/DataRequirement.subjectCodeableConcept>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/CodeableConcept>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/DataRequirement.subjectReference>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Reference>))),None,None,None,None,None)),Some(0),Some(IntMax(1)),None,None)
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "fhirvs:name-use" as 70 <<(S,#FF7700)>> [[http://hl7.org/fhir/ValueSet/name-use fhirvs:name-use]] {
+[ "usual"^^xsd:string "official"^^xsd:string "temp"^^xsd:string "nickname"^^xsd:string "anonymous"^^xsd:string "old"^^xsd:string "maiden"^^xsd:string ]
+--
+}
+class "http://hl7.org/fhir/shape/Period" as 21 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Period http://hl7.org/fhir/shape/Period]] {
+Closed
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/Attachment" as 33 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Attachment http://hl7.org/fhir/shape/Attachment]] {
+Closed
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "fhirvs:quantity-comparator" as 65 <<(S,#FF7700)>> [[http://hl7.org/fhir/ValueSet/quantity-comparator fhirvs:quantity-comparator]] {
+[ "<"^^xsd:string "<="^^xsd:string ">="^^xsd:string ">"^^xsd:string ]
+--
+}
+class "http://hl7.org/fhir/shape/Resource" as 9 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Resource http://hl7.org/fhir/shape/Resource]] {
+[[http://www.w3.org/1999/02/22-rdf-syntax-ns#type a]] : . +
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/ContactPoint" as 53 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/ContactPoint http://hl7.org/fhir/shape/ContactPoint]] {
+Closed
+--
+[[http://hl7.org/fhir/ContactPoint.system fhir:ContactPoint.system]] : [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]]  AND Complex shape: Shape(-, -, false, -, TripleConstraint(-, -, -, <http://hl7.org/fhir/value>, Some(ShapeRef(<http://hl7.org/fhir/ValueSet/contact-point-system>)), -, -, -, -), -, -) ?
+--
+[[http://hl7.org/fhir/ContactPoint.use fhir:ContactPoint.use]] : [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]]  AND Complex shape: Shape(-, -, false, -, TripleConstraint(-, -, -, <http://hl7.org/fhir/value>, Some(ShapeRef(<http://hl7.org/fhir/ValueSet/contact-point-use>)), -, -, -, -), -, -) ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "fhirvs:event-timing" as 77 <<(S,#FF7700)>> [[http://hl7.org/fhir/ValueSet/event-timing fhirvs:event-timing]] {
+[ "MORN"^^xsd:string "MORN.early"^^xsd:string "MORN.late"^^xsd:string "NOON"^^xsd:string "AFT"^^xsd:string "AFT.early"^^xsd:string "AFT.late"^^xsd:string "EVE"^^xsd:string "EVE.early"^^xsd:string "EVE.late"^^xsd:string "NIGHT"^^xsd:string "PHS"^^xsd:string "HS"^^xsd:string "WAKE"^^xsd:string "C"^^xsd:string "CM"^^xsd:string "CD"^^xsd:string "CV"^^xsd:string "AC"^^xsd:string "ACM"^^xsd:string "ACD"^^xsd:string "ACV"^^xsd:string "PC"^^xsd:string "PCM"^^xsd:string "PCD"^^xsd:string "PCV"^^xsd:string ]
+--
+}
+class "http://hl7.org/fhir/shape/Meta" as 13 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Meta http://hl7.org/fhir/shape/Meta]] {
+Closed
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/DataRequirement.codeFilter" as 41 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/DataRequirement.codeFilter http://hl7.org/fhir/shape/DataRequirement.codeFilter]] {
+Closed
+--
+Not supported oneOf yet OneOf(None,List(TripleConstraint(None,None,None,<http://hl7.org/fhir/DataRequirement.codeFilter.valueSetUri>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/uri>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/DataRequirement.codeFilter.valueSetCanonical>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/canonical>))),None,None,None,None,None)),Some(0),Some(IntMax(1)),None,None)
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "fhirvs:contact-point-system" as 73 <<(S,#FF7700)>> [[http://hl7.org/fhir/ValueSet/contact-point-system fhirvs:contact-point-system]] {
+[ "phone"^^xsd:string "fax"^^xsd:string "email"^^xsd:string "pager"^^xsd:string "url"^^xsd:string "sms"^^xsd:string "other"^^xsd:string ]
+--
+}
+class "http://hl7.org/fhir/shape/Reference" as 2 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Reference http://hl7.org/fhir/shape/Reference]] {
+Closed
+--
+[[http://hl7.org/fhir/link fhir:link]] : IRI ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/Address" as 32 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Address http://hl7.org/fhir/shape/Address]] {
+Closed
+--
+[[http://hl7.org/fhir/Address.use fhir:Address.use]] : [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]]  AND Complex shape: Shape(-, -, false, -, TripleConstraint(-, -, -, <http://hl7.org/fhir/value>, Some(ShapeRef(<http://hl7.org/fhir/ValueSet/address-use>)), -, -, -, -), -, -) ?
+--
+[[http://hl7.org/fhir/Address.type fhir:Address.type]] : [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]]  AND Complex shape: Shape(-, -, false, -, TripleConstraint(-, -, -, <http://hl7.org/fhir/value>, Some(ShapeRef(<http://hl7.org/fhir/ValueSet/address-type>)), -, -, -, -), -, -) ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/base64Binary" as 34 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/base64Binary http://hl7.org/fhir/shape/base64Binary]] {
+Closed
+--
+[[http://hl7.org/fhir/value fhir:value]] : [[http://www.w3.org/2001/XMLSchema#base64Binary xsd:base64Binary]]  ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/Distance" as 45 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Distance http://hl7.org/fhir/shape/Distance]] {
+Closed
+--
+[[http://hl7.org/fhir/Quantity.comparator fhir:Quantity.comparator]] : [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]]  AND Complex shape: Shape(-, -, false, -, TripleConstraint(-, -, -, <http://hl7.org/fhir/value>, Some(ShapeRef(<http://hl7.org/fhir/ValueSet/quantity-comparator>)), -, -, -, -), -, -) ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "fhirvs:trigger-type" as 64 <<(S,#FF7700)>> [[http://hl7.org/fhir/ValueSet/trigger-type fhirvs:trigger-type]] {
+[ "named-event"^^xsd:string "periodic"^^xsd:string "data-changed"^^xsd:string "data-added"^^xsd:string "data-modified"^^xsd:string "data-removed"^^xsd:string "data-accessed"^^xsd:string "data-access-ended"^^xsd:string ]
+--
+}
+class "http://hl7.org/fhir/shape/dateTime" as 17 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/dateTime http://hl7.org/fhir/shape/dateTime]] {
+Closed
+--
+[[http://hl7.org/fhir/value fhir:value]] : [[http://www.w3.org/2001/XMLSchema#gYear xsd:gYear]]  OR [[http://www.w3.org/2001/XMLSchema#gYearMonth xsd:gYearMonth]]  OR [[http://www.w3.org/2001/XMLSchema#date xsd:date]]  OR [[http://www.w3.org/2001/XMLSchema#dateTime xsd:dateTime]]  ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/Quantity" as 22 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Quantity http://hl7.org/fhir/shape/Quantity]] {
+Closed
+--
+[[http://hl7.org/fhir/Quantity.comparator fhir:Quantity.comparator]] : [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]]  AND Complex shape: Shape(-, -, false, -, TripleConstraint(-, -, -, <http://hl7.org/fhir/value>, Some(ShapeRef(<http://hl7.org/fhir/ValueSet/quantity-comparator>)), -, -, -, -), -, -) ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/uuid" as 44 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/uuid http://hl7.org/fhir/shape/uuid]] {
+Closed
+--
+[[http://hl7.org/fhir/value fhir:value]] : [[http://www.w3.org/2001/XMLSchema#string xsd:string]]  ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/TriggerDefinition.condition" as 59 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/TriggerDefinition.condition http://hl7.org/fhir/shape/TriggerDefinition.condition]] {
+Closed
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/Ratio" as 27 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Ratio http://hl7.org/fhir/shape/Ratio]] {
+Closed
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "fhirvs:contact-point-use" as 71 <<(S,#FF7700)>> [[http://hl7.org/fhir/ValueSet/contact-point-use fhirvs:contact-point-use]] {
+[ "home"^^xsd:string "work"^^xsd:string "temp"^^xsd:string "old"^^xsd:string "mobile"^^xsd:string ]
+--
+}
+class "http://hl7.org/fhir/shape/uri" as 12 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/uri http://hl7.org/fhir/shape/uri]] {
+Closed
+--
+[[http://hl7.org/fhir/value fhir:value]] : [[http://www.w3.org/2001/XMLSchema#string xsd:string]]  ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/HumanName" as 54 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/HumanName http://hl7.org/fhir/shape/HumanName]] {
+Closed
+--
+[[http://hl7.org/fhir/HumanName.use fhir:HumanName.use]] : [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]]  AND Complex shape: Shape(-, -, false, -, TripleConstraint(-, -, -, <http://hl7.org/fhir/value>, Some(ShapeRef(<http://hl7.org/fhir/ValueSet/name-use>)), -, -, -, -), -, -) ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/ParameterDefinition" as 49 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/ParameterDefinition http://hl7.org/fhir/shape/ParameterDefinition]] {
+Closed
+--
+[[http://hl7.org/fhir/ParameterDefinition.use fhir:ParameterDefinition.use]] : [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]]  AND Complex shape: Shape(-, -, false, -, TripleConstraint(-, -, -, <http://hl7.org/fhir/value>, Some(ShapeRef(<http://hl7.org/fhir/ValueSet/operation-parameter-use>)), -, -, -, -), -, -)  
+--
+[[http://hl7.org/fhir/ParameterDefinition.type fhir:ParameterDefinition.type]] : [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]]  AND Complex shape: Shape(-, -, false, -, TripleConstraint(-, -, -, <http://hl7.org/fhir/value>, Some(ShapeRef(<http://hl7.org/fhir/ValueSet/all-types>)), -, -, -, -), -, -)  
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "fhirvs:units-of-time" as 76 <<(S,#FF7700)>> [[http://hl7.org/fhir/ValueSet/units-of-time fhirvs:units-of-time]] {
+[ "s"^^xsd:string "min"^^xsd:string "h"^^xsd:string "d"^^xsd:string "wk"^^xsd:string "mo"^^xsd:string "a"^^xsd:string ]
+--
+}
+class "http://hl7.org/fhir/shape/Identifier" as 7 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Identifier http://hl7.org/fhir/shape/Identifier]] {
+Closed
+--
+[[http://hl7.org/fhir/Identifier.use fhir:Identifier.use]] : [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]]  AND Complex shape: Shape(-, -, false, -, TripleConstraint(-, -, -, <http://hl7.org/fhir/value>, Some(ShapeRef(<http://hl7.org/fhir/ValueSet/identifier-use>)), -, -, -, -), -, -) ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/DataRequirement.sort" as 39 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/DataRequirement.sort http://hl7.org/fhir/shape/DataRequirement.sort]] {
+Closed
+--
+[[http://hl7.org/fhir/DataRequirement.sort.direction fhir:DataRequirement.sort.direction]] : [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]]  AND Complex shape: Shape(-, -, false, -, TripleConstraint(-, -, -, <http://hl7.org/fhir/value>, Some(ShapeRef(<http://hl7.org/fhir/ValueSet/sort-direction>)), -, -, -, -), -, -)  
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "fhirvs:contributor-type" as 66 <<(S,#FF7700)>> [[http://hl7.org/fhir/ValueSet/contributor-type fhirvs:contributor-type]] {
+[ "author"^^xsd:string "editor"^^xsd:string "reviewer"^^xsd:string "endorser"^^xsd:string ]
+--
+}
+class "http://hl7.org/fhir/shape/Observation.referenceRange" as 3 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Observation.referenceRange http://hl7.org/fhir/shape/Observation.referenceRange]] {
+Closed
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/unsignedInt" as 35 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/unsignedInt http://hl7.org/fhir/shape/unsignedInt]] {
+Closed
+--
+[[http://hl7.org/fhir/value fhir:value]] : [[http://www.w3.org/2001/XMLSchema#nonNegativeInteger xsd:nonNegativeInteger]]  ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/UsageContext" as 48 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/UsageContext http://hl7.org/fhir/shape/UsageContext]] {
+Closed
+--
+Not supported oneOf yet OneOf(None,List(TripleConstraint(None,None,None,<http://hl7.org/fhir/UsageContext.valueCodeableConcept>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/CodeableConcept>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/UsageContext.valueQuantity>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Quantity>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/UsageContext.valueRange>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Range>))),None,None,None,None,None)),None,None,None,None)
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "fhirvs:operation-parameter-use" as 63 <<(S,#FF7700)>> [[http://hl7.org/fhir/ValueSet/operation-parameter-use fhirvs:operation-parameter-use]] {
+[ "in"^^xsd:string "out"^^xsd:string ]
+--
+}
+class "http://hl7.org/fhir/shape/Coding" as 18 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Coding http://hl7.org/fhir/shape/Coding]] {
+Closed
+--
+[[http://www.w3.org/1999/02/22-rdf-syntax-ns#type a]] : NonLiteral ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/Contributor" as 50 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Contributor http://hl7.org/fhir/shape/Contributor]] {
+Closed
+--
+[[http://hl7.org/fhir/Contributor.type fhir:Contributor.type]] : [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]]  AND Complex shape: Shape(-, -, false, -, TripleConstraint(-, -, -, <http://hl7.org/fhir/value>, Some(ShapeRef(<http://hl7.org/fhir/ValueSet/contributor-type>)), -, -, -, -), -, -)  
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "fhirvs:address-use" as 67 <<(S,#FF7700)>> [[http://hl7.org/fhir/ValueSet/address-use fhirvs:address-use]] {
+[ "home"^^xsd:string "work"^^xsd:string "temp"^^xsd:string "old"^^xsd:string "billing"^^xsd:string ]
+--
+}
+class "http://hl7.org/fhir/shape/SimpleQuantity" as 16 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/SimpleQuantity http://hl7.org/fhir/shape/SimpleQuantity]] {
+Closed
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/date" as 31 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/date http://hl7.org/fhir/shape/date]] {
+Closed
+--
+[[http://hl7.org/fhir/value fhir:value]] : [[http://www.w3.org/2001/XMLSchema#gYear xsd:gYear]]  OR [[http://www.w3.org/2001/XMLSchema#gYearMonth xsd:gYearMonth]]  OR [[http://www.w3.org/2001/XMLSchema#date xsd:date]]  ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/code" as 11 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]] {
+Closed
+--
+[[http://hl7.org/fhir/value fhir:value]] : [[http://www.w3.org/2001/XMLSchema#string xsd:string]]  ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "fhirvs:days-of-week" as 72 <<(S,#FF7700)>> [[http://hl7.org/fhir/ValueSet/days-of-week fhirvs:days-of-week]] {
+[ "mon"^^xsd:string "tue"^^xsd:string "wed"^^xsd:string "thu"^^xsd:string "fri"^^xsd:string "sat"^^xsd:string "sun"^^xsd:string ]
+--
+}
+class "http://hl7.org/fhir/shape/Dosage.doseAndRate" as 43 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Dosage.doseAndRate http://hl7.org/fhir/shape/Dosage.doseAndRate]] {
+Closed
+--
+Not supported oneOf yet OneOf(None,List(TripleConstraint(None,None,None,<http://hl7.org/fhir/Dosage.doseAndRate.doseRange>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Range>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Dosage.doseAndRate.doseQuantity>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/SimpleQuantity>))),None,None,None,None,None)),Some(0),Some(IntMax(1)),None,None)
+--
+Not supported oneOf yet OneOf(None,List(TripleConstraint(None,None,None,<http://hl7.org/fhir/Dosage.doseAndRate.rateRatio>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Ratio>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Dosage.doseAndRate.rateRange>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Range>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Dosage.doseAndRate.rateQuantity>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/SimpleQuantity>))),None,None,None,None,None)),Some(0),Some(IntMax(1)),None,None)
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/DataRequirement.dateFilter" as 40 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/DataRequirement.dateFilter http://hl7.org/fhir/shape/DataRequirement.dateFilter]] {
+Closed
+--
+Not supported oneOf yet OneOf(None,List(TripleConstraint(None,None,None,<http://hl7.org/fhir/DataRequirement.dateFilter.valueDateTime>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/dateTime>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/DataRequirement.dateFilter.valuePeriod>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Period>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/DataRequirement.dateFilter.valueDuration>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Duration>))),None,None,None,None,None)),Some(0),Some(IntMax(1)),None,None)
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/positiveInt" as 26 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/positiveInt http://hl7.org/fhir/shape/positiveInt]] {
+Closed
+--
+[[http://hl7.org/fhir/value fhir:value]] : [[http://www.w3.org/2001/XMLSchema#positiveInteger xsd:positiveInteger]]  ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/Money" as 55 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Money http://hl7.org/fhir/shape/Money]] {
+Closed
+--
+[[http://hl7.org/fhir/Quantity.comparator fhir:Quantity.comparator]] : [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]]  AND Complex shape: Shape(-, -, false, -, TripleConstraint(-, -, -, <http://hl7.org/fhir/value>, Some(ShapeRef(<http://hl7.org/fhir/ValueSet/quantity-comparator>)), -, -, -, -), -, -) ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/integer" as 23 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/integer http://hl7.org/fhir/shape/integer]] {
+Closed
+--
+[[http://hl7.org/fhir/value fhir:value]] : <= 2147483647 >= -2147483648 [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/Extension" as 8 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Extension http://hl7.org/fhir/shape/Extension]] {
+Closed
+--
+Not supported oneOf yet OneOf(None,List(TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueBase64Binary>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/base64Binary>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueBoolean>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/boolean>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueCanonical>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/canonical>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueCode>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/code>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueDate>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/date>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueDateTime>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/dateTime>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueDecimal>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/decimal>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueId>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/id>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueInstant>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/instant>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueInteger>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/integer>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueMarkdown>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/markdown>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueOid>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/oid>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valuePositiveInt>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/positiveInt>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueString>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/string>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueTime>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/time>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueUnsignedInt>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/unsignedInt>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueUri>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/uri>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueUrl>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/url>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueUuid>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/uuid>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueAddress>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Address>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueAge>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Age>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueAnnotation>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Annotation>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueAttachment>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Attachment>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueCodeableConcept>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/CodeableConcept>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueCoding>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Coding>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueContactPoint>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/ContactPoint>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueCount>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Count>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueDistance>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Distance>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueDuration>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Duration>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueHumanName>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/HumanName>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueIdentifier>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Identifier>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueMoney>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Money>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valuePeriod>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Period>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueQuantity>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Quantity>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueRange>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Range>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueRatio>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Ratio>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueReference>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Reference>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueSampledData>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/SampledData>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueSignature>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Signature>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueTiming>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Timing>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueParameterDefinition>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/ParameterDefinition>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueDataRequirement>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/DataRequirement>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueRelatedArtifact>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/RelatedArtifact>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueContactDetail>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/ContactDetail>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueContributor>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Contributor>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueTriggerDefinition>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/TriggerDefinition>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueUsageContext>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/UsageContext>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/Extension.valueDosage>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Dosage>))),None,None,None,None,None)),Some(0),Some(IntMax(1)),None,None)
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "fhirvs:sort-direction" as 75 <<(S,#FF7700)>> [[http://hl7.org/fhir/ValueSet/sort-direction fhirvs:sort-direction]] {
+[ "ascending"^^xsd:string "descending"^^xsd:string ]
+--
+}
+class "http://hl7.org/fhir/shape/TriggerDefinition" as 58 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/TriggerDefinition http://hl7.org/fhir/shape/TriggerDefinition]] {
+Closed
+--
+[[http://hl7.org/fhir/TriggerDefinition.type fhir:TriggerDefinition.type]] : [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]]  AND Complex shape: Shape(-, -, false, -, TripleConstraint(-, -, -, <http://hl7.org/fhir/value>, Some(ShapeRef(<http://hl7.org/fhir/ValueSet/trigger-type>)), -, -, -, -), -, -)  
+--
+Not supported oneOf yet OneOf(None,List(TripleConstraint(None,None,None,<http://hl7.org/fhir/TriggerDefinition.timingTiming>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Timing>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/TriggerDefinition.timingReference>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/Reference>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/TriggerDefinition.timingDate>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/date>))),None,None,None,None,None), TripleConstraint(None,None,None,<http://hl7.org/fhir/TriggerDefinition.timingDateTime>,Some(ShapeRef(IRILabel(<http://hl7.org/fhir/shape/dateTime>))),None,None,None,None,None)),Some(0),Some(IntMax(1)),None,None)
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/url" as 36 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/url http://hl7.org/fhir/shape/url]] {
+Closed
+--
+[[http://hl7.org/fhir/value fhir:value]] : [[http://www.w3.org/2001/XMLSchema#string xsd:string]]  ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/time" as 30 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/time http://hl7.org/fhir/shape/time]] {
+Closed
+--
+[[http://hl7.org/fhir/value fhir:value]] : [[http://www.w3.org/2001/XMLSchema#time xsd:time]]  ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/ContactDetail" as 51 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/ContactDetail http://hl7.org/fhir/shape/ContactDetail]] {
+Closed
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/canonical" as 19 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/canonical http://hl7.org/fhir/shape/canonical]] {
+Closed
+--
+[[http://hl7.org/fhir/value fhir:value]] : [[http://www.w3.org/2001/XMLSchema#string xsd:string]]  ?
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/CodeableConcept" as 4 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/CodeableConcept http://hl7.org/fhir/shape/CodeableConcept]] {
+Closed
+--
+[[http://www.w3.org/1999/02/22-rdf-syntax-ns#type a]] : NonLiteral *
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "fhirvs:narrative-status" as 79 <<(S,#FF7700)>> [[http://hl7.org/fhir/ValueSet/narrative-status fhirvs:narrative-status]] {
+[ "generated"^^xsd:string "extensions"^^xsd:string "additional"^^xsd:string "empty"^^xsd:string ]
+--
+}
+class "http://hl7.org/fhir/shape/RelatedArtifact" as 47 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/RelatedArtifact http://hl7.org/fhir/shape/RelatedArtifact]] {
+Closed
+--
+[[http://hl7.org/fhir/RelatedArtifact.type fhir:RelatedArtifact.type]] : [[http://hl7.org/fhir/shape/code http://hl7.org/fhir/shape/code]]  AND Complex shape: Shape(-, -, false, -, TripleConstraint(-, -, -, <http://hl7.org/fhir/value>, Some(ShapeRef(<http://hl7.org/fhir/ValueSet/related-artifact-type>)), -, -, -, -), -, -)  
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "http://hl7.org/fhir/shape/Range" as 15 <<(S,#FF7700)>> [[http://hl7.org/fhir/shape/Range http://hl7.org/fhir/shape/Range]] {
+Closed
+--
+[[http://hl7.org/fhir/index fhir:index]] : [[http://www.w3.org/2001/XMLSchema#integer xsd:integer]]  ?
+--
+}
+class "fhirvs:address-type" as 68 <<(S,#FF7700)>> [[http://hl7.org/fhir/ValueSet/address-type fhirvs:address-type]] {
+[ "postal"^^xsd:string "physical"^^xsd:string "both"^^xsd:string ]
+--
+}
+class "fhirvs:identifier-use" as 62 <<(S,#FF7700)>> [[http://hl7.org/fhir/ValueSet/identifier-use fhirvs:identifier-use]] {
+[ "usual"^^xsd:string "official"^^xsd:string "temp"^^xsd:string "secondary"^^xsd:string "old"^^xsd:string ]
+--
+}
+43 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+43 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+43 --> " " 4 : [[http://hl7.org/fhir/Dosage.doseAndRate.type fhir:Dosage.doseAndRate.type]]
+40 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+40 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+40 --> " " 5 : [[http://hl7.org/fhir/DataRequirement.dateFilter.path fhir:DataRequirement.dateFilter.path]]
+59 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+59 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+59 --> "?" 5 : [[http://hl7.org/fhir/TriggerDefinition.condition.description fhir:TriggerDefinition.condition.description]]
+59 --> " " 11 : [[http://hl7.org/fhir/TriggerDefinition.condition.language fhir:TriggerDefinition.condition.language]]
+59 --> " " 5 : [[http://hl7.org/fhir/TriggerDefinition.condition.expression fhir:TriggerDefinition.condition.expression]]
+39 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+39 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+39 --> " " 5 : [[http://hl7.org/fhir/DataRequirement.sort.path fhir:DataRequirement.sort.path]]
+41 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+41 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+41 --> " " 5 : [[http://hl7.org/fhir/DataRequirement.codeFilter.path fhir:DataRequirement.codeFilter.path]]
+41 --> "*" 18 : [[http://hl7.org/fhir/DataRequirement.codeFilter.code fhir:DataRequirement.codeFilter.code]]
+29 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+29 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+29 --> "?" 23 : [[http://hl7.org/fhir/Timing.repeat.count fhir:Timing.repeat.count]]
+29 --> "?" 23 : [[http://hl7.org/fhir/Timing.repeat.countMax fhir:Timing.repeat.countMax]]
+29 --> "?" 20 : [[http://hl7.org/fhir/Timing.repeat.duration fhir:Timing.repeat.duration]]
+29 --> "?" 20 : [[http://hl7.org/fhir/Timing.repeat.durationMax fhir:Timing.repeat.durationMax]]
+29 --> "?" 23 : [[http://hl7.org/fhir/Timing.repeat.frequency fhir:Timing.repeat.frequency]]
+29 --> "?" 23 : [[http://hl7.org/fhir/Timing.repeat.frequencyMax fhir:Timing.repeat.frequencyMax]]
+29 --> "?" 20 : [[http://hl7.org/fhir/Timing.repeat.period fhir:Timing.repeat.period]]
+29 --> "?" 20 : [[http://hl7.org/fhir/Timing.repeat.periodMax fhir:Timing.repeat.periodMax]]
+29 --> "*" 30 : [[http://hl7.org/fhir/Timing.repeat.timeOfDay fhir:Timing.repeat.timeOfDay]]
+29 --> "?" 35 : [[http://hl7.org/fhir/Timing.repeat.offset fhir:Timing.repeat.offset]]
+35 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+35 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+61 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+61 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+61 --> "+" 18 : [[http://hl7.org/fhir/Signature.type fhir:Signature.type]]
+61 --> " " 6 : [[http://hl7.org/fhir/Signature.when fhir:Signature.when]]
+61 --> "?" 11 : [[http://hl7.org/fhir/Signature.targetFormat fhir:Signature.targetFormat]]
+61 --> "?" 11 : [[http://hl7.org/fhir/Signature.sigFormat fhir:Signature.sigFormat]]
+61 --> "?" 34 : [[http://hl7.org/fhir/Signature.blob fhir:Signature.blob]]
+51 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+51 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+51 --> "?" 5 : [[http://hl7.org/fhir/ContactDetail.name fhir:ContactDetail.name]]
+51 --> "*" 53 : [[http://hl7.org/fhir/ContactDetail.telecom fhir:ContactDetail.telecom]]
+60 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+60 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+60 --> "?" 17 : [[http://hl7.org/fhir/Annotation.time fhir:Annotation.time]]
+60 --> " " 5 : [[http://hl7.org/fhir/Annotation.text fhir:Annotation.text]]
+36 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+36 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+58 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+58 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+58 --> "?" 5 : [[http://hl7.org/fhir/TriggerDefinition.name fhir:TriggerDefinition.name]]
+58 --> "?" 38 : [[http://hl7.org/fhir/TriggerDefinition.data fhir:TriggerDefinition.data]]
+58 --> "?" 59 : [[http://hl7.org/fhir/TriggerDefinition.condition fhir:TriggerDefinition.condition]]
+57 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+57 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+57 --> "?" 20 : [[http://hl7.org/fhir/Quantity.value fhir:Quantity.value]]
+57 --> "?" 5 : [[http://hl7.org/fhir/Quantity.unit fhir:Quantity.unit]]
+57 --> "?" 12 : [[http://hl7.org/fhir/Quantity.system fhir:Quantity.system]]
+57 --> "?" 11 : [[http://hl7.org/fhir/Quantity.code fhir:Quantity.code]]
+56 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+56 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+55 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+55 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+55 --> "?" 20 : [[http://hl7.org/fhir/Quantity.value fhir:Quantity.value]]
+55 --> "?" 5 : [[http://hl7.org/fhir/Quantity.unit fhir:Quantity.unit]]
+55 --> "?" 12 : [[http://hl7.org/fhir/Quantity.system fhir:Quantity.system]]
+55 --> "?" 11 : [[http://hl7.org/fhir/Quantity.code fhir:Quantity.code]]
+54 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+54 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+54 --> "?" 5 : [[http://hl7.org/fhir/HumanName.text fhir:HumanName.text]]
+54 --> "?" 5 : [[http://hl7.org/fhir/HumanName.family fhir:HumanName.family]]
+54 --> "*" 5 : [[http://hl7.org/fhir/HumanName.given fhir:HumanName.given]]
+54 --> "*" 5 : [[http://hl7.org/fhir/HumanName.prefix fhir:HumanName.prefix]]
+54 --> "*" 5 : [[http://hl7.org/fhir/HumanName.suffix fhir:HumanName.suffix]]
+54 --> "?" 21 : [[http://hl7.org/fhir/HumanName.period fhir:HumanName.period]]
+53 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+53 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+53 --> "?" 5 : [[http://hl7.org/fhir/ContactPoint.value fhir:ContactPoint.value]]
+53 --> "?" 26 : [[http://hl7.org/fhir/ContactPoint.rank fhir:ContactPoint.rank]]
+53 --> "?" 21 : [[http://hl7.org/fhir/ContactPoint.period fhir:ContactPoint.period]]
+52 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+52 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+50 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+50 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+50 --> " " 5 : [[http://hl7.org/fhir/Contributor.name fhir:Contributor.name]]
+50 --> "*" 51 : [[http://hl7.org/fhir/Contributor.contact fhir:Contributor.contact]]
+49 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+49 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+49 --> "?" 11 : [[http://hl7.org/fhir/ParameterDefinition.name fhir:ParameterDefinition.name]]
+49 --> "?" 23 : [[http://hl7.org/fhir/ParameterDefinition.min fhir:ParameterDefinition.min]]
+49 --> "?" 5 : [[http://hl7.org/fhir/ParameterDefinition.max fhir:ParameterDefinition.max]]
+49 --> "?" 5 : [[http://hl7.org/fhir/ParameterDefinition.documentation fhir:ParameterDefinition.documentation]]
+49 --> "?" 19 : [[http://hl7.org/fhir/ParameterDefinition.profile fhir:ParameterDefinition.profile]]
+20 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+20 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+48 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+48 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+48 --> " " 18 : [[http://hl7.org/fhir/UsageContext.code fhir:UsageContext.code]]
+34 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+34 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+47 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+47 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+47 --> "?" 5 : [[http://hl7.org/fhir/RelatedArtifact.display fhir:RelatedArtifact.display]]
+47 --> "?" 5 : [[http://hl7.org/fhir/RelatedArtifact.citation fhir:RelatedArtifact.citation]]
+47 --> "?" 36 : [[http://hl7.org/fhir/RelatedArtifact.url fhir:RelatedArtifact.url]]
+47 --> "?" 33 : [[http://hl7.org/fhir/RelatedArtifact.document fhir:RelatedArtifact.document]]
+47 --> "?" 19 : [[http://hl7.org/fhir/RelatedArtifact.resource fhir:RelatedArtifact.resource]]
+19 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+19 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+46 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+46 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+46 --> "?" 20 : [[http://hl7.org/fhir/Quantity.value fhir:Quantity.value]]
+46 --> "?" 5 : [[http://hl7.org/fhir/Quantity.unit fhir:Quantity.unit]]
+46 --> "?" 12 : [[http://hl7.org/fhir/Quantity.system fhir:Quantity.system]]
+46 --> "?" 11 : [[http://hl7.org/fhir/Quantity.code fhir:Quantity.code]]
+45 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+45 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+45 --> "?" 20 : [[http://hl7.org/fhir/Quantity.value fhir:Quantity.value]]
+45 --> "?" 5 : [[http://hl7.org/fhir/Quantity.unit fhir:Quantity.unit]]
+45 --> "?" 12 : [[http://hl7.org/fhir/Quantity.system fhir:Quantity.system]]
+45 --> "?" 11 : [[http://hl7.org/fhir/Quantity.code fhir:Quantity.code]]
+26 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+26 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+18 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+18 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+18 --> "?" 12 : [[http://hl7.org/fhir/Coding.system fhir:Coding.system]]
+18 --> "?" 5 : [[http://hl7.org/fhir/Coding.version fhir:Coding.version]]
+18 --> "?" 11 : [[http://hl7.org/fhir/Coding.code fhir:Coding.code]]
+18 --> "?" 5 : [[http://hl7.org/fhir/Coding.display fhir:Coding.display]]
+18 --> "?" 24 : [[http://hl7.org/fhir/Coding.userSelected fhir:Coding.userSelected]]
+44 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+44 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+42 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+42 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+42 --> "*" 8 : [[http://hl7.org/fhir/BackboneElement.modifierExtension fhir:BackboneElement.modifierExtension]]
+42 --> "?" 23 : [[http://hl7.org/fhir/Dosage.sequence fhir:Dosage.sequence]]
+42 --> "?" 5 : [[http://hl7.org/fhir/Dosage.text fhir:Dosage.text]]
+42 --> "*" 4 : [[http://hl7.org/fhir/Dosage.additionalInstruction fhir:Dosage.additionalInstruction]]
+42 --> "?" 5 : [[http://hl7.org/fhir/Dosage.patientInstruction fhir:Dosage.patientInstruction]]
+42 --> "?" 28 : [[http://hl7.org/fhir/Dosage.timing fhir:Dosage.timing]]
+42 --> "?" 4 : [[http://hl7.org/fhir/Dosage.site fhir:Dosage.site]]
+42 --> "?" 4 : [[http://hl7.org/fhir/Dosage.route fhir:Dosage.route]]
+42 --> "?" 4 : [[http://hl7.org/fhir/Dosage.method fhir:Dosage.method]]
+42 --> "*" 43 : [[http://hl7.org/fhir/Dosage.doseAndRate fhir:Dosage.doseAndRate]]
+42 --> "?" 27 : [[http://hl7.org/fhir/Dosage.maxDosePerPeriod fhir:Dosage.maxDosePerPeriod]]
+42 --> "?" 16 : [[http://hl7.org/fhir/Dosage.maxDosePerAdministration fhir:Dosage.maxDosePerAdministration]]
+42 --> "?" 16 : [[http://hl7.org/fhir/Dosage.maxDosePerLifetime fhir:Dosage.maxDosePerLifetime]]
+38 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+38 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+38 --> "*" 19 : [[http://hl7.org/fhir/DataRequirement.profile fhir:DataRequirement.profile]]
+38 --> "*" 5 : [[http://hl7.org/fhir/DataRequirement.mustSupport fhir:DataRequirement.mustSupport]]
+38 --> "*" 41 : [[http://hl7.org/fhir/DataRequirement.codeFilter fhir:DataRequirement.codeFilter]]
+38 --> "*" 40 : [[http://hl7.org/fhir/DataRequirement.dateFilter fhir:DataRequirement.dateFilter]]
+38 --> "?" 26 : [[http://hl7.org/fhir/DataRequirement.limit fhir:DataRequirement.limit]]
+38 --> "*" 39 : [[http://hl7.org/fhir/DataRequirement.sort fhir:DataRequirement.sort]]
+37 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+37 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+37 --> "?" 20 : [[http://hl7.org/fhir/Quantity.value fhir:Quantity.value]]
+37 --> "?" 5 : [[http://hl7.org/fhir/Quantity.unit fhir:Quantity.unit]]
+37 --> "?" 12 : [[http://hl7.org/fhir/Quantity.system fhir:Quantity.system]]
+37 --> "?" 11 : [[http://hl7.org/fhir/Quantity.code fhir:Quantity.code]]
+33 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+33 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+33 --> "?" 11 : [[http://hl7.org/fhir/Attachment.contentType fhir:Attachment.contentType]]
+33 --> "?" 11 : [[http://hl7.org/fhir/Attachment.language fhir:Attachment.language]]
+33 --> "?" 34 : [[http://hl7.org/fhir/Attachment.data fhir:Attachment.data]]
+33 --> "?" 36 : [[http://hl7.org/fhir/Attachment.url fhir:Attachment.url]]
+33 --> "?" 35 : [[http://hl7.org/fhir/Attachment.size fhir:Attachment.size]]
+33 --> "?" 34 : [[http://hl7.org/fhir/Attachment.hash fhir:Attachment.hash]]
+33 --> "?" 5 : [[http://hl7.org/fhir/Attachment.title fhir:Attachment.title]]
+33 --> "?" 17 : [[http://hl7.org/fhir/Attachment.creation fhir:Attachment.creation]]
+32 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+32 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+32 --> "?" 5 : [[http://hl7.org/fhir/Address.text fhir:Address.text]]
+32 --> "*" 5 : [[http://hl7.org/fhir/Address.line fhir:Address.line]]
+32 --> "?" 5 : [[http://hl7.org/fhir/Address.city fhir:Address.city]]
+32 --> "?" 5 : [[http://hl7.org/fhir/Address.district fhir:Address.district]]
+32 --> "?" 5 : [[http://hl7.org/fhir/Address.state fhir:Address.state]]
+32 --> "?" 5 : [[http://hl7.org/fhir/Address.postalCode fhir:Address.postalCode]]
+32 --> "?" 5 : [[http://hl7.org/fhir/Address.country fhir:Address.country]]
+32 --> "?" 21 : [[http://hl7.org/fhir/Address.period fhir:Address.period]]
+31 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+31 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+4 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+4 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+4 --> "*" 18 : [[http://hl7.org/fhir/CodeableConcept.coding fhir:CodeableConcept.coding]]
+4 --> "?" 5 : [[http://hl7.org/fhir/CodeableConcept.text fhir:CodeableConcept.text]]
+30 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+30 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+28 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+28 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+28 --> "*" 8 : [[http://hl7.org/fhir/BackboneElement.modifierExtension fhir:BackboneElement.modifierExtension]]
+28 --> "*" 17 : [[http://hl7.org/fhir/Timing.event fhir:Timing.event]]
+28 --> "?" 29 : [[http://hl7.org/fhir/Timing.repeat fhir:Timing.repeat]]
+28 --> "?" 4 : [[http://hl7.org/fhir/Timing.code fhir:Timing.code]]
+14 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+14 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+27 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+27 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+27 --> "?" 22 : [[http://hl7.org/fhir/Ratio.numerator fhir:Ratio.numerator]]
+27 --> "?" 22 : [[http://hl7.org/fhir/Ratio.denominator fhir:Ratio.denominator]]
+25 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+25 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+25 --> " " 16 : [[http://hl7.org/fhir/SampledData.origin fhir:SampledData.origin]]
+25 --> " " 20 : [[http://hl7.org/fhir/SampledData.period fhir:SampledData.period]]
+25 --> "?" 20 : [[http://hl7.org/fhir/SampledData.factor fhir:SampledData.factor]]
+25 --> "?" 20 : [[http://hl7.org/fhir/SampledData.lowerLimit fhir:SampledData.lowerLimit]]
+25 --> "?" 20 : [[http://hl7.org/fhir/SampledData.upperLimit fhir:SampledData.upperLimit]]
+25 --> " " 26 : [[http://hl7.org/fhir/SampledData.dimensions fhir:SampledData.dimensions]]
+25 --> "?" 5 : [[http://hl7.org/fhir/SampledData.data fhir:SampledData.data]]
+10 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+10 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+24 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+24 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+7 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+7 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+7 --> "?" 4 : [[http://hl7.org/fhir/Identifier.type fhir:Identifier.type]]
+7 --> "?" 12 : [[http://hl7.org/fhir/Identifier.system fhir:Identifier.system]]
+7 --> "?" 5 : [[http://hl7.org/fhir/Identifier.value fhir:Identifier.value]]
+7 --> "?" 21 : [[http://hl7.org/fhir/Identifier.period fhir:Identifier.period]]
+7 --> "?" 2 : [[http://hl7.org/fhir/Identifier.assigner fhir:Identifier.assigner]]
+8 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+8 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+8 --> " " 12 : [[http://hl7.org/fhir/Extension.url fhir:Extension.url]]
+6 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+6 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+12 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+12 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+15 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+15 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+15 --> "?" 16 : [[http://hl7.org/fhir/Range.low fhir:Range.low]]
+15 --> "?" 16 : [[http://hl7.org/fhir/Range.high fhir:Range.high]]
+23 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+23 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+22 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+22 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+22 --> "?" 20 : [[http://hl7.org/fhir/Quantity.value fhir:Quantity.value]]
+22 --> "?" 5 : [[http://hl7.org/fhir/Quantity.unit fhir:Quantity.unit]]
+22 --> "?" 12 : [[http://hl7.org/fhir/Quantity.system fhir:Quantity.system]]
+22 --> "?" 11 : [[http://hl7.org/fhir/Quantity.code fhir:Quantity.code]]
+21 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+21 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+21 --> "?" 17 : [[http://hl7.org/fhir/Period.start fhir:Period.start]]
+21 --> "?" 17 : [[http://hl7.org/fhir/Period.end fhir:Period.end]]
+16 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+16 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+16 --> "?" 20 : [[http://hl7.org/fhir/Quantity.value fhir:Quantity.value]]
+16 --> "?" 5 : [[http://hl7.org/fhir/Quantity.unit fhir:Quantity.unit]]
+16 --> "?" 12 : [[http://hl7.org/fhir/Quantity.system fhir:Quantity.system]]
+16 --> "?" 11 : [[http://hl7.org/fhir/Quantity.code fhir:Quantity.code]]
+9 --> "?" 14 : [[http://hl7.org/fhir/Resource.id fhir:Resource.id]]
+9 --> "?" 13 : [[http://hl7.org/fhir/Resource.meta fhir:Resource.meta]]
+9 --> "?" 12 : [[http://hl7.org/fhir/Resource.implicitRules fhir:Resource.implicitRules]]
+9 --> "?" 11 : [[http://hl7.org/fhir/Resource.language fhir:Resource.language]]
+2 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+2 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+2 --> "?" 5 : [[http://hl7.org/fhir/Reference.reference fhir:Reference.reference]]
+2 --> "?" 12 : [[http://hl7.org/fhir/Reference.type fhir:Reference.type]]
+2 --> "?" 7 : [[http://hl7.org/fhir/Reference.identifier fhir:Reference.identifier]]
+2 --> "?" 5 : [[http://hl7.org/fhir/Reference.display fhir:Reference.display]]
+5 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+5 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+11 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+11 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+13 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+13 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+13 --> "?" 14 : [[http://hl7.org/fhir/Meta.versionId fhir:Meta.versionId]]
+13 --> "?" 6 : [[http://hl7.org/fhir/Meta.lastUpdated fhir:Meta.lastUpdated]]
+13 --> "?" 12 : [[http://hl7.org/fhir/Meta.source fhir:Meta.source]]
+13 --> "*" 19 : [[http://hl7.org/fhir/Meta.profile fhir:Meta.profile]]
+13 --> "*" 18 : [[http://hl7.org/fhir/Meta.security fhir:Meta.security]]
+13 --> "*" 18 : [[http://hl7.org/fhir/Meta.tag fhir:Meta.tag]]
+17 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+17 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+1 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+1 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+1 --> "*" 8 : [[http://hl7.org/fhir/BackboneElement.modifierExtension fhir:BackboneElement.modifierExtension]]
+1 --> " " 4 : [[http://hl7.org/fhir/Observation.component.code fhir:Observation.component.code]]
+1 --> "?" 4 : [[http://hl7.org/fhir/Observation.component.dataAbsentReason fhir:Observation.component.dataAbsentReason]]
+1 --> "?" 4 : [[http://hl7.org/fhir/Observation.component.interpretation fhir:Observation.component.interpretation]]
+1 --> "*" 3 : [[http://hl7.org/fhir/Observation.component.referenceRange fhir:Observation.component.referenceRange]]
+3 --> "?" 5 : [[http://hl7.org/fhir/Element.id fhir:Element.id]]
+3 --> "*" 8 : [[http://hl7.org/fhir/Element.extension fhir:Element.extension]]
+3 --> "*" 8 : [[http://hl7.org/fhir/BackboneElement.modifierExtension fhir:BackboneElement.modifierExtension]]
+3 --> "?" 16 : [[http://hl7.org/fhir/Observation.referenceRange.low fhir:Observation.referenceRange.low]]
+3 --> "?" 16 : [[http://hl7.org/fhir/Observation.referenceRange.high fhir:Observation.referenceRange.high]]
+3 --> "?" 4 : [[http://hl7.org/fhir/Observation.referenceRange.type fhir:Observation.referenceRange.type]]
+3 --> "*" 4 : [[http://hl7.org/fhir/Observation.referenceRange.appliesTo fhir:Observation.referenceRange.appliesTo]]
+3 --> "?" 15 : [[http://hl7.org/fhir/Observation.referenceRange.age fhir:Observation.referenceRange.age]]
+3 --> "?" 5 : [[http://hl7.org/fhir/Observation.referenceRange.text fhir:Observation.referenceRange.text]]
+0 --> "?" 14 : [[http://hl7.org/fhir/Resource.id fhir:Resource.id]]
+0 --> "?" 13 : [[http://hl7.org/fhir/Resource.meta fhir:Resource.meta]]
+0 --> "?" 12 : [[http://hl7.org/fhir/Resource.implicitRules fhir:Resource.implicitRules]]
+0 --> "?" 11 : [[http://hl7.org/fhir/Resource.language fhir:Resource.language]]
+0 --> "?" 10 : [[http://hl7.org/fhir/DomainResource.text fhir:DomainResource.text]]
+0 --> "*" 9 : [[http://hl7.org/fhir/DomainResource.contained fhir:DomainResource.contained]]
+0 --> "*" 8 : [[http://hl7.org/fhir/DomainResource.extension fhir:DomainResource.extension]]
+0 --> "*" 8 : [[http://hl7.org/fhir/DomainResource.modifierExtension fhir:DomainResource.modifierExtension]]
+0 --> "*" 7 : [[http://hl7.org/fhir/Observation.identifier fhir:Observation.identifier]]
+0 --> "*" 2 : [[http://hl7.org/fhir/Observation.basedOn fhir:Observation.basedOn]]
+0 --> "*" 2 : [[http://hl7.org/fhir/Observation.partOf fhir:Observation.partOf]]
+0 --> "*" 4 : [[http://hl7.org/fhir/Observation.category fhir:Observation.category]]
+0 --> " " 4 : [[http://hl7.org/fhir/Observation.code fhir:Observation.code]]
+0 --> "?" 2 : [[http://hl7.org/fhir/Observation.subject fhir:Observation.subject]]
+0 --> "?" 2 : [[http://hl7.org/fhir/Observation.focus fhir:Observation.focus]]
+0 --> "?" 2 : [[http://hl7.org/fhir/Observation.context fhir:Observation.context]]
+0 --> "?" 6 : [[http://hl7.org/fhir/Observation.issued fhir:Observation.issued]]
+0 --> "*" 2 : [[http://hl7.org/fhir/Observation.performer fhir:Observation.performer]]
+0 --> "?" 4 : [[http://hl7.org/fhir/Observation.dataAbsentReason fhir:Observation.dataAbsentReason]]
+0 --> "?" 4 : [[http://hl7.org/fhir/Observation.interpretation fhir:Observation.interpretation]]
+0 --> "?" 5 : [[http://hl7.org/fhir/Observation.comment fhir:Observation.comment]]
+0 --> "?" 4 : [[http://hl7.org/fhir/Observation.bodySite fhir:Observation.bodySite]]
+0 --> "?" 4 : [[http://hl7.org/fhir/Observation.method fhir:Observation.method]]
+0 --> "?" 2 : [[http://hl7.org/fhir/Observation.specimen fhir:Observation.specimen]]
+0 --> "?" 2 : [[http://hl7.org/fhir/Observation.device fhir:Observation.device]]
+0 --> "*" 3 : [[http://hl7.org/fhir/Observation.referenceRange fhir:Observation.referenceRange]]
+0 --> "*" 2 : [[http://hl7.org/fhir/Observation.hasMember fhir:Observation.hasMember]]
+0 --> "*" 2 : [[http://hl7.org/fhir/Observation.derivedFrom fhir:Observation.derivedFrom]]
+0 --> "*" 1 : [[http://hl7.org/fhir/Observation.component fhir:Observation.component]]
+@enduml

@@ -1,13 +1,10 @@
 package es.weso.uml
-
-//import java.io.ByteArrayOutputStream
-//import java.nio.charset.Charset
-
 import es.weso.shex.ShapeLabel
-//import net.sourceforge.plantuml.SourceStringReader
-//import net.sourceforge.plantuml.FileFormat
-//import net.sourceforge.plantuml.FileFormatOption
-
+import java.io.ByteArrayOutputStream
+import java.nio.charset.Charset
+import net.sourceforge.plantuml.SourceStringReader
+import net.sourceforge.plantuml.FileFormat
+import net.sourceforge.plantuml.FileFormatOption
 
 object UMLDiagram {
 
@@ -183,14 +180,14 @@ object UMLDiagram {
       sb.toString
     }
 
-    /* def toSVG: String = {
+    def toSVG: String = {
       val reader: SourceStringReader = new SourceStringReader(this.toPlantUML)
       val os: ByteArrayOutputStream = new ByteArrayOutputStream()
-      // val desc = reader.generateImage(os, new FileFormatOption(FileFormat.SVG))
+      reader.generateImage(os, new FileFormatOption(FileFormat.SVG))
       os.close
       val svg: String = new String(os.toByteArray(), Charset.forName("UTF-8"))
       svg
-    } */
+    }
   }
 
   object UML {

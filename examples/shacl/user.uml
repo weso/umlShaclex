@@ -1,0 +1,22 @@
+@startuml
+class ":User" as 0 <<(S,#FF7700)>> [[http://example.org/User :User]] {
+--
+--
+}
+class "0987e362c6c56e5ab22e8f64f73c3ce3" as 1 <<(S,#FF7700)>>  {
+--
+--
+}
+class "78efe61803f4fd9a7ecdc35ce40bd973" as 2 <<(S,#FF7700)>>  {
+--
+--
+}
+class "a16505a9df9263f2daa17e7c6332e982" as 3 <<(S,#FF7700)>>  {
+--
+--
+}
+class "545998681514ab51e97d97202c146142" as 4 <<(S,#FF7700)>>  {
+--
+--
+}
+@enduml

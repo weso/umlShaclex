@@ -17,7 +17,6 @@ object SHACL2UML {
     maybe.map(_ => state.uml)
   }
 
-
   type Id = Int
   case class StateValue(uml: UML, currentId: Id)
   type S[A] = State[StateValue,A]
@@ -79,7 +78,9 @@ object SHACL2UML {
   private def cnvComponents(cs: Seq[Component], schema: Schema): Converter[List[UMLEntry]] =
     ok(List())
 
-  private def cnvPropertyShapes(cs: Seq[RefNode], schema: Schema): Converter[List[UMLEntry]] =
+  private def cnvPropertyShapes(cs: Seq[RefNode],
+                                schema: Schema
+                               ): Converter[List[UMLEntry]] =
     ok(List())
 
   private def cnvShape(id: NodeId, s: Shape, schema: Schema): Converter[UMLClass] = for {
@@ -113,8 +114,6 @@ object SHACL2UML {
       case s => s
     }
   }
-
-
 
   private def predicate2lbl(iri: IRI, pm: PrefixMap): (Name, HRef) = iri match {
     case `rdf_type` => ("a",iri.str)
