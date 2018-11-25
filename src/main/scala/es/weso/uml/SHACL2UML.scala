@@ -116,7 +116,7 @@ object SHACL2UML {
   }
 
   private def predicate2lbl(iri: IRI, pm: PrefixMap): (Name, HRef) = iri match {
-    case `rdf_type` => ("a",iri.str)
+    case `rdf:type` => ("a",iri.str)
     case _ => (iri2Label(iri,pm), iri.str)
   }
 

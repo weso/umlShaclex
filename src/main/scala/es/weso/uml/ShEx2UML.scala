@@ -217,7 +217,7 @@ object ShEx2UML {
   }
 
   private def cnvNumericLiteral(l: NumericLiteral): String = l match {
-    case NumericInt(n) => n.toString
+    case NumericInt(_,repr) => repr
     case NumericDouble(_,repr) => repr
     case NumericDecimal(_,repr) => repr
   }
@@ -352,7 +352,7 @@ object ShEx2UML {
   }
 
   private def predicate2lbl(iri: IRI, pm: PrefixMap): (Name, HRef) = iri match {
-    case `rdf_type` => ("a",iri.str)
+    case `rdf:type` => ("a",iri.str)
     case _ => (iri2Label(iri,pm), iri.str)
   }
 

@@ -1,6 +1,6 @@
 package es.weso.uml
 
-import es.weso.rdf.jena.RDFAsJenaModel
+import es.weso.rdf.PREFIXES._
 import es.weso.rdf.nodes.IRI
 import es.weso.shex.{IRILabel, Schema}
 import es.weso.uml.UMLDiagram._
@@ -30,15 +30,18 @@ class ShExUMLTest extends FunSpec with Matchers {
         """|prefix : <http://example.org/>
            |
            |:User {
+           | a     IRI ;
            | :name IRI ;
            |}
         """.stripMargin
       val ex = IRI(s"http://example.org/")
-      val umlField = UMLField(":name", Some((ex + "name").str), List(Constant("IRI")), NoCard)
-      val umlClass = UMLClass(0,":User", Some((ex + "User").str), List(List(umlField)), List())
+      val nameField = UMLField(":name", Some((ex + "name").str), List(Constant("IRI")), NoCard)
+      val aField = UMLField("a", Some((`rdf:type`).str), List(Constant("IRI")), NoCard)
+
+      val umlClass = UMLClass(0,":User", Some((ex + "User").str), List(List(aField),List(nameField)), List())
       val uml = UML(Map(IRILabel(ex + "User") -> 0), Map(0 -> umlClass), List())
       val maybe = for {
-        shex <- Schema.fromString(shexStr,"ShExC",None,RDFAsJenaModel.empty)
+        shex <- Schema.fromString(shexStr,"ShExC")
         uml <- ShEx2UML.schema2Uml(shex)
       } yield uml
       maybe.fold(
@@ -67,7 +70,7 @@ class ShExUMLTest extends FunSpec with Matchers {
         List(UMLLink(0,0,":knows",(ex + "knows").str, NoCard))
       )
       val maybe = for {
-        shex <- Schema.fromString(shexStr,"ShExC",None,RDFAsJenaModel.empty)
+        shex <- Schema.fromString(shexStr,"ShExC")
         uml <- ShEx2UML.schema2Uml(shex)
       } yield uml
       maybe.fold(
@@ -93,7 +96,7 @@ class ShExUMLTest extends FunSpec with Matchers {
            |}
         """.stripMargin
       val maybe = for {
-        shex <- Schema.fromString(shexStr,"ShExC",None,RDFAsJenaModel.empty)
+        shex <- Schema.fromString(shexStr,"ShExC")
         uml <- ShEx2UML.schema2Uml(shex)
       } yield uml
       maybe.fold(
@@ -109,7 +112,7 @@ class ShExUMLTest extends FunSpec with Matchers {
       val fhirFile = "examples/shex/fhir/observation.shex"
       val maybe = for {
         str <- FileUtils.getContents(fhirFile)
-        shex <- Schema.fromString(str,"ShExC",None,RDFAsJenaModel.empty)
+        shex <- Schema.fromString(str,"ShExC")
         uml <- ShEx2UML.schema2Uml(shex)
       } yield uml
       maybe.fold(

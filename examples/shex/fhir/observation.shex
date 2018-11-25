@@ -237,7 +237,7 @@ start=@<Observation> AND {fhir:nodeRole [fhir:treeRoot]}
     fhir:Element.id @<string>?;             # xml:id (or equivalent in JSON)
     fhir:Element.extension @<Extension>*;   # Additional Content defined by
                                             # implementations
-    fhir:value xsd:integer MININCLUSIVE "-2147483648"^^xsd:integer MAXINCLUSIVE "2147483647"^^xsd:integer?;  # Primitive value for integer
+    fhir:value xsd:integer ;
     fhir:index xsd:integer?                 # Relative position in a list
 }
 

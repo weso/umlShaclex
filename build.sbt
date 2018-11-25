@@ -24,7 +24,7 @@ scalafmt: {
 }
  */
 
-lazy val shaclexVersion        = "0.1.04"
+lazy val shaclexVersion        = "0.1.15"
 
 // Dependency versions
 lazy val catsVersion           = "1.1.0"
@@ -53,6 +53,7 @@ lazy val scalaTest         = "org.scalatest"              %% "scalatest"        
 lazy val shex              = "es.weso"                    % "shex_2.12"            % shaclexVersion
 lazy val shacl             = "es.weso"                    % "shacl_2.12"           % shaclexVersion
 lazy val schema            = "es.weso"                    % "schema_2.12"          % shaclexVersion
+lazy val schemaInfer       = "es.weso"                    % "schemainfer_2.12"     % shaclexVersion
 lazy val srdfJena          = "es.weso"                    % "srdfjena_2.12"        % shaclexVersion
 lazy val plantuml          = "net.sourceforge.plantuml"   % "plantuml"             % plantumlVersion
 
@@ -76,7 +77,8 @@ lazy val umlShaclex = project
       scalaLogging,
       scallop,
       shex,
-      schema,
+      schema, 
+      schemaInfer,
       shacl,
       plantuml,
       scalaTest % Test,
