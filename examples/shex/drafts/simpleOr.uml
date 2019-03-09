@@ -1,0 +1,28 @@
+@startuml
+class ":Prueba" as 1 <<(S,#FF7700)>>  {
+[[http://example.org/q :q]] : .  
+--
+}
+class ":User" as 0 <<(S,#FF7700)>> [[http://example.org/User :User]] {
+}
+class "Dos" as dos <<(S,#FF7700)>>
+class "IRI" as iri1 <<IRI>> {
+}
+class "OR" as or1 <<Or>>  
+skinparam class {
+ BackgroundColor<<Or>> PaleGreen
+}
+skinparam class {
+ BackgroundColor<<IRI>> Cyan
+}
+0 -> " " or1 : [[http://example.org/p :p]]
+or1 -- iri1 
+or1 -- 1
+or1 -- dos
+hide iri1 circle
+hide iri1 members
+hide iri1 stereotype
+hide or1 members
+hide or1 circle
+hide or1 stereotype
+@enduml
