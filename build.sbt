@@ -24,21 +24,21 @@ scalafmt: {
 }
  */
 
-lazy val shaclexVersion        = "0.1.15"
+lazy val shaclexVersion        = "0.1.28"
 
 // Dependency versions
-lazy val catsVersion           = "1.1.0"
-lazy val scalacticVersion      = "3.0.5"
-lazy val scalaTestVersion      = "3.0.5"
+lazy val catsVersion           = "2.0.0-M4"
+lazy val scalacticVersion      = "3.0.8"
+lazy val scalaTestVersion      = "3.0.8"
 lazy val plantumlVersion       = "1.2017.12"
 lazy val logbackVersion        = "1.2.3"
-lazy val loggingVersion        = "3.7.2"
-lazy val scallopVersion        = "3.1.1"
+lazy val loggingVersion        = "3.9.2"
+lazy val scallopVersion        = "3.3.1"
 
 
 // Compiler plugin dependency versions
-lazy val simulacrumVersion    = "0.11.0"
-lazy val kindProjectorVersion = "0.9.5"
+lazy val simulacrumVersion    = "0.19.0"
+// lazy val kindProjectorVersion = "0.9.5"
 lazy val scalaMacrosVersion   = "2.1.1"
 
 // Dependency modules
@@ -46,21 +46,24 @@ lazy val catsCore          = "org.typelevel"              %% "cats-core"        
 lazy val catsKernel        = "org.typelevel"              %% "cats-kernel"         % catsVersion
 lazy val catsMacros        = "org.typelevel"              %% "cats-macros"         % catsVersion
 lazy val logbackClassic    = "ch.qos.logback"             % "logback-classic"      % logbackVersion
+lazy val plantuml          = "net.sourceforge.plantuml"   % "plantuml"             % plantumlVersion
 lazy val scalaLogging      = "com.typesafe.scala-logging" %% "scala-logging"       % loggingVersion
 lazy val scallop           = "org.rogach"                 %% "scallop"             % scallopVersion
 lazy val scalactic         = "org.scalactic"              %% "scalactic"           % scalacticVersion
 lazy val scalaTest         = "org.scalatest"              %% "scalatest"           % scalaTestVersion
-lazy val shex              = "es.weso"                    % "shex_2.12"            % shaclexVersion
-lazy val shacl             = "es.weso"                    % "shacl_2.12"           % shaclexVersion
-lazy val schema            = "es.weso"                    % "schema_2.12"          % shaclexVersion
-lazy val schemaInfer       = "es.weso"                    % "schemainfer_2.12"     % shaclexVersion
-lazy val srdfJena          = "es.weso"                    % "srdfjena_2.12"        % shaclexVersion
-lazy val plantuml          = "net.sourceforge.plantuml"   % "plantuml"             % plantumlVersion
+lazy val shex              = "es.weso"                    % "shex_2.13"            % shaclexVersion
+lazy val shacl             = "es.weso"                    % "shacl_2.13"           % shaclexVersion
+lazy val schema            = "es.weso"                    % "schema_2.13"          % shaclexVersion
+lazy val schemaInfer       = "es.weso"                    % "schemainfer_2.13"     % shaclexVersion
+lazy val srdfJena          = "es.weso"                    % "srdfjena_2.13"        % shaclexVersion
+lazy val sgraph            = "es.weso"                    % "sgraph_2.13"          % shaclexVersion
+lazy val utilsTest         = "es.weso"                    % "utilstest_2.13"       % shaclexVersion
+
 
 // Compiler plugin modules
-lazy val scalaMacrosParadise = "org.scalamacros"      % "paradise"        % scalaMacrosVersion cross CrossVersion.full
+// lazy val scalaMacrosParadise = "org.scalamacros"      % "paradise"        % scalaMacrosVersion cross CrossVersion.full
 lazy val simulacrum          = "com.github.mpilquist" %% "simulacrum"     % simulacrumVersion
-lazy val kindProjector       = "org.spire-math"       %% "kind-projector" % kindProjectorVersion
+// lazy val kindProjector       = "org.spire-math"       %% "kind-projector" % kindProjectorVersion
 
 lazy val umlShaclex = project
   .in(file("."))
@@ -80,6 +83,7 @@ lazy val umlShaclex = project
       schema, 
       schemaInfer,
       shacl,
+      sgraph,
       plantuml,
       scalaTest % Test,
       srdfJena % Test
@@ -109,7 +113,7 @@ lazy val sharedDependencies = Seq(
 )
 
 lazy val compilationSettings = Seq(
-  scalaVersion := "2.12.6",
+  scalaVersion := "2.13.0",
   // format: off
   scalacOptions ++= Seq(
     "-deprecation",                      // Emit warning and location for usages of deprecated APIs.
@@ -118,18 +122,17 @@ lazy val compilationSettings = Seq(
     "-feature",                          // Emit warning and location for usages of features that should be imported explicitly.  "-encoding", "UTF-8",
     "-language:_",
     "-unchecked",                        // Enable additional warnings where generated code depends on assumptions.
-    "-Xfuture",                          // Turn on future language features.
     "-Xlint",
     "-Yrangepos",
 //    "-Ylog-classpath",
-    "-Yno-adapted-args",                 // Do not adapt an argument list (either by inserting () or creating a tuple) to match the receiver
+//    "-Yno-adapted-args",                 // Do not adapt an argument list (either by inserting () or creating a tuple) to match the receiver
     "-Ywarn-dead-code",                  // Warn when dead code is identified.
     "-Ywarn-extra-implicit",             // Warn when more than one implicit parameter section is defined.
-    "-Ywarn-inaccessible",               // Warn about inaccessible types in method signatures.
-    "-Ywarn-infer-any",                  // Warn when a type argument is inferred to be `Any`.
-    "-Ywarn-nullary-override",           // Warn when non-nullary `def f()' overrides nullary `def f'.
-    "-Ywarn-nullary-unit",               // Warn when nullary methods return Unit.
-    "-Ywarn-numeric-widen",              // Warn when numerics are widened.
+//    "-Ywarn-inaccessible",               // Warn about inaccessible types in method signatures.
+//    "-Ywarn-infer-any",                  // Warn when a type argument is inferred to be `Any`.
+//    "-Ywarn-nullary-override",           // Warn when non-nullary `def f()' overrides nullary `def f'.
+//    "-Ywarn-nullary-unit",               // Warn when nullary methods return Unit.
+//    "-Ywarn-numeric-widen",              // Warn when numerics are widened.
 //    "-Ywarn-unused:implicits",           // Warn if an implicit parameter is unused.
 //    "-Ywarn-unused:imports",             // Warn if an import selector is not referenced.
 //    "-Ywarn-unused:locals",              // Warn if a local definition is unused.
@@ -138,7 +141,7 @@ lazy val compilationSettings = Seq(
 //    "-Ywarn-unused:privates",            // Warn if a private member is unused.
 //    "-Ywarn-value-discard",              // Warn when non-Unit expression results are unused.
 //    "-Xfatal-warnings",                  // Fail the compilation if there are any warnings.
-    "-Ypartial-unification",
+//    "-Ypartial-unification",
   )
   // format: on
 )

@@ -1,5 +1,4 @@
 package es.weso.uml
-
 import cats.implicits._
 import es.weso.shex.implicits.eqShEx._
 import cats.data.{EitherT, State}
@@ -8,6 +7,13 @@ import es.weso.rdf.nodes.{BNode, IRI}
 import es.weso.rdf.PREFIXES._
 import es.weso.shex._
 import es.weso.uml.UMLDiagram._
+import es.weso.uml.{
+ Optional => UMLOptional,
+ Star => UMLStar,
+ Plus => UMLPlus,
+ IntMax => UMLIntMax,
+ _
+}
 import es.weso.shex.implicits.showShEx._
 import es.weso.rdf.operations.Comparisons._
 import RDF2UML._
@@ -93,14 +99,17 @@ object ShEx2UML {
   }
 
   private def cnvShapeExpr(id: Id, se: ShapeExpr, pm: PrefixMap): Converter[UMLClass] = se match {
-    case _: ShapeOr => err(s"Not implemented UML representation of ShapeOr. You can help us suggesting UML diagrams for OR")
+    case _: ShapeOr => {
+      println(s"ShapeOr: $se")
+      err(s"Not implemented UML representation of ShapeOr $se")
+    }
     case sa: ShapeAnd => for {
       entries <- cnvListShapeExprEntries(sa.shapeExprs, id, pm)
     } yield {
       val (label,href) = mkLabelHref(se.id,pm)
       UMLClass(id, label, href, entries, List())
     }
-    case sn: ShapeNot => err(s"Not implemented UML representation of Not yet")
+    case sn: ShapeNot => err(s"Not implemented UML representation of Not yet: $se")
     case s: Shape => {
       for {
         entries <- cnvShape(s,id,pm)
@@ -184,11 +193,12 @@ object ShEx2UML {
     // TODO: datatype, facets...
   } yield mkLs(nks,dt,facets,values)
 
-  private def cnvShapeOrInline(es: List[ShapeExpr], pm: PrefixMap): Converter[List[List[ValueConstraint]]] =
+  private def cnvShapeOrInline(es: List[ShapeExpr], pm: PrefixMap): Converter[List[List[ValueConstraint]]] = {
+    println(s"cnvShapeOrInline: $es")
     for {
       values <- cnvList(es, cnvFlat(pm))
     } yield List(List(ValueExpr("OR", values)))
-
+  }
 
   private def cnvShapeAndInline(es: List[ShapeExpr], pm: PrefixMap): Converter[List[List[ValueConstraint]]] =
     for {
@@ -343,12 +353,12 @@ object ShEx2UML {
     } */
 
   private def cnvCard(min: Int, max: Max): UMLCardinality = (min,max) match {
-    case (0,es.weso.shex.Star) => UMLDiagram.Star
-    case (1,es.weso.shex.Star) => UMLDiagram.Plus
-    case (0, es.weso.shex.IntMax(1)) => UMLDiagram.Optional
-    case (1, es.weso.shex.IntMax(1)) => UMLDiagram.NoCard
-    case (m, es.weso.shex.Star) => UMLDiagram.Range(m,Unbounded)
-    case (m,es.weso.shex.IntMax(n)) => UMLDiagram.Range(m,UMLDiagram.IntMax(n))
+    case (0,es.weso.shex.Star) => UMLStar
+    case (1,es.weso.shex.Star) => UMLPlus
+    case (0, es.weso.shex.IntMax(1)) => UMLOptional
+    case (1, es.weso.shex.IntMax(1)) => NoCard
+    case (m, es.weso.shex.Star) => Range(m,Unbounded)
+    case (m,es.weso.shex.IntMax(n)) => Range(m,UMLIntMax(n))
   }
 
   private def predicate2lbl(iri: IRI, pm: PrefixMap): (Name, HRef) = iri match {
