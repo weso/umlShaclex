@@ -1,0 +1,9 @@
+@startuml
+class "?" as 1 <<(S,#FF7700)>>  {
+[[http://example.org/q :q]] : .  
+--
+}
+class ":User" as 0 <<(S,#FF7700)>> [[http://example.org/User :User]] {
+}
+0 --> " " 1 : [[http://example.org/p :p]]
+@enduml

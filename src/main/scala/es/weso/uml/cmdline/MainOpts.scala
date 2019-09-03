@@ -45,8 +45,8 @@ class MainOpts(
   val outputFile = opt[String](
     "outFile",
     default = None,
-    descr = "save report to file",
-    short = 'f')
+    descr = "save result to file",
+    short = 'o')
 
   val engine = opt[String](
     "engine",
@@ -60,6 +60,12 @@ class MainOpts(
     descr = "base folder",
     short = 'b')
 
+
+  val outFormat = opt[String](
+    "outputFormat",
+    default = None,
+    descr = "output format",
+    short = 'f')
 
   override protected def onError(e: Throwable) = onError(e, builder)
 
