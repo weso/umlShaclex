@@ -1,27 +1,77 @@
 package es.weso.uml
 import UMLDiagram._
+import io.circe.Json
 
-sealed abstract class UMLEntry
+sealed abstract class UMLEntry {
+  def toJson: Json
+}
 
-sealed abstract class ValueConstraint extends UMLEntry
+sealed abstract class ValueConstraint extends UMLEntry {
+  override def toJson: Json
+}
 case class DatatypeConstraint(name: Name,
                               href: String
-                             ) extends ValueConstraint
+                             ) extends ValueConstraint {
+  override def toJson: Json = Json.fromFields(List(
+    ("name",Json.fromString(name)),
+    ("href",Json.fromString(href))
+  ))
+}
 
-case class Constant(name: Name) extends ValueConstraint
+case class Constant(name: Name) extends ValueConstraint {
+  override def toJson: Json = Json.fromFields(List(
+    ("name", Json.fromString(name))
+  ))
+}
 
-case class ValueSet(values: List[Value]) extends ValueConstraint
+case class ValueSet(values: List[Value]) extends ValueConstraint {
+  override def toJson: Json = Json.fromValues(
+    values.map(_.toJson)
+  )
+}
 
-case class ValueExpr(operator: Name, vs: List[ValueConstraint]) extends ValueConstraint
+case class ValueExpr(operator: Name, vs: List[ValueConstraint]) extends ValueConstraint {
+  def toJson: Json = Json.fromFields(
+    List(
+      ("operator", Json.fromString(operator)),
+      ("values", Json.fromValues(vs.map(_.toJson)))
+    )
+  )
+}
 
-case class Value(name: String, href: Option[String])
+case class Value(name: String, href: Option[String]) {
+  def toJson: Json = Json.fromFields(
+    List(
+      ("name", Json.fromString(name)),
+      ("href", href.fold(Json.Null)(Json.fromString(_)))
+    )
+  )
+}
 
 case class UMLField(name: Name,
                     href: Option[HRef],
                     valueConstraints: List[ValueConstraint],
                     card: UMLCardinality
-                   ) extends UMLEntry
+                   ) extends UMLEntry {
+  def toJson: Json = {
+    val valueCs = Json.fromValues(valueConstraints.map(_.toJson))
+    Json.fromFields(
+      List(
+        ("name", Json.fromString(name)),
+        ("card", card.toJson),
+        ("href",href.fold(Json.Null)(Json.fromString(_))),
+        ("valueConstraints", valueCs)
+      )
+    )
+  }
+}
 
 case class FieldExpr(operator: Name,
                      es: List[UMLField]
-                    ) extends UMLEntry
+                    ) extends UMLEntry {
+  def toJson: Json = Json.fromFields(List(
+    ("operator", Json.fromString(operator)),
+    ("fields", Json.fromValues(es.map(_.toJson)))
+   )
+  )
+}
