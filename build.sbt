@@ -24,7 +24,8 @@ scalafmt: {
 }
  */
 
-lazy val shaclexVersion        = "0.1.28"
+lazy val shaclexVersion        = "0.1.35"
+lazy val srdfVersion           = "0.1.35"
 
 // Dependency versions
 lazy val catsVersion           = "2.0.0-M4"
@@ -55,8 +56,8 @@ lazy val shex              = "es.weso"                    % "shex_2.13"         
 lazy val shacl             = "es.weso"                    % "shacl_2.13"           % shaclexVersion
 lazy val schema            = "es.weso"                    % "schema_2.13"          % shaclexVersion
 lazy val schemaInfer       = "es.weso"                    % "schemainfer_2.13"     % shaclexVersion
-lazy val srdfJena          = "es.weso"                    % "srdfjena_2.13"        % shaclexVersion
 lazy val sgraph            = "es.weso"                    % "sgraph_2.13"          % shaclexVersion
+lazy val srdfJena          = "es.weso"                    % "srdfjena_2.13"        % srdfVersion
 lazy val utilsTest         = "es.weso"                    % "utilstest_2.13"       % shaclexVersion
 
 

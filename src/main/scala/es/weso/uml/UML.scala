@@ -1,12 +1,12 @@
 package es.weso.uml
 import java.io.ByteArrayOutputStream
 import java.nio.charset.Charset
-import es.weso.shex.ShapeLabel
+import es.weso.shex.{BNodeLabel, IRILabel, ShapeLabel, Start}
 import UMLDiagram._
+import io.circe.Json
 import net.sourceforge.plantuml.SourceStringReader
 import net.sourceforge.plantuml.FileFormat
 import net.sourceforge.plantuml.FileFormatOption
-
 
 /**
   * Represents a UML-like class diagram that can be serialized to PlantUML syntax
@@ -129,6 +129,40 @@ case class UML(labels: Map[ShapeLabel,NodeId],
     val svg: String = new String(os.toByteArray(), Charset.forName("UTF-8"))
     svg
   }
+
+  private def label2Json(label: ShapeLabel): Json = label match {
+    case IRILabel(iri) => Json.fromString(iri.toString)
+    case BNodeLabel(bn) => Json.fromString(bn.id)
+    case Start => Json.fromString("START")
+
+  }
+  private def node2Json(node: NodeId): Json = Json.fromInt(node)
+
+  private def labelPair2Json(pair: (ShapeLabel, NodeId)): Json = {
+    val (label,node) = pair
+    Json.fromFields(
+      List(
+        ("shapeLabel", label2Json(label)),
+        ("node", node2Json(node))
+      ))
+  }
+
+  private def componentPair2Json(pair: (NodeId, UMLComponent)): Json = {
+    val (node, component) = pair
+    Json.fromFields(List(
+      ("node", node2Json(node)),
+      ("component", component.toJson)
+    ))
+  }
+
+  def toJson: Json = Json.fromFields(
+    List(
+      ("labels", Json.fromValues(labels.toList.map(labelPair2Json(_)))),
+      ("components", Json.fromValues(components.toList.map(componentPair2Json(_)))),
+      ("links",Json.fromValues(links.map(_.toJson)))
+    )
+  )
+
 }
 
 object UML {
