@@ -59,6 +59,9 @@ case class UML(labels: Map[ShapeLabel,NodeId],
     case DatatypeConstraint(name,href) => {
       s"[[${href} ${name}]] "
     }
+    case RefConstraint(name,href) => {
+      s"[[${href} @${name}]] "
+    }
     case ValueExpr(op,vs) => vs.map(cnvValueConstraint(_)).mkString(s" ${op} ")
   }
 
@@ -105,24 +108,31 @@ case class UML(labels: Map[ShapeLabel,NodeId],
     case _ => ""
   }
 
-  def toPlantUML: String = {
+  def cnvLink(link: UMLLink): String = link match {
+    case r: Relationship => s"""${r.source} --> "${r.card}" ${r.target} : [[${r.href} ${r.label}]]\n"""
+    case r: Inheritance => s"""${r.source} --|> ${r.target} \n"""
+  }
+
+  def toPlantUML(options: PlantUMLOptions): String = {
     val sb = new StringBuilder
     sb.append("@startuml\n")
     components.values.foreach {
       c => sb.append(cnvComponent(c))
     }
-    links.foreach { link =>
-      sb.append(s"""${link.source} --> "${link.card}" ${link.target} : [[${link.href} ${link.label}]]\n""")
-    }
+    links.foreach { link => sb.append(cnvLink(link)) }
     components.values.foreach {
       cls => sb.append(cnvExtends(cls))
+    }
+    options.watermark match {
+      case None => ()
+      case Some(watermarkFooter) => sb.append(s"\nright footer $watermarkFooter\n")
     }
     sb.append("@enduml\n")
     sb.toString
   }
 
-  def toSVG: String = {
-    val reader: SourceStringReader = new SourceStringReader(this.toPlantUML)
+  def toSVG(options: PlantUMLOptions): String = {
+    val reader: SourceStringReader = new SourceStringReader(this.toPlantUML(options))
     val os: ByteArrayOutputStream = new ByteArrayOutputStream()
     reader.generateImage(os, new FileFormatOption(FileFormat.SVG))
     os.close

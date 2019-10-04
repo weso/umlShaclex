@@ -1,7 +1,9 @@
 package es.weso.uml
+import cats._
+import cats.data._
 import cats.implicits._
 import es.weso.shex.implicits.eqShEx._
-import cats.data.{EitherT, State}
+import cats.data._
 import es.weso.rdf.PrefixMap
 import es.weso.rdf.nodes.{BNode, IRI}
 import es.weso.rdf.PREFIXES._
@@ -20,26 +22,33 @@ import RDF2UML._
 
 object ShEx2UML {
 
-  def schema2Uml(schema: Schema): Either[String,UML] = {
-    val (state, maybe) =
-      cnvSchema(schema).value.run(StateValue(UML.empty,0)).value
-    maybe.map(_ => state.uml)
+  def schema2Uml(schema: Schema): Either[String,(UML,List[String])] = {
+    val (warnings, (state,maybe)) =
+      cnvSchema(schema).value.run(StateValue(UML.empty,0)).run
+    maybe.map(_ => ((state.uml, warnings)))
   }
 
 
   type Id = Int
+
   case class StateValue(uml: UML, currentId: Id)
-  type S[A] = State[StateValue,A]
+  type Logged[A] = Writer[List[String],A]
+  type S[A] = StateT[Logged,StateValue,A]
   type Converter[A] = EitherT[S,String,A]
 
   private def ok[A](x:A): Converter[A] =
     EitherT.pure[S, String](x)
 
   private def err[A](s: String): Converter[A] =
-    EitherT.left[A](State.pure(s))
+    EitherT.left[A](StateT.pure(s))
+
+  private def log[A](msg: String, v: A): Converter[A] = {
+    val w: Logged[A] = Writer(List(msg), v)
+    EitherT.liftF(StateT.liftF(w))
+  }
 
   private def modify(fn: StateValue => StateValue): Converter[Unit] =
-    EitherT.liftF(State.modify(fn))
+    EitherT.liftF(StateT.modify(fn))
 
   private def updateUML(fn: UML => UML): Converter[Unit] =
     modify(s => s.copy(uml = fn(s.uml)))
@@ -54,7 +63,7 @@ object ShEx2UML {
   } yield s.currentId
 
   private def get: Converter[StateValue] = {
-    val s: State[StateValue,StateValue] = State.get
+    val s: S[StateValue] = StateT.get
     EitherT.liftF(s)
   }
 
@@ -100,8 +109,7 @@ object ShEx2UML {
 
   private def cnvShapeExpr(id: Id, se: ShapeExpr, pm: PrefixMap): Converter[UMLClass] = se match {
     case _: ShapeOr => {
-      println(s"ShapeOr: $se")
-      err(s"Not implemented UML representation of ShapeOr $se")
+      log(s"Not implemented ShapeOr $se", UMLClass(id,"OR not implemented yet", None, List(), List()))
     }
     case sa: ShapeAnd => for {
       entries <- cnvListShapeExprEntries(sa.shapeExprs, id, pm)
@@ -109,7 +117,8 @@ object ShEx2UML {
       val (label,href) = mkLabelHref(se.id,pm)
       UMLClass(id, label, href, entries, List())
     }
-    case sn: ShapeNot => err(s"Not implemented UML representation of Not yet: $se")
+    case sn: ShapeNot => 
+      log(s"Not implemented ShapeNot $sn", UMLClass(id,"NOT not implemented yet", None, List(), List()))
     case s: Shape => {
       for {
         entries <- cnvShape(s,id,pm)
@@ -125,14 +134,23 @@ object ShEx2UML {
       val (label,href) = mkLabel(s.id, pm)
       UMLClass(id, label, href, entries, List())
     }
-    case s: ShapeExternal => err(s"Not implemented shapeExternal yet")
-    case sr: ShapeRef => err(s"Not implemented ShapeRef yet")
+    case s: ShapeExternal => ok(UMLClass(id,"External",None,List(),List()))
+    case sr: ShapeRef => for {
+      rid <- newLabel(Some(sr.reference))
+      _ <- updateUML(_.addLink(Inheritance(id,rid)))
+  } yield {
+    val (labelShape,hrefShape) = mkLabel(se.id, pm)
+    UMLClass(id,labelShape,hrefShape,List(),List())
+  }
+
+
   }
 
   private def mkLabel(maybeLabel: Option[ShapeLabel], pm: PrefixMap):(String,Option[String]) =
     maybeLabel match {
       case None => ("?", None)
       case Some(lbl) => lbl match {
+        case Start => ("Start", None)
         case i: IRILabel => (iri2Label(i.iri,pm), Some(i.iri.str))
         case b: BNodeLabel => (b.bnode.id, None)
       }
@@ -146,7 +164,7 @@ object ShEx2UML {
       fs <- cnvShapeExprEntries(se,id,pm)
     } yield fs ++ xss
     val zero: List[List[UMLEntry]] = List(List())
-    se.foldM(zero)(cmb)
+    se.reverse.foldM(zero)(cmb)
   }
 
 
@@ -154,21 +172,25 @@ object ShEx2UML {
     case sa: ShapeAnd => for {
       ess <- cnvListShapeExprEntries(sa.shapeExprs,id,pm)
     } yield ess
-    case so: ShapeOr => err(s"Nested OR not supported yet $so")
-    case sn: ShapeNot => err(s"Nested NOT not supported yet $sn")
+    case so: ShapeOr => log(s"Nested OR not supported yet $so", List(List()))
+    case sn: ShapeNot => log(s"Nested NOT not supported yet $sn", List(List()))
     case s: Shape => cnvShape(s,id,pm)
     case nk: NodeConstraint => for {
       vcs <- cnvNodeConstraint(nk,pm)
     } yield vcs
     case s: ShapeExternal => ok(List(List(UML.external)))
-    case sr: ShapeRef => err(s"Not implemented shapeRef yet $sr")
+    case sr: ShapeRef => cnvShapeRef(sr,id,pm)
   }
 
   private def cnvShape(s: Shape, id: NodeId, pm: PrefixMap): Converter[List[List[UMLEntry]]] = for {
-    closedEntries <- if (s.closed.getOrElse(false))
+    closedEntries <- if (s.isClosed)
       ok(List(List(UML.umlClosed)))
     else ok(List())
-    // TODO Extra
+    extraEntries <- {
+      val extras = s.extra.getOrElse(List())
+      if (extras.isEmpty) ok(List())
+      else ok(List(List(Constant(s"EXTRA ${extras.map(pm.qualify(_)).mkString(" ")}"))))
+    }
     // TODO virtual
     inheritedEntries <- s._extends match {
       case None => ok(List())
@@ -178,23 +200,31 @@ object ShEx2UML {
       case None => ok(List())
       case Some(e) => cnvTripleExpr(e, id, pm)
     }
-  } yield mkList(closedEntries, inheritedEntries, exprEntries)
+  } yield mkList(closedEntries, extraEntries, inheritedEntries, exprEntries)
+
+  private def cnvShapeRef(sr: ShapeRef, id: NodeId, pm:PrefixMap): Converter[List[List[UMLEntry]]] = {
+    for {
+        rid <- newLabel(Some(sr.reference))
+        _ <- updateUML(_.addLink(Inheritance(id,rid)))
+    } yield {
+        List()
+    }
+  }
 
   private def cnvExtends(ls: List[ShapeLabel],
                          id: NodeId
-                        ): Converter[List[List[UMLEntry]]] =
-    ok(List())
+                        ): Converter[List[List[UMLEntry]]] = {
+    log("cnvExtends not implemented yet", List())
+  }
 
   private def cnvNodeConstraint(nc: NodeConstraint, pm: PrefixMap): Converter[List[List[ValueConstraint]]] = for {
     nks <- cnvNodeKind(nc.nodeKind)
     dt <- cnvDatatype(nc.datatype,pm)
     facets <- cnvFacets(nc.xsFacets,pm)
     values <- cnvValues(nc.values,pm)
-    // TODO: datatype, facets...
   } yield mkLs(nks,dt,facets,values)
 
   private def cnvShapeOrInline(es: List[ShapeExpr], pm: PrefixMap): Converter[List[List[ValueConstraint]]] = {
-    println(s"cnvShapeOrInline: $es")
     for {
       values <- cnvList(es, cnvFlat(pm))
     } yield List(List(ValueExpr("OR", values)))
@@ -246,11 +276,11 @@ object ShEx2UML {
     case DatatypeString(s,iri) => ok(Value("\"" + s + "\"^^" + iri2Label(iri,pm), None))
     case LangString(s,lang) => ok(Value("\"" + s + "\"@" + lang.lang,None))
     case IRIStem(stem) => ok(Value(s"${iri2Label(stem,pm)}~",None))
-    case IRIStemRange(stem,excs) => err(s"Not implemented UML visualization of IRIStemRange($stem,$excs) yet")
+    case IRIStemRange(stem,excs) => log(s"Not implemented IRIStemRange($stem,$excs) yet", Value(s"IRIStemRange($stem,$excs)",None))
     case LanguageStem(lang) => ok(Value(s"@${lang.lang}~",None))
-    case LanguageStemRange(lang,excs) => err(s"Not implemented UML visualization of LanguageStemRange($lang,$excs) yet")
+    case LanguageStemRange(lang,excs) => log(s"Not implemented LanguageStemRange($lang,$excs) yet", Value(s"LanguageStemRange($lang,$excs)", None))
     case LiteralStem(stem) => ok(Value("\"" + "\"" + stem + "\"~",None))
-    case LiteralStemRange(stem,excs) => err(s"Not implemented UML visualization of LiteralStemRange($stem,$excs) yet")
+    case LiteralStemRange(stem,excs) => log(s"Not implemented LiteralStemRange($stem,$excs) yet", Value(s"LanguageStemRange($stem,$excs)",None))
     case Language(lang) => ok(Value(s"@${lang.lang}",None))
   }
 
@@ -269,9 +299,9 @@ object ShEx2UML {
 
   private def cnvTripleExpr(e: TripleExpr, id: NodeId, pm: PrefixMap): Converter[List[List[UMLEntry]]] = e match {
     case eo: EachOf => cnvEachOf(eo,id,pm)
-    case oo: OneOf => ok(List(List(Constant(s"Not supported oneOf yet $oo"))))
-    case i: Inclusion => err(s"Not supported inclusion yet")
-    case e: Expr => err(s"Not supported Expr $e yet")
+    case oo: OneOf => log(s"Id:Not supported oneOf yet: $oo", List(List(Constant("OneOf not implemented"))))
+    case i: Inclusion => log(s"Not supported inclusion $i yet", List())
+    case e: Expr => log(s"Not supported Expr $e yet", List())
     case tc: TripleConstraint => cnvTripleConstraint(tc,id,pm)
   }
 
@@ -293,8 +323,8 @@ object ShEx2UML {
       case Some(se) => se match {
         case r: ShapeRef => for {
           rid <- newLabel(Some(r.reference))
-          _ <- if (!tc.inverse) updateUML(_.addLink(UMLLink(id, rid, label, href, card)))
-          else updateUML(_.addLink(UMLLink(rid, id, label, href, card)))
+          _ <- if (!tc.inverse) updateUML(_.addLink(Relationship(id, rid, label, href, card)))
+          else updateUML(_.addLink(Relationship(rid, id, label, href, card)))
         } yield {
           List()
         }
@@ -312,7 +342,7 @@ object ShEx2UML {
           (labelShape,hrefShape) = mkLabel(s.id, pm)
           cls = UMLClass(sid,labelShape,hrefShape,entries, List())
           _ <- updateUML(_.addClass(cls))
-          _ <- updateUML(_.addLink(UMLLink(id,sid,label,href,card)))
+          _ <- updateUML(_.addLink(Relationship(id,sid,label,href,card)))
         } yield
           List()
         case so: ShapeOr => for {
@@ -322,12 +352,12 @@ object ShEx2UML {
           vso <- cnvShapeAndInline(so.shapeExprs,pm)
         } yield List(List(UMLField(label, Some(href), vso.flatten, card)))
 
-        case _ => err(s"Complex shape $se in triple constraint with predicate ${label} not implemented yet")
+        case _ => log(s"Complex shape $se in triple constraint with predicate ${label} not implemented yet", List())
       }
     }
   }
 
-  private def cnvFlat(pm: PrefixMap)(sr: ShapeExpr): Converter[ValueConstraint] = sr match {
+  private def cnvFlat(pm: PrefixMap)(se: ShapeExpr): Converter[ValueConstraint] = se match {
     case sr:ShapeRef => sr.reference.toRDFNode.toIRI match {
       case Left(e) => err(e)
       case Right(iri) => ok(DatatypeConstraint(iri2Label(iri,pm),iri.str))
@@ -336,11 +366,11 @@ object ShEx2UML {
       vs <- cnvNodeConstraint(nc,pm)
       single <- vs match {
         case List(List(vc)) => ok(vc)
-        case _ => err(s"cnvFlat: result of cnvNodeConstraint($nc) = $vs (too complex)")
+        case _ => log(s"cnvFlat: result of cnvNodeConstraint($nc) = $vs (too complex)",Constant(s"Complex nodeConstraint"))
       }
     } yield single
-    case s: Shape => ok(Constant(s"Complex shape: ${s.show}"))
-    case _ => err(s"cnvShapeRef. Expected shapeRef but found $sr")
+    case s: Shape => log(s"Complex shape: ${s.show}", Constant(s"Complex shape"))
+    case _ => err(s"cnvFlat. Unexpected shape expr $se")
   }
 
   /*  private def allFlat(es: List[ShapeExpr]): Boolean =

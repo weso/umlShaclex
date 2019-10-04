@@ -9,17 +9,31 @@ sealed abstract class UMLEntry {
 sealed abstract class ValueConstraint extends UMLEntry {
   override def toJson: Json
 }
+
+case class RefConstraint(name: Name,
+                         href: String
+                        ) extends ValueConstraint {
+  override def toJson: Json = Json.fromFields(List(
+    ("type", Json.fromString("Reference")),
+    ("name", Json.fromString(name)),
+    ("href", Json.fromString(href))
+  ))
+}
+
+
 case class DatatypeConstraint(name: Name,
                               href: String
                              ) extends ValueConstraint {
   override def toJson: Json = Json.fromFields(List(
-    ("name",Json.fromString(name)),
-    ("href",Json.fromString(href))
+    ("type", Json.fromString("DatatypeConstraint")),
+    ("name", Json.fromString(name)),
+    ("href", Json.fromString(href))
   ))
 }
 
 case class Constant(name: Name) extends ValueConstraint {
   override def toJson: Json = Json.fromFields(List(
+    ("type", Json.fromString("Constant")),
     ("name", Json.fromString(name))
   ))
 }

@@ -45,11 +45,14 @@ object Main extends App with LazyLogging {
       case Left(e) => {
         println(s"Error: $e")
       }
-      case Right(uml) => {
+      case Right(pair) => {
+        val (uml,warnings) = pair
+        val popts = PlantUMLOptions(watermark = opts.watermark.toOption)
+        println(s"PlantUMLOptions: $popts")
         val outputStr = outFormat match {
-          case "uml" => uml.toPlantUML
-          case "svg" => uml.toSVG
-          case _ => uml.toPlantUML
+          case "uml" => uml.toPlantUML(popts)
+          case "svg" => uml.toSVG(popts)
+          case _ => uml.toPlantUML(popts)
         }
         if (opts.outputFile.isDefined) {
           val outPath = baseFolder.resolve(opts.outputFile())
@@ -59,6 +62,8 @@ object Main extends App with LazyLogging {
         } else {
           println(outputStr)
         }
+        if (!warnings.isEmpty) println(s"Warnings: ${warnings.mkString("\n")} ")
+        else ()
       }
     }
   }

@@ -2,8 +2,7 @@ package es.weso.uml
 
 import cats.data.{EitherT, State}
 import cats.implicits._
-import es.weso.rdf.PREFIXES._
-import es.weso.rdf.PrefixMap
+// import es.weso.rdf.PrefixMap
 import es.weso.rdf.nodes.{BNode, IRI, RDFNode}
 import es.weso.shex.{BNodeLabel, IRILabel, ShapeLabel}
 import es.weso.shacl._
@@ -12,9 +11,10 @@ import RDF2UML._
 
 object SHACL2UML {
 
-  def schema2Uml(schema: Schema): Either[String,UML] = {
+  def schema2Uml(schema: Schema): Either[String,(UML,List[String])] = {
     val (state, maybe) = cnvSchema(schema).value.run(StateValue(UML.empty,0)).value
-    maybe.map(_ => state.uml)
+    // TODO: Add writer of warnings as in ShEx2UML
+    maybe.map(_ => (state.uml, List()))
   }
 
   type Id = Int
@@ -25,8 +25,8 @@ object SHACL2UML {
   private def ok[A](x:A): Converter[A] =
     EitherT.pure[S, String](x)
 
-  private def err[A](s: String): Converter[A] =
-    EitherT.left[A](State.pure(s))
+//  private def err[A](s: String): Converter[A] =
+//    EitherT.left[A](State.pure(s))
 
   private def modify(fn: StateValue => StateValue): Converter[Unit] =
     EitherT.liftF(State.modify(fn))
@@ -48,8 +48,8 @@ object SHACL2UML {
     EitherT.liftF(s)
   }
 
-  private def cnvList[A,B](vs: List[A], cnv: A => Converter[B]): Converter[List[B]] =
-    vs.map(cnv(_)).sequence[Converter,B]
+  //private def cnvList[A,B](vs: List[A], cnv: A => Converter[B]): Converter[List[B]] =
+  //  vs.map(cnv(_)).sequence[Converter,B]
 
   private def newLabel(maybeLbl: Option[ShapeLabel]): Converter[NodeId] =
     maybeLbl match {
@@ -106,7 +106,7 @@ object SHACL2UML {
     schema.shapesMap.toList.foldM(())(cmb)
   }
 
-  private def iri2Label(iri: IRI, pm: PrefixMap): String = {
+  /*private def iri2Label(iri: IRI, pm: PrefixMap): String = {
     // It changes <uri> by [uri] to avoid problems visualizing SVG in HTML
     val ltgt = "<(.*)>".r
     pm.qualify(iri) match {
@@ -114,13 +114,13 @@ object SHACL2UML {
       case s => s
     }
   }
-
-  private def predicate2lbl(iri: IRI, pm: PrefixMap): (Name, HRef) = iri match {
+*/
+  /*private def predicate2lbl(iri: IRI, pm: PrefixMap): (Name, HRef) = iri match {
     case `rdf:type` => ("a",iri.str)
     case _ => (iri2Label(iri,pm), iri.str)
-  }
+  }*/
 
-  private def mkLs[A](ls: List[A]*): List[List[A]] = {
+  /*private def mkLs[A](ls: List[A]*): List[List[A]] = {
     val zero: List[List[A]] = List()
     def cmb(rest: List[List[A]], x: List[A]): List[List[A]] =
       if (x.isEmpty) rest
@@ -135,5 +135,5 @@ object SHACL2UML {
       else rest ++ current
     lss.foldLeft(zero)(cmb)
   }
-
+*/
 }
