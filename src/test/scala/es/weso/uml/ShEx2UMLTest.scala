@@ -119,7 +119,7 @@ class ShExUMLTest extends FunSpec with Matchers {
       val uml = UML(Map(IRILabel(ex + "User") -> 0), Map(0 -> umlClass), List())
       val maybe = for {
         shex <- Schema.fromString(shexStr,"ShExC")
-        uml <- ShEx2UML.schema2Uml(shex)
+        uml <- ShEx2UML.schema2Uml(shex, ConversionOptions.default)
       } yield uml
       maybe.fold(
         e => fail(s"Error converting to UML: $e"),

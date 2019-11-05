@@ -20,7 +20,7 @@ import RDF2UML._
 
 object ShEx2UML {
 
-  def schema2Uml(schema: Schema): Either[String,UML] = {
+  def schema2Uml(schema: Schema, options: ConversionOptions): Either[String,UML] = {
     val (state, maybe) =
       cnvSchema(schema).value.run(StateValue(UML.empty,0)).value
     maybe.map(_ => state.uml)
