@@ -3,10 +3,7 @@
 Convert [SHACL](http://w3c.github.io/data-shapes/shacl/) and
 [ShEx](http://www.shex.io) to UML-like class diagrams
 
-[![CircleCI](https://circleci.com/gh/labra/shaclex.svg?style=svg)](https://circleci.com/gh/labra/shaclex)
-[![Build Status](https://travis-ci.org/labra/shaclex.svg?branch=master)](https://travis-ci.org/labra/shaclex)
-[![Codacy Badge](https://api.codacy.com/project/badge/grade/f87bd2ebcfa94dce89e2a981ff13decd)](https://www.codacy.com/app/jelabra/shaclex)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1214239.svg)](https://doi.org/10.5281/zenodo.1214239)
+[![Build Status](https://travis-ci.org/labra/umlShaclex.svg?branch=master)](https://travis-ci.org/labra/umlShaclex)
 
 ## Author & contributors
 
@@ -15,6 +12,28 @@ Convert [SHACL](http://w3c.github.io/data-shapes/shacl/) and
 ## Adopters
 
 * [RDFShape](http://rdfshape.weso.es): An online demo powered by this library.
+
+## Installation and compilation
+
+The project uses [sbt](http://www.scala-sbt.org/) for compilation as well as Java 1.8 or later.
+
+* `sbt packageBin` compiles and generates executable Jar file
+
+## Usage
+
+The library can be used programmmatically or from the command line. Examples:
+
+-Convert a ShEx schema file to SVG
+
+```bash
+run --schema examples/shex/simple.shex --schemaFormat ShExC -o simple.svg -f svg
+```
+
+-Convert a ShEx schema file to UML (using [PlantUML](http://plantuml.com/) format)
+
+```bash
+run --schema examples/shex/simple.shex --schemaFormat ShExC -o simple.uml -f uml
+```
 
 ## Contribution
 

@@ -3,20 +3,19 @@ package es.weso.uml.cmdline
 import org.rogach.scallop._
 import org.rogach.scallop.exceptions._
 import com.typesafe.scalalogging._
-import es.weso.rdf.jena.Endpoint
-import es.weso.uml.{Schema2UML, ShEx2UML}
-
+import es.weso.uml._
 import scala.io.Source
-// import es.weso.server._
 import es.weso.schema._
 import es.weso.rdf.jena.RDFAsJenaModel
-import scala.concurrent.duration._
 import es.weso.utils.FileUtils
 import scala.util._
 import java.nio.file._
 import es.weso.rdf.RDFReader
 
 object Main extends App with LazyLogging {
+
+  val defaultOutFormat = "uml"
+
   try {
     run(args)
   } catch {
@@ -35,25 +34,30 @@ object Main extends App with LazyLogging {
       Paths.get(".")
     }
 
-    val startTime = System.nanoTime()
-
-    val base = Some(FileUtils.currentFolderURL)
-
     val eitherResult = for {
       schema <- getSchema(opts, baseFolder, RDFAsJenaModel.empty)
       uml <- Schema2UML.schema2UML(schema)
     } yield uml
+
+    val outFormat = opts.outFormat.getOrElse(defaultOutFormat)
 
     eitherResult match {
       case Left(e) => {
         println(s"Error: $e")
       }
       case Right(uml) => {
-        val outputStr = uml.toPlantUML
+        val outputStr = outFormat match {
+          case "uml" => uml.toPlantUML
+          case "svg" => uml.toSVG
+          case _ => uml.toPlantUML
+        }
         if (opts.outputFile.isDefined) {
-          FileUtils.writeFile(opts.outputFile(), outputStr)
+          val outPath = baseFolder.resolve(opts.outputFile())
+          val outName = outPath.toFile.getAbsolutePath
+          FileUtils.writeFile(outName, outputStr)
+          println(s"Output written to file: $outName")
         } else {
-          println("No outputFile?")
+          println(outputStr)
         }
       }
     }
