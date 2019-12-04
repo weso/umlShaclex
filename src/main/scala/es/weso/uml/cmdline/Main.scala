@@ -8,23 +8,16 @@ import scala.io.Source
 import es.weso.schema._
 import es.weso.rdf.jena.RDFAsJenaModel
 import es.weso.utils.FileUtils
-import scala.util._
+import cats.data.EitherT
+import cats.effect._
 import java.nio.file._
 import es.weso.rdf.RDFReader
 
-object Main extends App with LazyLogging {
+object Main extends IOApp with LazyLogging {
 
   val defaultOutFormat = "uml"
 
-  try {
-    run(args)
-  } catch {
-    case (e: Exception) => {
-      println(s"Error: ${e.getMessage}")
-    }
-  }
-
-  def run(args: Array[String]): Unit = {
+  def run(args: List[String]): IO[ExitCode] = {
     val opts = new MainOpts(args, errorDriver)
     opts.verify()
 
@@ -33,40 +26,53 @@ object Main extends App with LazyLogging {
     } else {
       Paths.get(".")
     }
-
-    val eitherResult = for {
-      schema <- getSchema(opts, baseFolder, RDFAsJenaModel.empty)
-      uml <- Schema2UML.schema2UML(schema)
-    } yield uml
-
-    val outFormat = opts.outFormat.getOrElse(defaultOutFormat)
-
-    eitherResult match {
-      case Left(e) => {
-        println(s"Error: $e")
-      }
-      case Right(pair) => {
-        val (uml,warnings) = pair
-        val popts = PlantUMLOptions(watermark = opts.watermark.toOption)
-        println(s"PlantUMLOptions: $popts")
-        val outputStr = outFormat match {
-          case "uml" => uml.toPlantUML(popts)
-          case "svg" => uml.toSVG(popts)
-          case _ => uml.toPlantUML(popts)
-        }
-        if (opts.outputFile.isDefined) {
+    if (args.length==0) for {
+      _ <- IO { opts.printHelp() }
+    } yield ExitCode.Error
+    else for {
+     /* exitCode <- schema2Uml(opts, baseFolder).fold(s => IO{
+        println(s"Error: $s")
+        ExitCode.Error
+      }, (pair) => {
+       val (uml,warnings) = pair
+       IO(ExitCode.Success)
+      }) */
+      either <- schema2Uml(opts,baseFolder).value
+      exitCode <- either.fold(s => IO{
+        println(s"Error: $s")
+        ExitCode.Error
+      }, pair => {
+       val (uml,warnings) = pair 
+       val outFormat = opts.outFormat.getOrElse(defaultOutFormat)
+       val popts = PlantUMLOptions(watermark = opts.watermark.toOption)
+       for {
+        outputStr <- IO(outFormat match {
+         case "uml" => uml.toPlantUML(popts)
+         case "svg" => uml.toSVG(popts)
+         case _ => uml.toPlantUML(popts)
+        })
+        _ <- if (opts.outputFile.isDefined) {
           val outPath = baseFolder.resolve(opts.outputFile())
           val outName = outPath.toFile.getAbsolutePath
-          FileUtils.writeFile(outName, outputStr)
-          println(s"Output written to file: $outName")
-        } else {
-          println(outputStr)
-        }
-        if (!warnings.isEmpty) println(s"Warnings: ${warnings.mkString("\n")} ")
-        else ()
-      }
-    }
+          IO {FileUtils.writeFile(outName, outputStr)
+              println(s"Output written to file: $outName")
+            }
+         } else {
+          IO (println(outputStr))
+         }
+         _ <- if (!warnings.isEmpty) IO(println(s"Warnings: ${warnings.mkString("\n")} "))
+         else IO(()) 
+       } yield ExitCode.Success
+      })
+    } yield (exitCode)
   }
+
+  private def schema2Uml(opts: MainOpts, baseFolder: Path): EitherT[IO,String,(UML,List[String])] = 
+   for {
+    schema <- getSchema(opts, baseFolder, RDFAsJenaModel.empty)
+    uml <- EitherT.fromEither[IO](Schema2UML.schema2UML(schema))
+  } yield uml
+
 
   private def errorDriver(e: Throwable, scallop: Scallop) = e match {
     case Help(s) => {
@@ -81,7 +87,7 @@ object Main extends App with LazyLogging {
     }
   }
 
-  def getSchema(opts: MainOpts, baseFolder: Path, rdf: RDFReader): Either[String, Schema] = {
+  def getSchema(opts: MainOpts, baseFolder: Path, rdf: RDFReader): EitherT[IO, String, Schema] = {
     val base = Some(FileUtils.currentFolderURL)
     if (opts.schema.isDefined) {
       val path = baseFolder.resolve(opts.schema())

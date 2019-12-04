@@ -2,13 +2,68 @@ package es.weso.uml
 import es.weso.rdf.PREFIXES._
 import es.weso.rdf.nodes.IRI
 import es.weso.shex.{IRILabel, Schema}
-import es.weso.utils.FileUtils
 import org.scalatest.{FunSpec, Matchers}
 
 class ShExUMLTest extends FunSpec with Matchers {
 
   describe(s"ShEx2UML") {
-/*    it(s"Should convert simple Shape with IRI") {
+
+    it(s"Should convert simple Shape with node constraint IRI") {
+      val shexStr =
+        """|prefix : <http://example.org/>
+           |
+           |:User IRI
+        """.stripMargin
+      val ex = IRI(s"http://example.org/")
+      // val nameField = UMLField(":name", Some((ex + "name").str), List(Constant("IRI")), NoCard)
+      // val aField = UMLField("a", Some((`rdf:type`).str), List(Constant("IRI")), NoCard)
+
+      val umlClass = UMLClass(0,":User", Some((ex + "User").str), List(List(Constant("IRI"))), List())
+      val uml = UML(Map(IRILabel(ex + "User") -> 0), Map(0 -> umlClass), List())
+      val maybe = for {
+        shex <- Schema.fromString(shexStr,"ShExC")
+        uml <- ShEx2UML.schema2Uml(shex)
+      } yield uml
+      maybe.fold(
+        e => fail(s"Error converting to UML: $e"),
+        pair => {
+          val (umlConverted,_) = pair
+          info(s"Expected: \n$uml\nObtained:\n$umlConverted")
+          uml should be(umlConverted)
+          uml.toSVG(PlantUMLOptions.empty) should include ("<svg")
+        }
+      )
+    }
+
+    it(s"Should convert simple Shape with IRI") {
+      val shexStr =
+        """|prefix : <http://example.org/>
+           |
+           |:User {
+           | a     IRI ;
+           |}
+        """.stripMargin
+      val ex = IRI(s"http://example.org/")
+      val aField = UMLField("a", Some((`rdf:type`).str), List(Constant("IRI")), NoCard)
+
+      val umlClass = UMLClass(0,":User", Some((ex + "User").str), List(List(aField)), List())
+      val uml = UML(Map(IRILabel(ex + "User") -> 0), Map(0 -> umlClass), List())
+      val maybe = for {
+        shex <- Schema.fromString(shexStr,"ShExC")
+        uml <- ShEx2UML.schema2Uml(shex)
+      } yield uml
+      maybe.fold(
+        e => fail(s"Error converting to UML: $e"),
+        pair => {
+          val (umlConverted,warnings) = pair
+          info(s"Expected: \n$uml\nObtained:\n$umlConverted")
+          uml should be(umlConverted)
+          uml.toSVG(PlantUMLOptions.empty) should include ("<svg")
+        }
+      )
+    }
+
+    it(s"Should convert simple Shape with IRI and a name") {
       val shexStr =
         """|prefix : <http://example.org/>
            |
@@ -29,10 +84,11 @@ class ShExUMLTest extends FunSpec with Matchers {
       } yield uml
       maybe.fold(
         e => fail(s"Error converting to UML: $e"),
-        umlConverted => {
+        pair => {
+          val (umlConverted,_) = pair
           info(s"Expected: \n$uml\nObtained:\n$umlConverted")
           uml should be(umlConverted)
-          uml.toSVG should include ("<svg")
+          uml.toSVG(PlantUMLOptions.empty) should include ("<svg")
         }
       )
     }
@@ -50,7 +106,7 @@ class ShExUMLTest extends FunSpec with Matchers {
       val uml = UML(
         Map(IRILabel(ex + "User") -> 0),
         Map(0 -> umlClass),
-        List(UMLLink(0,0,":knows",(ex + "knows").str, NoCard))
+        List(Relationship(0,0,":knows",(ex + "knows").str, NoCard))
       )
       val maybe = for {
         shex <- Schema.fromString(shexStr,"ShExC")
@@ -58,7 +114,8 @@ class ShExUMLTest extends FunSpec with Matchers {
       } yield uml
       maybe.fold(
         e => fail(s"Error converting to UML: $e"),
-        umlConverted => {
+        pair => {
+          val (umlConverted,_) = pair
           info(s"Expected: \n$uml\nObtained:\n$umlConverted")
           uml should be(umlConverted)
           // uml.toSVG should include ("<svg")
@@ -90,7 +147,7 @@ class ShExUMLTest extends FunSpec with Matchers {
         }
       )
     }
-
+/*
     it(s"Shouldn't fail with FHIR schema") {
       val fhirFile = "examples/shex/fhir/observation.shex"
       val maybe = for {
@@ -106,7 +163,7 @@ class ShExUMLTest extends FunSpec with Matchers {
       )
     }
 */
-    it(s"Should convert a Shape with OR and self-reference") {
+/*    it(s"Should convert a Shape with OR and self-reference") {
       val shexStr =
         """|prefix : <http://example.org/>
            |
@@ -117,6 +174,7 @@ class ShExUMLTest extends FunSpec with Matchers {
       val ex = IRI(s"http://example.org/")
       val umlClass = UMLClass(0,":User", Some((ex + "User").str), List(), List())
       val uml = UML(Map(IRILabel(ex + "User") -> 0), Map(0 -> umlClass), List())
+
       val maybe = for {
         shex <- Schema.fromString(shexStr,"ShExC")
         uml <- ShEx2UML.schema2Uml(shex)
@@ -126,10 +184,10 @@ class ShExUMLTest extends FunSpec with Matchers {
         umlConverted => {
           info(s"Expected: \n$uml\nObtained:\n$umlConverted")
           uml should be(umlConverted)
-          uml.toSVG should include ("<svg")
+          uml.toSVG(PlantUMLOptions(watermark = None)) should include ("<svg")
         }
       )
-    }
-  }
+    } */
+  } 
 
 }

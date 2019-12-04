@@ -5,7 +5,7 @@ import es.weso.schema._
 import es.weso.rdf.jena.RDFAsJenaModel
 
 class MainOpts(
-                arguments: Array[String],
+                arguments: List[String],
                 onError: (Throwable, Scallop) => Nothing
               ) extends ScallopConf(arguments) {
 

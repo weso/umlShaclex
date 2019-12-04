@@ -24,11 +24,11 @@ scalafmt: {
 }
  */
 
-lazy val shaclexVersion        = "0.1.41"
-lazy val srdfVersion           = "0.1.38"
+lazy val shaclexVersion        = "0.1.47"
+lazy val srdfVersion           = "0.1.54"
 
 // Dependency versions
-lazy val catsVersion           = "2.0.0-M4"
+lazy val catsVersion           = "2.0.0"
 lazy val scalacticVersion      = "3.0.8"
 lazy val scalaTestVersion      = "3.0.8"
 lazy val plantumlVersion       = "1.2017.12"
@@ -46,6 +46,7 @@ lazy val scalaMacrosVersion   = "2.1.1"
 lazy val catsCore          = "org.typelevel"              %% "cats-core"           % catsVersion
 lazy val catsKernel        = "org.typelevel"              %% "cats-kernel"         % catsVersion
 lazy val catsMacros        = "org.typelevel"              %% "cats-macros"         % catsVersion
+lazy val catsEffect        = "org.typelevel"              %% "cats-effect"         % catsVersion
 lazy val logbackClassic    = "ch.qos.logback"             % "logback-classic"      % logbackVersion
 lazy val plantuml          = "net.sourceforge.plantuml"   % "plantuml"             % plantumlVersion
 lazy val scalaLogging      = "com.typesafe.scala-logging" %% "scala-logging"       % loggingVersion
