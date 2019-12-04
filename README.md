@@ -3,7 +3,9 @@
 Convert [SHACL](http://w3c.github.io/data-shapes/shacl/) and
 [ShEx](http://www.shex.io) to UML-like class diagrams
 
-[![Build Status](https://travis-ci.org/labra/umlShaclex.svg?branch=master)](https://travis-ci.org/labra/umlShaclex)
+[![Build Status](https://travis-ci.org/weso/umlShaclex.svg?branch=master)](https://travis-ci.org/weso/umlShaclex)
+[![codecov](https://codecov.io/gh/weso/umlShaclex/branch/master/graph/badge.svg)](https://codecov.io/gh/weso/umlShaclex)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/74d68f09d6cf488c8ac9da54bfbdc416)](https://www.codacy.com/gh/weso/umlShaclex?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=weso/umlShaclex&amp;utm_campaign=Badge_Grade)
 
 ## Author & contributors
 
