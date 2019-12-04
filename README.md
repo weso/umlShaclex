@@ -1,4 +1,4 @@
-# shaclex
+# umlShaclex
 
 Convert [SHACL](http://w3c.github.io/data-shapes/shacl/) and
 [ShEx](http://www.shex.io) to UML-like class diagrams
