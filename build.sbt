@@ -29,6 +29,8 @@ scalafmt: {
  */
 
 lazy val shaclexVersion        = "0.1.47"
+lazy val shaclsVersion         = "0.1.53"
+lazy val shexsVersion          = "0.1.51"
 lazy val srdfVersion           = "0.1.54"
 
 // Dependency versions
@@ -57,13 +59,13 @@ lazy val scalaLogging      = "com.typesafe.scala-logging" %% "scala-logging"    
 lazy val scallop           = "org.rogach"                 %% "scallop"             % scallopVersion
 lazy val scalactic         = "org.scalactic"              %% "scalactic"           % scalacticVersion
 lazy val scalaTest         = "org.scalatest"              %% "scalatest"           % scalaTestVersion
-lazy val shex              = "es.weso"                    %% "shex"            % shaclexVersion
-lazy val shacl             = "es.weso"                    %% "shacl"           % shaclexVersion
-lazy val schema            = "es.weso"                    %% "schema"          % shaclexVersion
-lazy val schemaInfer       = "es.weso"                    %% "schemainfer"     % shaclexVersion
-lazy val sgraph            = "es.weso"                    %% "sgraph"          % shaclexVersion
-lazy val srdfJena          = "es.weso"                    %% "srdfjena"        % srdfVersion
-lazy val utilsTest         = "es.weso"                    %% "utilstest"       % shaclexVersion
+lazy val shex              = "es.weso"                    %% "shex"                % shexsVersion
+lazy val shacl             = "es.weso"                    %% "shacl"               % shaclsVersion
+lazy val schema            = "es.weso"                    %% "schema"              % shaclexVersion
+lazy val schemaInfer       = "es.weso"                    %% "schemainfer"         % shaclexVersion
+lazy val sgraph            = "es.weso"                    %% "sgraph"              % shaclexVersion
+lazy val srdfJena          = "es.weso"                    %% "srdfjena"            % srdfVersion
+lazy val utilsTest         = "es.weso"                    %% "utilstest"           % shaclexVersion
 
 
 // Compiler plugin modules
