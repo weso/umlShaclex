@@ -6,4 +6,7 @@ addSbtPlugin("com.typesafe.sbt"  % "sbt-native-packager" % "1.3.25")
 addSbtPlugin("com.typesafe.sbt"  % "sbt-git" % "1.0.0")
 addSbtPlugin("org.lyranthe.sbt"  % "partial-unification" % "1.1.2")
 addSbtPlugin("org.foundweekends" % "sbt-bintray"         % "0.5.5")
+addSbtPlugin("org.scoverage"     % "sbt-scoverage"       % "1.6.1")
+addSbtPlugin("com.codacy"        % "sbt-codacy-coverage" % "3.0.3")
+
 
