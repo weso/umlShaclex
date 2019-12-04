@@ -57,13 +57,13 @@ lazy val scalaLogging      = "com.typesafe.scala-logging" %% "scala-logging"    
 lazy val scallop           = "org.rogach"                 %% "scallop"             % scallopVersion
 lazy val scalactic         = "org.scalactic"              %% "scalactic"           % scalacticVersion
 lazy val scalaTest         = "org.scalatest"              %% "scalatest"           % scalaTestVersion
-lazy val shex              = "es.weso"                    % "shex_2.13"            % shaclexVersion
-lazy val shacl             = "es.weso"                    % "shacl_2.13"           % shaclexVersion
-lazy val schema            = "es.weso"                    % "schema_2.13"          % shaclexVersion
-lazy val schemaInfer       = "es.weso"                    % "schemainfer_2.13"     % shaclexVersion
-lazy val sgraph            = "es.weso"                    % "sgraph_2.13"          % shaclexVersion
-lazy val srdfJena          = "es.weso"                    % "srdfjena_2.13"        % srdfVersion
-lazy val utilsTest         = "es.weso"                    % "utilstest_2.13"       % shaclexVersion
+lazy val shex              = "es.weso"                    %% "shex"            % shaclexVersion
+lazy val shacl             = "es.weso"                    %% "shacl"           % shaclexVersion
+lazy val schema            = "es.weso"                    %% "schema"          % shaclexVersion
+lazy val schemaInfer       = "es.weso"                    %% "schemainfer"     % shaclexVersion
+lazy val sgraph            = "es.weso"                    %% "sgraph"          % shaclexVersion
+lazy val srdfJena          = "es.weso"                    %% "srdfjena"        % srdfVersion
+lazy val utilsTest         = "es.weso"                    %% "utilstest"       % shaclexVersion
 
 
 // Compiler plugin modules
