@@ -1,4 +1,4 @@
-lazy val scala212 = "2.12.10"
+lazy val scala212 = "2.12.11"
 lazy val scala213 = "2.13.1"
 lazy val supportedScalaVersions = List(scala213, scala212)
 
@@ -28,15 +28,15 @@ scalafmt: {
 }
  */
 
-lazy val shaclexVersion        = "0.1.47"
-lazy val shaclsVersion         = "0.1.53"
-lazy val shexsVersion          = "0.1.51"
-lazy val srdfVersion           = "0.1.54"
+lazy val shaclexVersion        = "0.1.57"
+lazy val shaclsVersion         = "0.1.59"
+lazy val shexsVersion          = "0.1.60"
+lazy val srdfVersion           = "0.1.66"
 
 // Dependency versions
-lazy val catsVersion           = "2.0.0"
-lazy val scalacticVersion      = "3.0.8"
-lazy val scalaTestVersion      = "3.0.8"
+lazy val catsVersion           = "2.1.1"
+lazy val scalacticVersion      = "3.1.1"
+lazy val scalaTestVersion      = "3.1.1"
 lazy val plantumlVersion       = "1.2017.12"
 lazy val logbackVersion        = "1.2.3"
 lazy val loggingVersion        = "3.9.2"

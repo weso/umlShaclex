@@ -69,7 +69,8 @@ object Main extends IOApp with LazyLogging {
 
   private def schema2Uml(opts: MainOpts, baseFolder: Path): EitherT[IO,String,(UML,List[String])] = 
    for {
-    schema <- getSchema(opts, baseFolder, RDFAsJenaModel.empty)
+    empty <- EitherT.liftF(RDFAsJenaModel.empty)
+    schema <- getSchema(opts, baseFolder, empty)
     uml <- EitherT.fromEither[IO](Schema2UML.schema2UML(schema))
   } yield uml
 
