@@ -1,0 +1,23 @@
+prefix schema: <http://schema.org/> 
+prefix xsd:   <http://www.w3.org/2001/XMLSchema#> 
+prefix dcterms: <http://purl.org/dc/terms/> 
+prefix it:    <http://data.europeana.eu/item/> 
+prefix foaf:  <http://xmlns.com/foaf/0.1/> 
+prefix :      <http://example.org/>
+
+:User IRI { 
+ a                    [ foaf:Person ]; 
+ schema:birthDate     xsd:date?  ;
+ foaf:knows           @:User* ;
+ foaf:topic_interest  @:Topic {0,10}                      
+}
+
+:Topic {
+  dcterms:title   xsd:string ;
+  dcterms:creator IRI ;
+}
+
+:Item {
+  dcterms:title [@en @fr @es] ;
+  dcterms:subject @:Topic
+}

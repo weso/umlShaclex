@@ -12,6 +12,7 @@ import cats.data.EitherT
 import cats.effect._
 import java.nio.file._
 import es.weso.rdf.RDFReader
+import es.weso.utils.IOUtils._
 
 object Main extends IOApp with LazyLogging {
 
@@ -69,7 +70,11 @@ object Main extends IOApp with LazyLogging {
 
   private def schema2Uml(opts: MainOpts, baseFolder: Path): EitherT[IO,String,(UML,List[String])] = 
    for {
+<<<<<<< HEAD
     empty <- EitherT.liftF(RDFAsJenaModel.empty)
+=======
+    empty <- io2es(RDFAsJenaModel.empty)
+>>>>>>> 98a232d5a0020d51d99de9b641f120c972ce4cb1
     schema <- getSchema(opts, baseFolder, empty)
     uml <- EitherT.fromEither[IO](Schema2UML.schema2UML(schema))
   } yield uml

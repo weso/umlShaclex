@@ -1,5 +1,5 @@
 lazy val scala212 = "2.12.11"
-lazy val scala213 = "2.13.1"
+lazy val scala213 = "2.13.2"
 lazy val supportedScalaVersions = List(scala213, scala212)
 
 /*
@@ -75,7 +75,7 @@ lazy val simulacrum          = "com.github.mpilquist" %% "simulacrum"     % simu
 
 lazy val umlShaclex = project
   .in(file("."))
-  .enablePlugins(ScalaUnidocPlugin, SbtNativePackager, WindowsPlugin, JavaAppPackaging)
+  .enablePlugins(ScalaUnidocPlugin, SiteScaladocPlugin, AsciidoctorPlugin,SbtNativePackager, WindowsPlugin, JavaAppPackaging)
 //  .settings(
 //    buildInfoKeys := BuildInfoKey.ofN(name, version, scalaVersion, sbtVersion),
 //    buildInfoPackage := "es.weso.shaclex.buildinfo" 
@@ -83,6 +83,12 @@ lazy val umlShaclex = project
   .settings(commonSettings, publishSettings)
   .settings(
     unidocProjectFilter in (ScalaUnidoc, unidoc) := inAnyProject -- inProjects(noDocProjects: _*),
+    siteSubdirName in ScalaUnidoc := "scaladoc/latest",
+    addMappingsToSiteDir(mappings in (ScalaUnidoc, packageDoc), siteSubdirName in ScalaUnidoc),
+    unidocProjectFilter in (ScalaUnidoc, unidoc) := inAnyProject -- inProjects(noDocProjects: _*),
+    mappings in makeSite ++= Seq(
+      file("src/assets/favicon.ico") -> "favicon.ico"
+    ),
     libraryDependencies ++= Seq(
       logbackClassic,
       scalaLogging,
@@ -94,7 +100,7 @@ lazy val umlShaclex = project
       sgraph,
       plantuml,
       scalaTest % Test,
-      srdfJena % Test
+      srdfJena 
     ),
     cancelable in Global      := true,
     fork                      := true,
