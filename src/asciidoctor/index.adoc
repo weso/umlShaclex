@@ -1,0 +1,25 @@
+= umlShaclex library 
+:toc: right
+
+umlSHaclEX is a library that transforms 
+link:http://shex.io/[ShEx]
+and 
+link:https://www.w3.org/TR/shacl/[SHACL] shapes to UML.
+
+umlSHaclEX can be used as:
+- An independent comman line tool
+- A JAR library that can be invoked from other Scala or Java programs
+- Integrated in a Web application (see link:http://rdfshape.weso.es[rdfshape])
+
+- link:https://github.com/labra/umlShaclex/issues[List of issues]
+- link:https://github.com/labra/umlShaclex[Source code]
+- link:scaladoc/latest/es/weso/index.html[ScalaDoc]
+- link:https://bintray.com/labra/maven/umlshaclex[Binary Jars and Javadocs]
+
+== Examples
+
+
+
+== ScalaDoc
+
+link:scaladoc/latest/es/weso/index.html[ScalaDoc]

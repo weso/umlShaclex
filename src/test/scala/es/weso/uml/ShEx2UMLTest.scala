@@ -3,6 +3,7 @@ import es.weso.rdf.PREFIXES._
 import es.weso.rdf.nodes.IRI
 import es.weso.shex.{IRILabel, Schema}
 import org.scalatest.{FunSpec, Matchers}
+import es.weso.utils.IOUtils._
 
 class ShExUMLTest extends FunSpec with Matchers {
 
@@ -21,10 +22,10 @@ class ShExUMLTest extends FunSpec with Matchers {
       val umlClass = UMLClass(0,":User", Some((ex + "User").str), List(List(Constant("IRI"))), List())
       val uml = UML(Map(IRILabel(ex + "User") -> 0), Map(0 -> umlClass), List())
       val maybe = for {
-        shex <- Schema.fromString(shexStr,"ShExC")
-        uml <- ShEx2UML.schema2Uml(shex)
+        shex <- io2es(Schema.fromString(shexStr,"ShExC"))
+        uml <- either2es(ShEx2UML.schema2Uml(shex))
       } yield uml
-      maybe.fold(
+      run_es(maybe).unsafeRunSync.fold(
         e => fail(s"Error converting to UML: $e"),
         pair => {
           val (umlConverted,_) = pair
@@ -49,10 +50,10 @@ class ShExUMLTest extends FunSpec with Matchers {
       val umlClass = UMLClass(0,":User", Some((ex + "User").str), List(List(aField)), List())
       val uml = UML(Map(IRILabel(ex + "User") -> 0), Map(0 -> umlClass), List())
       val maybe = for {
-        shex <- Schema.fromString(shexStr,"ShExC")
-        uml <- ShEx2UML.schema2Uml(shex)
+        shex <- io2es(Schema.fromString(shexStr,"ShExC"))
+        uml <- either2es(ShEx2UML.schema2Uml(shex))
       } yield uml
-      maybe.fold(
+      run_es(maybe).unsafeRunSync.fold(
         e => fail(s"Error converting to UML: $e"),
         pair => {
           val (umlConverted,warnings) = pair
@@ -79,10 +80,10 @@ class ShExUMLTest extends FunSpec with Matchers {
       val umlClass = UMLClass(0,":User", Some((ex + "User").str), List(List(aField),List(nameField)), List())
       val uml = UML(Map(IRILabel(ex + "User") -> 0), Map(0 -> umlClass), List())
       val maybe = for {
-        shex <- Schema.fromString(shexStr,"ShExC")
-        uml <- ShEx2UML.schema2Uml(shex)
+        shex <- io2es(Schema.fromString(shexStr,"ShExC"))
+        uml <- either2es(ShEx2UML.schema2Uml(shex))
       } yield uml
-      maybe.fold(
+      run_es(maybe).unsafeRunSync.fold(
         e => fail(s"Error converting to UML: $e"),
         pair => {
           val (umlConverted,_) = pair
@@ -109,10 +110,10 @@ class ShExUMLTest extends FunSpec with Matchers {
         List(Relationship(0,0,":knows",(ex + "knows").str, NoCard))
       )
       val maybe = for {
-        shex <- Schema.fromString(shexStr,"ShExC")
-        uml <- ShEx2UML.schema2Uml(shex)
+        shex <- io2es(Schema.fromString(shexStr,"ShExC"))
+        uml <- either2es(ShEx2UML.schema2Uml(shex))
       } yield uml
-      maybe.fold(
+      run_es(maybe).unsafeRunSync.fold(
         e => fail(s"Error converting to UML: $e"),
         pair => {
           val (umlConverted,_) = pair
@@ -136,10 +137,10 @@ class ShExUMLTest extends FunSpec with Matchers {
            |}
         """.stripMargin
       val maybe = for {
-        shex <- Schema.fromString(shexStr,"ShExC")
-        uml <- ShEx2UML.schema2Uml(shex)
+        shex <- io2es(Schema.fromString(shexStr,"ShExC"))
+        uml <- either2es(ShEx2UML.schema2Uml(shex))
       } yield uml
-      maybe.fold(
+      run_es(maybe).unsafeRunSync.fold(
         e => fail(s"Error converting to UML: $e"),
         uml => {
           info(s"Converted")

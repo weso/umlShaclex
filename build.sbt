@@ -1,5 +1,5 @@
-lazy val scala212 = "2.12.10"
-lazy val scala213 = "2.13.1"
+lazy val scala212 = "2.12.11"
+lazy val scala213 = "2.13.2"
 lazy val supportedScalaVersions = List(scala213, scala212)
 
 /*
@@ -29,14 +29,14 @@ scalafmt: {
  */
 
 lazy val shaclexVersion        = "0.1.47"
-lazy val shaclsVersion         = "0.1.53"
-lazy val shexsVersion          = "0.1.51"
-lazy val srdfVersion           = "0.1.54"
+lazy val shaclsVersion         = "0.1.59"
+lazy val shexsVersion          = "0.1.60"
+lazy val srdfVersion           = "0.1.63"
 
 // Dependency versions
-lazy val catsVersion           = "2.0.0"
-lazy val scalacticVersion      = "3.0.8"
-lazy val scalaTestVersion      = "3.0.8"
+lazy val catsVersion           = "2.1.1"
+lazy val scalacticVersion      = "3.1.1"
+lazy val scalaTestVersion      = "3.1.1"
 lazy val plantumlVersion       = "1.2017.12"
 lazy val logbackVersion        = "1.2.3"
 lazy val loggingVersion        = "3.9.2"
@@ -75,7 +75,7 @@ lazy val simulacrum          = "com.github.mpilquist" %% "simulacrum"     % simu
 
 lazy val umlShaclex = project
   .in(file("."))
-  .enablePlugins(ScalaUnidocPlugin, SbtNativePackager, WindowsPlugin, JavaAppPackaging)
+  .enablePlugins(ScalaUnidocPlugin, SiteScaladocPlugin, AsciidoctorPlugin,SbtNativePackager, WindowsPlugin, JavaAppPackaging)
 //  .settings(
 //    buildInfoKeys := BuildInfoKey.ofN(name, version, scalaVersion, sbtVersion),
 //    buildInfoPackage := "es.weso.shaclex.buildinfo" 
@@ -83,6 +83,12 @@ lazy val umlShaclex = project
   .settings(commonSettings, publishSettings)
   .settings(
     unidocProjectFilter in (ScalaUnidoc, unidoc) := inAnyProject -- inProjects(noDocProjects: _*),
+    siteSubdirName in ScalaUnidoc := "scaladoc/latest",
+    addMappingsToSiteDir(mappings in (ScalaUnidoc, packageDoc), siteSubdirName in ScalaUnidoc),
+    unidocProjectFilter in (ScalaUnidoc, unidoc) := inAnyProject -- inProjects(noDocProjects: _*),
+    mappings in makeSite ++= Seq(
+      file("src/assets/favicon.ico") -> "favicon.ico"
+    ),
     libraryDependencies ++= Seq(
       logbackClassic,
       scalaLogging,
@@ -94,7 +100,7 @@ lazy val umlShaclex = project
       sgraph,
       plantuml,
       scalaTest % Test,
-      srdfJena % Test
+      srdfJena 
     ),
     cancelable in Global      := true,
     fork                      := true,
