@@ -12,7 +12,7 @@ import cats.data.EitherT
 import cats.effect._
 import java.nio.file._
 import es.weso.rdf.RDFReader
-import es.weso.utils.IOUtils._
+// import es.weso.utils.IOUtils._
 
 object Main extends IOApp with LazyLogging {
 
@@ -47,11 +47,13 @@ object Main extends IOApp with LazyLogging {
        val outFormat = opts.outFormat.getOrElse(defaultOutFormat)
        val popts = PlantUMLOptions(watermark = opts.watermark.toOption)
        for {
-        outputStr <- IO(outFormat match {
-         case "uml" => uml.toPlantUML(popts)
-         case "svg" => uml.toSVG(popts)
-         case _ => uml.toPlantUML(popts)
-        })
+        outputStr <- outFormat.toLowerCase match {
+          case "uml" => IO(uml.toPlantUML(popts))
+          case s => opts.outputFormatsMap.get(s) match {
+            case None => IO.raiseError(new RuntimeException(s"Unsupported fileformat: $s"))
+            case Some(fileFormat) => uml.toFormat(popts, fileFormat)
+          }
+        }
         _ <- if (opts.outputFile.isDefined) {
           val outPath = baseFolder.resolve(opts.outputFile())
           val outName = outPath.toFile.getAbsolutePath
@@ -70,11 +72,7 @@ object Main extends IOApp with LazyLogging {
 
   private def schema2Uml(opts: MainOpts, baseFolder: Path): EitherT[IO,String,(UML,List[String])] = 
    for {
-<<<<<<< HEAD
     empty <- EitherT.liftF(RDFAsJenaModel.empty)
-=======
-    empty <- io2es(RDFAsJenaModel.empty)
->>>>>>> 98a232d5a0020d51d99de9b641f120c972ce4cb1
     schema <- getSchema(opts, baseFolder, empty)
     uml <- EitherT.fromEither[IO](Schema2UML.schema2UML(schema))
   } yield uml

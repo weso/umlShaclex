@@ -1,16 +1,21 @@
 package es.weso.uml
 import java.io.ByteArrayOutputStream
 import java.nio.charset.Charset
+
 import es.weso.shex.{BNodeLabel, IRILabel, ShapeLabel, Start}
 import UMLDiagram._
 import io.circe.Json
 import net.sourceforge.plantuml.SourceStringReader
 import net.sourceforge.plantuml.FileFormat
 import net.sourceforge.plantuml.FileFormatOption
+import cats.effect.IO
+import net.sourceforge.plantuml.core.DiagramDescription
 
 /**
   * Represents a UML-like class diagram that can be serialized to PlantUML syntax
-  *
+  * @param labels associates ShapeLabels to NodeIds
+  * @param components associates NodeIds to UMLComponents
+  * @param links list of links
   */
 case class UML(labels: Map[ShapeLabel,NodeId],
                components: Map[NodeId, UMLComponent],
@@ -20,7 +25,7 @@ case class UML(labels: Map[ShapeLabel,NodeId],
   /**
     * Adds a label to a UML diagram
     * If exists, return the existing nodeId
-    * @param label
+    * @param label Shape label
     * @return a pair with the updated UML diagram and the nodeId
     */
   def newLabel(label: ShapeLabel): (UML, NodeId) = {
@@ -32,6 +37,11 @@ case class UML(labels: Map[ShapeLabel,NodeId],
     }
   }
 
+  /**
+    * Get nodeId of a shape label
+    * @param label shape label
+    * @return
+    */
   def getId(label: ShapeLabel): Option[NodeId] = labels.get(label)
 
   def addClass(cls: UMLClass): UML = {
@@ -131,13 +141,22 @@ case class UML(labels: Map[ShapeLabel,NodeId],
     sb.toString
   }
 
-  def toSVG(options: PlantUMLOptions): String = {
+  /**
+    * Convert a UML diagram to some format
+    * @param options plantUML options
+    * @param format output format
+    * @return
+    */
+  def toFormat(options: PlantUMLOptions, format: net.sourceforge.plantuml.FileFormat): IO[String] = try {
     val reader: SourceStringReader = new SourceStringReader(this.toPlantUML(options))
     val os: ByteArrayOutputStream = new ByteArrayOutputStream()
-    reader.generateImage(os, new FileFormatOption(FileFormat.SVG))
+    val d: DiagramDescription = reader.outputImage(os, new FileFormatOption(format))
+    // System.out.println(s"Generated diagram description: ${d.getDescription}")
     os.close
-    val svg: String = new String(os.toByteArray(), Charset.forName("UTF-8"))
-    svg
+    val outStr: String = new String(os.toByteArray(), Charset.forName("UTF-8"))
+    IO.pure(outStr)
+  } catch {
+    case e: Exception => IO.raiseError(new RuntimeException(s"Exception converting to format: ${format}: ${e.getMessage}"))
   }
 
   private def label2Json(label: ShapeLabel): Json = label match {

@@ -2,14 +2,25 @@ package es.weso.uml
 import UMLDiagram._
 import io.circe.Json
 
+/**
+  * UML Entry
+  */
 sealed abstract class UMLEntry {
   def toJson: Json
 }
 
+/**
+  * UML entry that represents a constant
+  */
 sealed abstract class ValueConstraint extends UMLEntry {
   override def toJson: Json
 }
 
+/**
+  * UML entry that represents a basic constraint
+  * @param name name of the constraint
+  * @param href hyperref
+  */
 case class RefConstraint(name: Name,
                          href: String
                         ) extends ValueConstraint {
@@ -20,7 +31,11 @@ case class RefConstraint(name: Name,
   ))
 }
 
-
+/**
+  * UML entry that represents a Datatype constraint
+  * @param name
+  * @param href
+  */
 case class DatatypeConstraint(name: Name,
                               href: String
                              ) extends ValueConstraint {
@@ -31,6 +46,10 @@ case class DatatypeConstraint(name: Name,
   ))
 }
 
+/**
+  * A constant value
+  * @param name
+  */
 case class Constant(name: Name) extends ValueConstraint {
   override def toJson: Json = Json.fromFields(List(
     ("type", Json.fromString("Constant")),
@@ -38,12 +57,21 @@ case class Constant(name: Name) extends ValueConstraint {
   ))
 }
 
+/**
+  * Represents a set of values
+  * @param values
+  */
 case class ValueSet(values: List[Value]) extends ValueConstraint {
   override def toJson: Json = Json.fromValues(
     values.map(_.toJson)
   )
 }
 
+/**
+  * Represents a value expression
+  * @param operator name of the expression
+  * @param vs list of arguments
+  */
 case class ValueExpr(operator: Name, vs: List[ValueConstraint]) extends ValueConstraint {
   def toJson: Json = Json.fromFields(
     List(
@@ -62,6 +90,13 @@ case class Value(name: String, href: Option[String]) {
   )
 }
 
+/**
+  * UML entry that represents a field
+  * @param name
+  * @param href
+  * @param valueConstraints
+  * @param card
+  */
 case class UMLField(name: Name,
                     href: Option[HRef],
                     valueConstraints: List[ValueConstraint],

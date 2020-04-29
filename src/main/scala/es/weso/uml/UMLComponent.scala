@@ -2,9 +2,21 @@ package es.weso.uml
 import UMLDiagram._
 import io.circe.Json
 
+/**
+  * Represents a UML component
+  */
 sealed abstract class UMLComponent {
   def toJson: Json
 }
+
+/**
+  * UML class
+  * @param id node Id
+  * @param label Label
+  * @param href Hyperref
+  * @param entries list of UML entries
+  * @param _extends List of nodes that it extends
+  */
 case class UMLClass(id: NodeId,
                     label: Name,
                     href: Option[HRef],
@@ -22,6 +34,11 @@ case class UMLClass(id: NodeId,
   }
 }
 
+/**
+  * UMLComponent that represents an operator
+  * @param name name of operator
+  * @param args list of arguments
+  */
 case class Operator(name: Name, args: List[UMLComponent]) extends UMLComponent {
   override def toJson: Json = {
     Json.fromFields(List(
@@ -30,6 +47,11 @@ case class Operator(name: Name, args: List[UMLComponent]) extends UMLComponent {
     ))
   }
 }
+
+/**
+  * UML constant
+  * @param name
+  */
 case class UMLConstant(name: Name) extends UMLComponent {
   override def toJson: Json = {
     Json.fromFields(List(

@@ -3,6 +3,7 @@ package es.weso.uml.cmdline
 import org.rogach.scallop._
 import es.weso.schema._
 import es.weso.rdf.jena.RDFAsJenaModel
+import net.sourceforge.plantuml.FileFormat
 
 class MainOpts(
                 arguments: List[String],
@@ -15,6 +16,13 @@ class MainOpts(
   lazy val defaultSchemaFormat = "TURTLE"
   lazy val defaultDataFormat = "TURTLE"
   lazy val defaultEngine = engines.head
+
+  lazy val outputFormatsMap = Map(
+    "svg" -> FileFormat.SVG,
+    "eps" -> FileFormat.EPS
+  )
+
+  lazy val defaultOutputFormat = outputFormatsMap.keys.head
 
   banner("""| umlShaclex: SHACL/ShEx processor
             | Options:
@@ -63,8 +71,8 @@ class MainOpts(
 
   val outFormat = opt[String](
     "outputFormat",
-    default = None,
-    descr = "output format",
+    default = Some(defaultOutputFormat),
+    descr = s"output format. Default = ${defaultOutputFormat}. Possible values: ${outputFormatsMap.keys.mkString(",")}",
     short = 'f')
 
   val watermark = opt[String](
