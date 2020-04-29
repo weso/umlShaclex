@@ -18,6 +18,11 @@ umlSHaclEX can be used as:
 - link:scaladoc/latest/es/weso/index.html[ScalaDoc]
 - link:https://bintray.com/labra/maven/umlshaclex[Binary Jars and Javadocs]
 
+== Building
+
+This project has been implemented in Scala using link:https://www.scala-sbt.org/[sbt]. 
+
+
 == Command line usage
 
 Generate a SVG diagram
