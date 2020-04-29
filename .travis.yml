@@ -33,7 +33,7 @@ script:
     then
       sbt ++$TRAVIS_SCALA_VERSION  clean coverage test coverageReport && bash <(curl -s https://codecov.io/bash);
     else 
-      sbt ++$TRAVIS_SCALA_VERSION  clean test && echo "Skipping code coverage reporting and docs on 2.13";
+      sbt ++$TRAVIS_SCALA_VERSION  clean test makeSite && echo "Skipping code coverage reporting and docs on 2.13";
     fi  
 
 jdk:
