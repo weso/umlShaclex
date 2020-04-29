@@ -159,6 +159,13 @@ case class UML(labels: Map[ShapeLabel,NodeId],
     case e: Exception => IO.raiseError(new RuntimeException(s"Exception converting to format: ${format}: ${e.getMessage}"))
   }
 
+  /**
+    * Converts a diagram to SVG
+    * @param options PlantUML options
+    * @return an IO action that generates the SVG representation of the UML diagram
+    */
+  def toSVG(options: PlantUMLOptions): IO[String] = this.toFormat(options,FileFormat.SVG)
+
   private def label2Json(label: ShapeLabel): Json = label match {
     case IRILabel(iri) => Json.fromString(iri.toString)
     case BNodeLabel(bn) => Json.fromString(bn.id)
@@ -184,6 +191,10 @@ case class UML(labels: Map[ShapeLabel,NodeId],
     ))
   }
 
+  /**
+    * Convert the UML diagram to JSON
+    * @return JSON representation of the diagram
+    */
   def toJson: Json = Json.fromFields(
     List(
       ("labels", Json.fromValues(labels.toList.map(labelPair2Json(_)))),

@@ -2,10 +2,13 @@ package es.weso.uml
 import es.weso.rdf.PREFIXES._
 import es.weso.rdf.nodes.IRI
 import es.weso.shex.{IRILabel, Schema}
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest.funspec._
+import org.scalatest.matchers.should._
 import es.weso.utils.IOUtils._
+import cats.effect._ 
+import cats.data._
 
-class ShExUMLTest extends FunSpec with Matchers {
+class ShExUMLTest extends AnyFunSpec with Matchers {
 
   describe(s"ShEx2UML") {
 
@@ -21,17 +24,19 @@ class ShExUMLTest extends FunSpec with Matchers {
 
       val umlClass = UMLClass(0,":User", Some((ex + "User").str), List(List(Constant("IRI"))), List())
       val uml = UML(Map(IRILabel(ex + "User") -> 0), Map(0 -> umlClass), List())
-      val maybe = for {
+      val maybe: EitherT[IO,String,(UML,List[String],String)] = for {
         shex <- io2es(Schema.fromString(shexStr,"ShExC"))
-        uml <- either2es(ShEx2UML.schema2Uml(shex))
-      } yield uml
+        pair <- either2es(ShEx2UML.schema2Uml(shex))
+        (uml,es) = pair
+        svg <- io2es(uml.toSVG(PlantUMLOptions.empty))
+      } yield (uml,es,svg)
       run_es(maybe).unsafeRunSync.fold(
         e => fail(s"Error converting to UML: $e"),
         pair => {
-          val (umlConverted,_) = pair
+          val (umlConverted,_,svg) = pair
           info(s"Expected: \n$uml\nObtained:\n$umlConverted")
           uml should be(umlConverted)
-          uml.toSVG(PlantUMLOptions.empty) should include ("<svg")
+          svg should include ("<svg")
         }
       )
     }
@@ -51,15 +56,17 @@ class ShExUMLTest extends FunSpec with Matchers {
       val uml = UML(Map(IRILabel(ex + "User") -> 0), Map(0 -> umlClass), List())
       val maybe = for {
         shex <- io2es(Schema.fromString(shexStr,"ShExC"))
-        uml <- either2es(ShEx2UML.schema2Uml(shex))
-      } yield uml
+        pair <- either2es(ShEx2UML.schema2Uml(shex))
+        (uml,es) = pair
+        svg <- io2es(uml.toSVG(PlantUMLOptions.empty))
+      } yield (uml,es,svg)
       run_es(maybe).unsafeRunSync.fold(
         e => fail(s"Error converting to UML: $e"),
         pair => {
-          val (umlConverted,warnings) = pair
+          val (umlConverted,warnings,svg) = pair
           info(s"Expected: \n$uml\nObtained:\n$umlConverted")
           uml should be(umlConverted)
-          uml.toSVG(PlantUMLOptions.empty) should include ("<svg")
+          svg should include ("<svg")
         }
       )
     }
@@ -81,15 +88,17 @@ class ShExUMLTest extends FunSpec with Matchers {
       val uml = UML(Map(IRILabel(ex + "User") -> 0), Map(0 -> umlClass), List())
       val maybe = for {
         shex <- io2es(Schema.fromString(shexStr,"ShExC"))
-        uml <- either2es(ShEx2UML.schema2Uml(shex))
-      } yield uml
+        pair <- either2es(ShEx2UML.schema2Uml(shex))
+        (uml,es) = pair
+        svg <- io2es(uml.toSVG(PlantUMLOptions.empty))
+      } yield (uml,es,svg)
       run_es(maybe).unsafeRunSync.fold(
         e => fail(s"Error converting to UML: $e"),
         pair => {
-          val (umlConverted,_) = pair
+          val (umlConverted,_,svg) = pair
           info(s"Expected: \n$uml\nObtained:\n$umlConverted")
           uml should be(umlConverted)
-          uml.toSVG(PlantUMLOptions.empty) should include ("<svg")
+          svg should include ("<svg")
         }
       )
     }
