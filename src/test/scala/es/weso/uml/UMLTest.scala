@@ -5,9 +5,11 @@ import es.weso.rdf.nodes.IRI
 import es.weso.shex.{IRILabel, Schema}
 import es.weso.uml.UMLDiagram._
 import es.weso.utils.FileUtils
-import org.scalatest.{FunSpec, Matchers}
+import org.scalatest._ 
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.should.Matchers
 
-class UMLTest extends FunSpec with Matchers {
+class UMLTest extends AnyFunSpec with Matchers {
 
   describe("Serialize PlantUML") {
     it("Should generate plantuml diagram") {

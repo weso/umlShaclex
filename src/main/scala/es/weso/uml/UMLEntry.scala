@@ -47,6 +47,17 @@ case class DatatypeConstraint(name: Name,
 }
 
 /**
+  * UML entry that represents no constraint
+  * @param name
+  * @param href
+  */
+case class NoConstraint() extends ValueConstraint {
+  override def toJson: Json = Json.fromFields(List(
+    ("type", Json.fromString("NoConstraint"))
+  ))
+}
+
+/**
   * A constant value
   * @param name
   */

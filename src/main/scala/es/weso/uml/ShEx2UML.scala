@@ -119,6 +119,8 @@ object ShEx2UML {
     }
     case sn: ShapeNot => 
       log(s"Not implemented ShapeNot $sn", UMLClass(id,"NOT not implemented yet", None, List(), List()))
+    case sd: ShapeDecl => 
+      log(s"Not implemented declarations of abstract shapes yet", UMLClass(id,"Not implemented ShapeDecl",None, List(), List()))
     case s: Shape => {
       for {
         entries <- cnvShape(s,id,pm)
@@ -318,8 +320,12 @@ object ShEx2UML {
                                   pm: PrefixMap): Converter[List[List[UMLEntry]]] = {
     val card = cnvCard(tc.min, tc.max)
     val (label,href) = predicate2lbl(tc.predicate,pm)
+    
     tc.valueExpr match {
-      case None => err(s"No value expr for triple constraint $tc")
+      case None => 
+        // err(s"No value expr for triple constraint $tc")
+        ok(List(List(UMLField(label, Some(href), List(NoConstraint()), card))))
+
       case Some(se) => se match {
         case r: ShapeRef => for {
           rid <- newLabel(Some(r.reference))

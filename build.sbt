@@ -1,5 +1,5 @@
-lazy val scala212 = "2.12.11"
-lazy val scala213 = "2.13.2"
+lazy val scala212 = "2.12.12"
+lazy val scala213 = "2.13.3"
 lazy val supportedScalaVersions = List(scala213, scala212)
 
 /*
@@ -28,15 +28,16 @@ scalafmt: {
 }
  */
 
-lazy val shaclexVersion        = "0.1.61"
-lazy val shaclsVersion         = "0.1.60"
-lazy val shexsVersion          = "0.1.64"
-lazy val srdfVersion           = "0.1.69"
+lazy val shaclexVersion        = "0.1.77"
+lazy val shaclsVersion         = "0.1.65"
+lazy val shexsVersion          = "0.1.76"
+lazy val srdfVersion           = "0.1.81"
 
 // Dependency versions
-lazy val catsVersion           = "2.1.1"
-lazy val scalacticVersion      = "3.1.1"
-lazy val scalaTestVersion      = "3.1.1"
+lazy val catsVersion           = "2.3.0"
+lazy val catsEffectVersion     = "2.2.0"
+lazy val scalacticVersion      = "3.2.0"
+lazy val scalaTestVersion      = "3.2.0"
 lazy val plantumlVersion       = "1.2017.12"
 lazy val logbackVersion        = "1.2.3"
 lazy val loggingVersion        = "3.9.2"
@@ -51,8 +52,7 @@ lazy val scalaMacrosVersion   = "2.1.1"
 // Dependency modules
 lazy val catsCore          = "org.typelevel"              %% "cats-core"           % catsVersion
 lazy val catsKernel        = "org.typelevel"              %% "cats-kernel"         % catsVersion
-lazy val catsMacros        = "org.typelevel"              %% "cats-macros"         % catsVersion
-lazy val catsEffect        = "org.typelevel"              %% "cats-effect"         % catsVersion
+lazy val catsEffect        = "org.typelevel"              %% "cats-effect"         % catsEffectVersion
 lazy val logbackClassic    = "ch.qos.logback"             % "logback-classic"      % logbackVersion
 lazy val plantuml          = "net.sourceforge.plantuml"   % "plantuml"             % plantumlVersion
 lazy val scalaLogging      = "com.typesafe.scala-logging" %% "scala-logging"       % loggingVersion
@@ -75,7 +75,13 @@ lazy val simulacrum          = "com.github.mpilquist" %% "simulacrum"     % simu
 
 lazy val umlShaclex = project
   .in(file("."))
-  .enablePlugins(ScalaUnidocPlugin, SiteScaladocPlugin, AsciidoctorPlugin,SbtNativePackager, WindowsPlugin, JavaAppPackaging)
+  .enablePlugins(ScalaUnidocPlugin, 
+     SiteScaladocPlugin, 
+     AsciidoctorPlugin,
+     SbtNativePackager, 
+     WindowsPlugin, 
+     JavaAppPackaging
+     )
 //  .settings(
 //    buildInfoKeys := BuildInfoKey.ofN(name, version, scalaVersion, sbtVersion),
 //    buildInfoPackage := "es.weso.shaclex.buildinfo" 
@@ -129,7 +135,7 @@ lazy val sharedDependencies = Seq(
 )
 
 lazy val compilationSettings = Seq(
-  scalaVersion := "2.13.0",
+  scalaVersion := "2.13.3",
   // format: off
   javacOptions ++= Seq("-source", "1.8", "-target", "1.8"),
   scalacOptions ++= Seq(

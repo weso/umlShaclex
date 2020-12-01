@@ -8,7 +8,8 @@ import scala.io.Source
 import es.weso.schema._
 import es.weso.rdf.jena.RDFAsJenaModel
 import es.weso.utils.FileUtils
-import cats.data.EitherT
+//import cats.data._ 
+import cats.implicits._
 import cats.effect._
 import java.nio.file._
 import es.weso.rdf.RDFReader
@@ -38,7 +39,7 @@ object Main extends IOApp with LazyLogging {
        val (uml,warnings) = pair
        IO(ExitCode.Success)
       }) */
-      either <- schema2Uml(opts,baseFolder).value
+      either <- schema2Uml(opts,baseFolder).attempt
       exitCode <- either.fold(s => IO{
         println(s"Error: $s")
         ExitCode.Error
@@ -70,28 +71,27 @@ object Main extends IOApp with LazyLogging {
     } yield (exitCode)
   }
 
-  private def schema2Uml(opts: MainOpts, baseFolder: Path): EitherT[IO,String,(UML,List[String])] = 
-   for {
-    empty <- EitherT.liftF(RDFAsJenaModel.empty)
+  private def schema2Uml(opts: MainOpts, baseFolder: Path): IO[(UML,List[String])] = 
+   RDFAsJenaModel.empty.flatMap(_.use(empty => for {
     schema <- getSchema(opts, baseFolder, empty)
-    uml <- EitherT.fromEither[IO](Schema2UML.schema2UML(schema))
-  } yield uml
+    uml <- IO.fromEither(Schema2UML.schema2UML(schema).leftMap(s => new RuntimeException(s"s")))
+  } yield uml))
 
 
   private def errorDriver(e: Throwable, scallop: Scallop) = e match {
     case Help(s) => {
       println("Help: " + s)
-      scallop.printHelp
+      scallop.printHelp()
       sys.exit(0)
     }
     case _ => {
       println("Error: %s".format(e.getMessage))
-      scallop.printHelp
+      scallop.printHelp()
       sys.exit(1)
     }
   }
 
-  def getSchema(opts: MainOpts, baseFolder: Path, rdf: RDFReader): EitherT[IO, String, Schema] = {
+  def getSchema(opts: MainOpts, baseFolder: Path, rdf: RDFReader): IO[Schema] = {
     val base = Some(FileUtils.currentFolderURL)
     if (opts.schema.isDefined) {
       val path = baseFolder.resolve(opts.schema())
@@ -104,7 +104,6 @@ object Main extends IOApp with LazyLogging {
       logger.info("Schema not specified. Extracting schema from data")
       Schemas.fromRDF(rdf, opts.engine())
     }
-
   }
 }
 
