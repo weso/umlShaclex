@@ -1,0 +1,33 @@
+prefix schema: <http://schema.org/> 
+prefix xsd:   <http://www.w3.org/2001/XMLSchema#> 
+prefix dcterms: <http://purl.org/dc/terms/> 
+prefix it:    <http://data.europeana.eu/item/> 
+prefix foaf:  <http://xmlns.com/foaf/0.1/> 
+prefix :      <http://example.org/>
+
+:Issue CLOSED {
+ :reported   @:Person ;
+ :reproduced @:User   ;
+ :related    @:Issue
+}
+:Person {
+ :name xsd:string        | 
+ :firstName xsd:string + ; 
+ :lastName xsd:string 
+}
+:User @:Person AND {
+  :email IRI      ;
+  :knows @:User *
+}
+:InternalRep {
+ :code xsd:integer
+}
+:Employee extends @:Person 
+          extends @:InternalRep { }
+:Programmer extends @:Employee {
+ :experience [ :senior :junior ]
+}
+:SolvedIssue extends @:Issue {
+ :reproduced   @:Employee   ;
+ :solved       @:Programmer 
+}

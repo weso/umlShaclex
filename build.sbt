@@ -1,43 +1,21 @@
-lazy val scala212 = "2.12.12"
-lazy val scala213 = "2.13.3"
-lazy val supportedScalaVersions = List(scala213, scala212)
+lazy val scala212 = "2.12.13"
+lazy val scala213 = "2.13.5"
+lazy val supportedScalaVersions = List(
+  scala213, 
+  scala212
+)
 
-/*
-scalafmt: {
-  style = defaultWithAlign
-  maxColumn = 150
-  align.tokens = [
-    { code = "=>", owner = "Case" }
-    { code = "⇒", owner = "Case" }
-    { code = "extends", owner = "Defn.(Class|Trait|Object)" }
-    { code = "//", owner = ".*" }
-    { code = "{", owner = "Template" }
-    { code = "}", owner = "Template" }
-    { code = ":=", owner = "Term.ApplyInfix" }
-    { code = "++=", owner = "Term.ApplyInfix" }
-    { code = "+=", owner = "Term.ApplyInfix" }
-    { code = "%", owner = "Term.ApplyInfix" }
-    { code = "%%", owner = "Term.ApplyInfix" }
-    { code = "%%%", owner = "Term.ApplyInfix" }
-    { code = "->", owner = "Term.ApplyInfix" }
-    { code = "→", owner = "Term.ApplyInfix" }
-    { code = "<-", owner = "Enumerator.Generator" }
-    { code = "←", owner = "Enumerator.Generator" }
-    { code = "=", owner = "(Enumerator.Val|Defn.(Va(l|r)|Def|Type))" }
-  ]
-}
- */
+val Java11 = "adopt@1.11"  
 
-lazy val shaclexVersion        = "0.1.77"
-lazy val shaclsVersion         = "0.1.65"
-lazy val shexsVersion          = "0.1.76"
-lazy val srdfVersion           = "0.1.81"
+lazy val shaclexVersion        = "0.1.88"
+lazy val shaclsVersion         = "0.1.73"
+lazy val shexsVersion          = "0.1.86"
+lazy val srdfVersion           = "0.1.96"
 
 // Dependency versions
-lazy val catsVersion           = "2.3.0"
-lazy val catsEffectVersion     = "2.2.0"
-lazy val scalacticVersion      = "3.2.0"
-lazy val scalaTestVersion      = "3.2.0"
+lazy val munitVersion          = "0.7.23"
+lazy val munitEffectVersion    = "1.0.1"
+
 lazy val plantumlVersion       = "1.2017.12"
 lazy val logbackVersion        = "1.2.3"
 lazy val loggingVersion        = "3.9.2"
@@ -45,20 +23,20 @@ lazy val scallopVersion        = "3.3.1"
 
 
 // Compiler plugin dependency versions
-lazy val simulacrumVersion    = "0.19.0"
+// lazy val simulacrumVersion    = "0.19.0"
 // lazy val kindProjectorVersion = "0.9.5"
-lazy val scalaMacrosVersion   = "2.1.1"
+// lazy val scalaMacrosVersion   = "2.1.1"
 
 // Dependency modules
-lazy val catsCore          = "org.typelevel"              %% "cats-core"           % catsVersion
-lazy val catsKernel        = "org.typelevel"              %% "cats-kernel"         % catsVersion
-lazy val catsEffect        = "org.typelevel"              %% "cats-effect"         % catsEffectVersion
-lazy val logbackClassic    = "ch.qos.logback"             % "logback-classic"      % logbackVersion
+// lazy val logbackClassic    = "ch.qos.logback"             % "logback-classic"      % logbackVersion
+lazy val munit             = "org.scalameta"              %% "munit"               % munitVersion
+lazy val munitEffect       = "org.typelevel"     %% "munit-cats-effect-3" % munitEffectVersion
+
 lazy val plantuml          = "net.sourceforge.plantuml"   % "plantuml"             % plantumlVersion
 lazy val scalaLogging      = "com.typesafe.scala-logging" %% "scala-logging"       % loggingVersion
 lazy val scallop           = "org.rogach"                 %% "scallop"             % scallopVersion
-lazy val scalactic         = "org.scalactic"              %% "scalactic"           % scalacticVersion
-lazy val scalaTest         = "org.scalatest"              %% "scalatest"           % scalaTestVersion
+// lazy val scalactic         = "org.scalactic"              %% "scalactic"           % scalacticVersion
+// lazy val scalaTest         = "org.scalatest"              %% "scalatest"           % scalaTestVersion
 lazy val shex              = "es.weso"                    %% "shex"                % shexsVersion
 lazy val shacl             = "es.weso"                    %% "shacl"               % shaclsVersion
 lazy val schema            = "es.weso"                    %% "schema"              % shaclexVersion
@@ -67,11 +45,15 @@ lazy val sgraph            = "es.weso"                    %% "sgraph"           
 lazy val srdfJena          = "es.weso"                    %% "srdfjena"            % srdfVersion
 lazy val utilsTest         = "es.weso"                    %% "utilstest"           % shaclexVersion
 
+lazy val MUnitFramework = new TestFramework("munit.Framework")
+
 
 // Compiler plugin modules
-// lazy val scalaMacrosParadise = "org.scalamacros"      % "paradise"        % scalaMacrosVersion cross CrossVersion.full
-lazy val simulacrum          = "com.github.mpilquist" %% "simulacrum"     % simulacrumVersion
-// lazy val kindProjector       = "org.spire-math"       %% "kind-projector" % kindProjectorVersion
+// lazy val simulacrum          = "com.github.mpilquist" %% "simulacrum"     % simulacrumVersion
+
+ThisBuild / githubWorkflowJavaVersions := Seq(Java11)
+ThisBuild / githubOwner := "weso"
+ThisBuild / githubRepository := "umlShaclex"
 
 lazy val umlShaclex = project
   .in(file("."))
@@ -96,7 +78,7 @@ lazy val umlShaclex = project
       file("src/assets/favicon.ico") -> "favicon.ico"
     ),
     libraryDependencies ++= Seq(
-      logbackClassic,
+//      logbackClassic,
       scalaLogging,
       scallop,
       shex,
@@ -105,9 +87,9 @@ lazy val umlShaclex = project
       shacl,
       sgraph,
       plantuml,
-      scalaTest % Test,
       srdfJena 
     ),
+    testFrameworks += MUnitFramework,
     cancelable in Global      := true,
     fork                      := true,
     crossScalaVersions := supportedScalaVersions,
@@ -122,20 +104,17 @@ lazy val umlShaclex = project
 lazy val noDocProjects = Seq[ProjectReference]()
 
 lazy val noPublishSettings = Seq(
-//  publish := (),
-//  publishLocal := (),
   publishArtifact := false
 )
 
 lazy val sharedDependencies = Seq(
   libraryDependencies ++= Seq(
-    scalactic,
-    scalaTest % Test
+//    scalactic,
+    munitEffect % Test
   )
 )
 
 lazy val compilationSettings = Seq(
-  scalaVersion := "2.13.3",
   // format: off
   javacOptions ++= Seq("-source", "1.8", "-target", "1.8"),
   scalacOptions ++= Seq(
@@ -166,21 +145,20 @@ lazy val compilationSettings = Seq(
 //    "-Ywarn-value-discard",              // Warn when non-Unit expression results are unused.
 //    "-Xfatal-warnings",                  // Fail the compilation if there are any warnings.
 //    "-Ypartial-unification",
-  )
+  ) 
   // format: on
 )
 
 lazy val commonSettings = compilationSettings ++ sharedDependencies ++ Seq(
   organization := "es.weso",
   resolvers ++= Seq(
-    Resolver.bintrayRepo("labra", "maven"),
-    Resolver.bintrayRepo("weso", "weso-releases"),
-    Resolver.sonatypeRepo("snapshots")
+   Resolver.githubPackages("weso"),
+   Resolver.sonatypeRepo("snapshots")
   )
 )
 
 lazy val publishSettings = Seq(
-  maintainer      := "Jose Emilio Labra Gayo <labra@uniovi.es>",
+//  maintainer      := "Jose Emilio Labra Gayo <labra@uniovi.es>",
   homepage        := Some(url("https://github.com/labra/umlShaclex")),
   licenses        := Seq("MIT" -> url("http://opensource.org/licenses/MIT")),
   scmInfo         := Some(ScmInfo(url("https://github.com/labra/umlShaclex"), "scm:git:git@github.com:labra/umlShaclex.git")),
@@ -193,15 +171,15 @@ lazy val publishSettings = Seq(
                          <url>https://github.com/labra/</url>
                        </developer>
                      </developers>,
-  scalacOptions in doc ++= Seq(
+ /* scalacOptions in doc ++= Seq(
     "-diagrams-debug",
     "-doc-source-url",
     scmInfo.value.get.browseUrl + "/tree/master€{FILE_PATH}.scala",
     "-sourcepath",
     baseDirectory.in(LocalRootProject).value.getAbsolutePath,
     "-diagrams",
-  ),
+  ), */
   publishMavenStyle              := true,
-  bintrayRepository in bintray   := "weso-releases",
-  bintrayOrganization in bintray := Some("weso")
+  // bintrayRepository in bintray   := "weso-releases",
+  // bintrayOrganization in bintray := Some("weso")
 )

@@ -182,6 +182,7 @@ object ShEx2UML {
     } yield vcs
     case s: ShapeExternal => ok(List(List(UML.external)))
     case sr: ShapeRef => cnvShapeRef(sr,id,pm)
+    case sd: ShapeDecl => log(s"Nested ShapeDecl not supported yet $sd", List(List()))
   }
 
   private def cnvShape(s: Shape, id: NodeId, pm: PrefixMap): Converter[List[List[UMLEntry]]] = for {
@@ -216,7 +217,7 @@ object ShEx2UML {
   private def cnvExtends(ls: List[ShapeLabel],
                          id: NodeId
                         ): Converter[List[List[UMLEntry]]] = {
-    log("cnvExtends not implemented yet", List())
+    log("cnvExtends (we don't do anything here as it is already handled at shape)", List())
   }
 
   private def cnvNodeConstraint(nc: NodeConstraint, pm: PrefixMap): Converter[List[List[ValueConstraint]]] = for {

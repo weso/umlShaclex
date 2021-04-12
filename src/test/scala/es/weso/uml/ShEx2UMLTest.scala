@@ -2,17 +2,15 @@ package es.weso.uml
 import es.weso.rdf.PREFIXES._
 import es.weso.rdf.nodes.IRI
 import es.weso.shex.{IRILabel, Schema}
-import org.scalatest.funspec._
-import org.scalatest.matchers.should._
 import es.weso.utils.IOUtils._
 import cats.effect._ 
 import cats.data._
+import munit._
 
-class ShExUMLTest extends AnyFunSpec with Matchers {
+class ShExUMLTest extends CatsEffectSuite {
 
-  describe(s"ShEx2UML") {
 
-    it(s"Should convert simple Shape with node constraint IRI") {
+    test(s"Should convert simple Shape with node constraint IRI") {
       val shexStr =
         """|prefix : <http://example.org/>
            |
@@ -30,18 +28,18 @@ class ShExUMLTest extends AnyFunSpec with Matchers {
         (uml,es) = pair
         svg <- io2es(uml.toSVG(PlantUMLOptions.empty))
       } yield (uml,es,svg)
-      run_es(maybe).unsafeRunSync.fold(
-        e => fail(s"Error converting to UML: $e"),
-        pair => {
+      run_es(maybe).map(e => e match { 
+        case Right(pair) => {
           val (umlConverted,_,svg) = pair
-          info(s"Expected: \n$uml\nObtained:\n$umlConverted")
-          uml should be(umlConverted)
-          svg should include ("<svg")
+          assertEquals(uml, umlConverted)
+          assertEquals(svg.contains("<svg"), true)
         }
+        case Left(e) => fail(e)
+      }
       )
     }
 
-    it(s"Should convert simple Shape with IRI") {
+    test(s"Should convert simple Shape with IRI") {
       val shexStr =
         """|prefix : <http://example.org/>
            |
@@ -60,18 +58,18 @@ class ShExUMLTest extends AnyFunSpec with Matchers {
         (uml,es) = pair
         svg <- io2es(uml.toSVG(PlantUMLOptions.empty))
       } yield (uml,es,svg)
-      run_es(maybe).unsafeRunSync.fold(
+      run_es(maybe).map(_.fold(
         e => fail(s"Error converting to UML: $e"),
         pair => {
           val (umlConverted,warnings,svg) = pair
-          info(s"Expected: \n$uml\nObtained:\n$umlConverted")
-          uml should be(umlConverted)
-          svg should include ("<svg")
+          // info(s"Expected: \n$uml\nObtained:\n$umlConverted")
+          assertEquals(uml, umlConverted)
+          assertEquals(svg.contains("<svg"), true)
         }
-      )
+      ))
     }
 
-    it(s"Should convert simple Shape with IRI and a name") {
+    test(s"Should convert simple Shape with IRI and a name") {
       val shexStr =
         """|prefix : <http://example.org/>
            |
@@ -92,18 +90,18 @@ class ShExUMLTest extends AnyFunSpec with Matchers {
         (uml,es) = pair
         svg <- io2es(uml.toSVG(PlantUMLOptions.empty))
       } yield (uml,es,svg)
-      run_es(maybe).unsafeRunSync.fold(
+      run_es(maybe).map(_.fold(
         e => fail(s"Error converting to UML: $e"),
         pair => {
           val (umlConverted,_,svg) = pair
-          info(s"Expected: \n$uml\nObtained:\n$umlConverted")
-          uml should be(umlConverted)
-          svg should include ("<svg")
+          // info(s"Expected: \n$uml\nObtained:\n$umlConverted")
+          assertEquals(uml, umlConverted)
+          assertEquals(svg.contains("<svg"), true)
         }
-      )
+      ))
     }
 
-    it(s"Should convert simple Shape with self-reference") {
+    test(s"Should convert simple Shape with self-reference") {
       val shexStr =
         """|prefix : <http://example.org/>
            |
@@ -122,18 +120,18 @@ class ShExUMLTest extends AnyFunSpec with Matchers {
         shex <- io2es(Schema.fromString(shexStr,"ShExC"))
         uml <- either2es(ShEx2UML.schema2Uml(shex))
       } yield uml
-      run_es(maybe).unsafeRunSync.fold(
+      run_es(maybe).map(_.fold(
         e => fail(s"Error converting to UML: $e"),
         pair => {
           val (umlConverted,_) = pair
-          info(s"Expected: \n$uml\nObtained:\n$umlConverted")
-          uml should be(umlConverted)
+          // info(s"Expected: \n$uml\nObtained:\n$umlConverted")
+          assertEquals(uml, umlConverted)
           // uml.toSVG should include ("<svg")
         }
-      )
+      ))
     }
 
-    it(s"Should convert value set with rdf:type") {
+    test(s"Should convert value set with rdf:type") {
       val shexStr =
         """|prefix : <http://example.org/>
            |
@@ -149,13 +147,14 @@ class ShExUMLTest extends AnyFunSpec with Matchers {
         shex <- io2es(Schema.fromString(shexStr,"ShExC"))
         uml <- either2es(ShEx2UML.schema2Uml(shex))
       } yield uml
-      run_es(maybe).unsafeRunSync.fold(
+      run_es(maybe).map(_.fold(
         e => fail(s"Error converting to UML: $e"),
         uml => {
-          info(s"Converted")
+        //  info(s"Converted")
           // uml.toSVG should include("<svg")
+          assertEquals(true,true)
         }
-      )
+      ))
     }
 /*
     it(s"Shouldn't fail with FHIR schema") {
@@ -198,6 +197,5 @@ class ShExUMLTest extends AnyFunSpec with Matchers {
         }
       )
     } */
-  } 
 
 }

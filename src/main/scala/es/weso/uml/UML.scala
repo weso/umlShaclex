@@ -73,6 +73,7 @@ case class UML(labels: Map[ShapeLabel,NodeId],
       s"[[${href} @${name}]] "
     }
     case ValueExpr(op,vs) => vs.map(cnvValueConstraint(_)).mkString(s" ${op} ")
+    case NoConstraint() => s"."
   }
 
   def cnvFieldExpr(fe: FieldExpr): String = {
