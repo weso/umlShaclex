@@ -1,16 +1,16 @@
 lazy val scala212 = "2.12.13"
 lazy val scala213 = "2.13.5"
 lazy val supportedScalaVersions = List(
-  scala213, 
+  scala213,
   scala212
 )
 
-val Java11 = "adopt@1.11"  
+val Java11 = "adopt@1.11"
 
-lazy val shaclexVersion        = "0.1.88"
-lazy val shaclsVersion         = "0.1.73"
-lazy val shexsVersion          = "0.1.86"
-lazy val srdfVersion           = "0.1.96"
+lazy val shaclexVersion        = "0.1.91"
+lazy val shaclsVersion         = "0.1.75"
+lazy val shexsVersion          = "0.1.91"
+lazy val srdfVersion           = "0.1.101"
 
 // Dependency versions
 lazy val munitVersion          = "0.7.23"
@@ -52,21 +52,21 @@ lazy val MUnitFramework = new TestFramework("munit.Framework")
 // lazy val simulacrum          = "com.github.mpilquist" %% "simulacrum"     % simulacrumVersion
 
 ThisBuild / githubWorkflowJavaVersions := Seq(Java11)
-ThisBuild / githubOwner := "weso"
-ThisBuild / githubRepository := "umlShaclex"
+// ThisBuild / githubOwner := "weso"
+// ThisBuild / githubRepository := "umlShaclex"
 
 lazy val umlShaclex = project
   .in(file("."))
-  .enablePlugins(ScalaUnidocPlugin, 
-     SiteScaladocPlugin, 
+  .enablePlugins(ScalaUnidocPlugin,
+     SiteScaladocPlugin,
      AsciidoctorPlugin,
-     SbtNativePackager, 
-     WindowsPlugin, 
+     SbtNativePackager,
+     WindowsPlugin,
      JavaAppPackaging
      )
 //  .settings(
 //    buildInfoKeys := BuildInfoKey.ofN(name, version, scalaVersion, sbtVersion),
-//    buildInfoPackage := "es.weso.shaclex.buildinfo" 
+//    buildInfoPackage := "es.weso.shaclex.buildinfo"
 //  )
   .settings(commonSettings, publishSettings)
   .settings(
@@ -82,12 +82,12 @@ lazy val umlShaclex = project
       scalaLogging,
       scallop,
       shex,
-      schema, 
+      schema,
       schemaInfer,
       shacl,
       sgraph,
       plantuml,
-      srdfJena 
+      srdfJena
     ),
     testFrameworks += MUnitFramework,
     cancelable in Global      := true,
@@ -145,41 +145,31 @@ lazy val compilationSettings = Seq(
 //    "-Ywarn-value-discard",              // Warn when non-Unit expression results are unused.
 //    "-Xfatal-warnings",                  // Fail the compilation if there are any warnings.
 //    "-Ypartial-unification",
-  ) 
+  )
   // format: on
 )
 
 lazy val commonSettings = compilationSettings ++ sharedDependencies ++ Seq(
   organization := "es.weso",
   resolvers ++= Seq(
-   Resolver.githubPackages("weso"),
+   // Resolver.githubPackages("weso"),
    Resolver.sonatypeRepo("snapshots")
   )
 )
 
 lazy val publishSettings = Seq(
-//  maintainer      := "Jose Emilio Labra Gayo <labra@uniovi.es>",
+  sonatypeProfileName := ("es.weso"),
   homepage        := Some(url("https://github.com/labra/umlShaclex")),
   licenses        := Seq("MIT" -> url("http://opensource.org/licenses/MIT")),
   scmInfo         := Some(ScmInfo(url("https://github.com/labra/umlShaclex"), "scm:git:git@github.com:labra/umlShaclex.git")),
   autoAPIMappings := true,
   apiURL          := Some(url("http://labra.github.io/umlShaclex/latest/api/")),
-  pomExtra        := <developers>
-                       <developer>
-                         <id>labra</id>
-                         <name>Jose Emilio Labra Gayo</name>
-                         <url>https://github.com/labra/</url>
-                       </developer>
-                     </developers>,
- /* scalacOptions in doc ++= Seq(
-    "-diagrams-debug",
-    "-doc-source-url",
-    scmInfo.value.get.browseUrl + "/tree/master€{FILE_PATH}.scala",
-    "-sourcepath",
-    baseDirectory.in(LocalRootProject).value.getAbsolutePath,
-    "-diagrams",
-  ), */
-  publishMavenStyle              := true,
-  // bintrayRepository in bintray   := "weso-releases",
-  // bintrayOrganization in bintray := Some("weso")
+  developers := List(
+    Developer(
+      id="labra",
+      name="Jose Emilio Labra Gayo",
+      email="jelabra@gmail.com",
+      url=url("https://weso.labra.es")
+    )),
+  publishMavenStyle := true,
 )
