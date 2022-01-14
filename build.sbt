@@ -1,24 +1,27 @@
-lazy val scala212 = "2.12.13"
-lazy val scala213 = "2.13.5"
+lazy val scala212 = "2.12.15"
+lazy val scala213 = "2.13.8"
+lazy val scala3   = "3.1.0"
+
 lazy val supportedScalaVersions = List(
+  scala3,
   scala213, 
   scala212
 )
 
-val Java11 = "adopt@1.11"  
+val Java11 = JavaSpec.temurin("11") // "adopt@1.11"
 
-lazy val shaclexVersion        = "0.1.88"
-lazy val shaclsVersion         = "0.1.73"
-lazy val shexsVersion          = "0.1.86"
-lazy val srdfVersion           = "0.1.96"
+lazy val srdfVersion           = "0.1.106"
+lazy val shaclexVersion        = "0.1.103"
+lazy val shaclsVersion         = "0.1.78"
+lazy val shexsVersion          = "0.1.108"
 
 // Dependency versions
-lazy val munitVersion          = "0.7.23"
-lazy val munitEffectVersion    = "1.0.1"
+lazy val munitVersion          = "0.7.29"
+lazy val munitEffectVersion    = "1.0.7"
 
 lazy val plantumlVersion       = "1.2017.12"
 lazy val logbackVersion        = "1.2.3"
-lazy val loggingVersion        = "3.9.2"
+lazy val loggingVersion        = "3.9.4"
 lazy val scallopVersion        = "3.3.1"
 
 
@@ -52,8 +55,6 @@ lazy val MUnitFramework = new TestFramework("munit.Framework")
 // lazy val simulacrum          = "com.github.mpilquist" %% "simulacrum"     % simulacrumVersion
 
 ThisBuild / githubWorkflowJavaVersions := Seq(Java11)
-ThisBuild / githubOwner := "weso"
-ThisBuild / githubRepository := "umlShaclex"
 
 lazy val umlShaclex = project
   .in(file("."))
@@ -116,7 +117,7 @@ lazy val sharedDependencies = Seq(
 
 lazy val compilationSettings = Seq(
   // format: off
-  javacOptions ++= Seq("-source", "1.8", "-target", "1.8"),
+  // javacOptions ++= Seq("-source", "1.8", "-target", "1.8"),
   scalacOptions ++= Seq(
     "-deprecation",                      // Emit warning and location for usages of deprecated APIs.
     "-encoding", "utf-8",                // Specify character encoding used by source files.
@@ -150,11 +151,7 @@ lazy val compilationSettings = Seq(
 )
 
 lazy val commonSettings = compilationSettings ++ sharedDependencies ++ Seq(
-  organization := "es.weso",
-  resolvers ++= Seq(
-   Resolver.githubPackages("weso"),
-   Resolver.sonatypeRepo("snapshots")
-  )
+  organization := "es.weso"
 )
 
 lazy val publishSettings = Seq(

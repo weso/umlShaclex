@@ -19,23 +19,40 @@ Convert [SHACL](http://w3c.github.io/data-shapes/shacl/) and
 
 The project uses [sbt](http://www.scala-sbt.org/) for compilation as well as Java 1.8 or later.
 
-* `sbt packageBin` compiles and generates executable Jar file
+```sh
+sbt universal:packageBin
+```
+
+Compiles and generates executable Jar file which will be located in folder:
+
+```
+target/universal/umlShaclex-x.y.z.zip
+```
+
+Once you have obtained the binary, you can uncompress in a folder and run it.
 
 ## Usage
+
+If you created a binary as described in previous section, you can invoke it as `umlShaclex`
+
+It is also possible to run it using sbt as: `sbt run <args>`.
+
 
 The library can be used programmmatically or from the command line. Examples:
 
 -Convert a ShEx schema file to SVG
 
 ```bash
-run --schema examples/shex/simple.shex --schemaFormat ShExC -o simple.svg -f svg
+umlShaclex --schema examples/shex/User.shex --schemaFormat ShExC -o simple.svg -f svg
 ```
 
 -Convert a ShEx schema file to UML (using [PlantUML](http://plantuml.com/) format)
 
 ```bash
-run --schema examples/shex/simple.shex --schemaFormat ShExC -o simple.uml -f uml
+umlShaclex --schema examples/shex/User.shex --schemaFormat ShExC -o simple.uml -f uml
 ```
+
+
 
 ## Contribution
 
