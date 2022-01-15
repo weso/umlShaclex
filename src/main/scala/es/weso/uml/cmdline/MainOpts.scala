@@ -13,8 +13,8 @@ class MainOpts(
   lazy val schemaFormats = Schemas.availableFormats.map(_.toUpperCase).distinct
   lazy val dataFormats = RDFAsJenaModel.availableFormats.map(_.toUpperCase).distinct
   lazy val engines = Schemas.availableSchemaNames.map(_.toUpperCase) ++ List("None")// List("SHEX","SHACL")
-  lazy val defaultSchemaFormat = "TURTLE"
-  lazy val defaultDataFormat = "TURTLE"
+  lazy val defaultSchemaFormat = schemaFormats.head
+//  lazy val defaultDataFormat = "TURTLE"
   lazy val defaultEngine = engines.head
 
   lazy val outputFormatsMap = Map(
@@ -24,7 +24,7 @@ class MainOpts(
 
   lazy val defaultOutputFormat = outputFormatsMap.keys.head
 
-  banner("""| umlShaclex: SHACL/ShEx processor
+  banner("""| umlShaclex: ShEx/SHACL converter to UML
             | Options:
             |""".stripMargin)
 
@@ -40,7 +40,7 @@ class MainOpts(
     "schemaFormat",
     noshort = true,
     default = Some(defaultSchemaFormat),
-    descr = s"Schema format. Default ($defaultDataFormat) Possible values: ${schemaFormats.mkString(",")}",
+    descr = s"Schema format. Default ($defaultSchemaFormat) Possible values: ${schemaFormats.mkString(",")}",
     validate = isMemberOf(schemaFormats))
 
   val schemaUrl = opt[String](
@@ -74,6 +74,13 @@ class MainOpts(
     default = Some(defaultOutputFormat),
     descr = s"output format. Default = ${defaultOutputFormat}. Possible values: ${outputFormatsMap.keys.mkString(",")}",
     short = 'f')
+
+  val verbose = opt[Boolean](
+    "verbose",
+    default = Some(false),
+    descr = s"Output more messages during processing",
+    short = 'v')
+
 
   val watermark = opt[String](
     "watermark",

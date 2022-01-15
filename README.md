@@ -17,13 +17,15 @@ Convert [SHACL](http://w3c.github.io/data-shapes/shacl/) and
 
 ## Installation and compilation
 
-The project uses [sbt](http://www.scala-sbt.org/) for compilation as well as Java 1.8 or later.
+The project uses [sbt](http://www.scala-sbt.org/) for compilation.
+
+Once you have installed sbt, you can generate an executable, running:
 
 ```sh
 sbt universal:packageBin
 ```
 
-Compiles and generates executable Jar file which will be located in folder:
+It will generate an executable zip file in folder:
 
 ```
 target/universal/umlShaclex-x.y.z.zip
@@ -43,16 +45,28 @@ The library can be used programmmatically or from the command line. Examples:
 -Convert a ShEx schema file to SVG
 
 ```bash
-umlShaclex --schema examples/shex/User.shex --schemaFormat ShExC -o simple.svg -f svg
+umlShaclex --schema examples/shex/simple.shex --schemaFormat ShExC -o simple.svg -f svg
 ```
 
 -Convert a ShEx schema file to UML (using [PlantUML](http://plantuml.com/) format)
 
 ```bash
-umlShaclex --schema examples/shex/User.shex --schemaFormat ShExC -o simple.uml -f uml
+umlShaclex --schema examples/shex/simple.shex --schemaFormat ShExC -o simple.uml -f uml
 ```
 
 
+## Publishing to OSS-Sonatype
+
+This project uses [the sbt ci release](https://github.com/olafurpg/sbt-ci-release) plugin for publishing to [OSS Sonatype](https://oss.sonatype.org/).
+
+##### SNAPSHOT Releases
+Open a PR and merge it to watch the CI release a -SNAPSHOT version
+
+##### Full Library Releases
+1. Push a tag and watch the CI do a regular release
+2. `git tag -a v0.1.0 -m "v0.1.0"`
+3. `git push origin v0.1.0`
+_Note that the tag version MUST start with v._
 
 ## Contribution
 

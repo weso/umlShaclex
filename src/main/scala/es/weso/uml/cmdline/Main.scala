@@ -20,6 +20,7 @@ object Main extends IOApp with LazyLogging {
   val defaultOutFormat = "uml"
 
   def run(args: List[String]): IO[ExitCode] = {
+
     val opts = new MainOpts(args, errorDriver)
     opts.verify()
 
@@ -39,7 +40,7 @@ object Main extends IOApp with LazyLogging {
        val (uml,warnings) = pair
        IO(ExitCode.Success)
       }) */
-      either <- schema2Uml(opts,baseFolder).attempt
+      either <- schema2Uml(opts, baseFolder, opts.verbose()).attempt
       exitCode <- either.fold(s => IO{
         println(s"Error: $s")
         ExitCode.Error
@@ -55,25 +56,31 @@ object Main extends IOApp with LazyLogging {
             case Some(fileFormat) => uml.toFormat(popts, fileFormat)
           }
         }
-        _ <- if (opts.outputFile.isDefined) {
-          val outPath = baseFolder.resolve(opts.outputFile())
-          val outName = outPath.toFile.getAbsolutePath
-          IO {FileUtils.writeFile(outName, outputStr)
-              println(s"Output written to file: $outName")
-            }
-         } else {
-          IO (println(outputStr))
-         }
-         _ <- if (!warnings.isEmpty) IO(println(s"Warnings: ${warnings.mkString("\n")} "))
-         else IO(()) 
+        _ <- opts.outputFile.toOption match {
+          case Some(outputFile) => {
+           val outPath = baseFolder.resolve(opts.outputFile())
+           val outName = outPath.toFile.getAbsolutePath
+           for {
+             _ <- FileUtils.writeFile(outName, outputStr) 
+             _ <- IO.println(s"Output written to file: $outName")
+           } yield ()
+          }
+          case None => IO.println(outputStr)
+        }
+         _ <- if (!warnings.isEmpty) IO.println(s"Warnings: ${warnings.mkString("\n")} ")
+              else IO(()) 
        } yield ExitCode.Success
       })
     } yield (exitCode)
   }
 
-  private def schema2Uml(opts: MainOpts, baseFolder: Path): IO[(UML,List[String])] = 
+  private def schema2Uml(
+    opts: MainOpts, 
+    baseFolder: Path,
+    verbose: Boolean
+    ): IO[(UML,List[String])] = 
    RDFAsJenaModel.empty.flatMap(_.use(empty => for {
-    schema <- getSchema(opts, baseFolder, empty)
+    schema <- getSchema(opts.schema.toOption, opts.schemaUrl.toOption, opts.schemaFormat(), opts.engine(), baseFolder, empty, verbose)
     uml <- IO.fromEither(Schema2UML.schema2UML(schema).leftMap(s => new RuntimeException(s"s")))
   } yield uml))
 
@@ -91,19 +98,46 @@ object Main extends IOApp with LazyLogging {
     }
   }
 
-  def getSchema(opts: MainOpts, baseFolder: Path, rdf: RDFReader): IO[Schema] = {
+  def getSchema(
+    // opts: MainOpts, 
+    optSchema: Option[String],
+    optSchemaUrl: Option[String],
+    schemaFormat: String,
+    engine: String,
+    baseFolder: Path, 
+    rdf: RDFReader,
+    verbose: Boolean
+    ): IO[Schema] = {
     val base = Some(FileUtils.currentFolderURL)
-    if (opts.schema.isDefined) {
-      val path = baseFolder.resolve(opts.schema())
-      Schemas.fromFile(path.toFile(), opts.schemaFormat(), opts.engine(), base)
-    } else if (opts.schemaUrl.isDefined) {
-      val str = Source.fromURL(opts.schemaUrl()).mkString
-      Schemas.fromString(str,opts.schemaFormat(),opts.engine(),base)
-    }
-    else {
-      logger.info("Schema not specified. Extracting schema from data")
-      Schemas.fromRDF(rdf, opts.engine())
+    (optSchema, optSchemaUrl) match {
+      case (Some(schema), _) => {
+       val path = baseFolder.resolve(optSchema.get)
+       info(s"Schema path $path, schemaFormat: $schemaFormat, engine: $engine", verbose)
+       Schemas.fromFile(path.toFile(), schemaFormat, engine, base)
+      }
+      case (_,Some(schemaUrl)) => {
+       val str = Source.fromURL(optSchemaUrl.get).mkString
+       info(s"Schema url $schemaUrl, schemaFormat: $schemaFormat, engine: $engine", verbose)
+       info(s"First 10 lines: " ++ showNLines(str,10), verbose)
+       Schemas.fromString(str,schemaFormat,engine,base)
+      }
+      case (None, None) => {
+       info("Schema not specified. Extracting schema from data", verbose)
+       Schemas.fromRDF(rdf, engine)
+      }
     }
   }
-}
 
+  private def showNLines(str: String, n: Int): String = {
+    val lines = str.split("\n")
+    str.take(n).mkString("\n") ++ 
+     (if (lines.length > n) "\n..." else "")
+  }
+
+  private def info(msg: String, verbose: Boolean): Unit = {
+   if (verbose) {
+    logger.info(msg)
+   } else ()
+  }
+
+}

@@ -22,7 +22,7 @@ lazy val munitEffectVersion    = "1.0.7"
 lazy val plantumlVersion       = "1.2017.12"
 lazy val logbackVersion        = "1.2.3"
 lazy val loggingVersion        = "3.9.4"
-lazy val scallopVersion        = "3.3.1"
+lazy val scallopVersion        = "4.1.0"
 
 
 // Compiler plugin dependency versions
@@ -58,16 +58,16 @@ ThisBuild / githubWorkflowJavaVersions := Seq(Java11)
 
 lazy val umlShaclex = project
   .in(file("."))
-  .enablePlugins(ScalaUnidocPlugin, 
-     SiteScaladocPlugin, 
+  .enablePlugins(ScalaUnidocPlugin,
+     SiteScaladocPlugin,
      AsciidoctorPlugin,
-     SbtNativePackager, 
-     WindowsPlugin, 
+     SbtNativePackager,
+     WindowsPlugin,
      JavaAppPackaging
      )
 //  .settings(
 //    buildInfoKeys := BuildInfoKey.ofN(name, version, scalaVersion, sbtVersion),
-//    buildInfoPackage := "es.weso.shaclex.buildinfo" 
+//    buildInfoPackage := "es.weso.shaclex.buildinfo"
 //  )
   .settings(commonSettings, publishSettings)
   .settings(
@@ -83,12 +83,12 @@ lazy val umlShaclex = project
       scalaLogging,
       scallop,
       shex,
-      schema, 
+      schema,
       schemaInfer,
       shacl,
       sgraph,
       plantuml,
-      srdfJena 
+      srdfJena
     ),
     testFrameworks += MUnitFramework,
     cancelable in Global      := true,
@@ -146,7 +146,7 @@ lazy val compilationSettings = Seq(
 //    "-Ywarn-value-discard",              // Warn when non-Unit expression results are unused.
 //    "-Xfatal-warnings",                  // Fail the compilation if there are any warnings.
 //    "-Ypartial-unification",
-  ) 
+  )
   // format: on
 )
 
@@ -155,28 +155,18 @@ lazy val commonSettings = compilationSettings ++ sharedDependencies ++ Seq(
 )
 
 lazy val publishSettings = Seq(
-//  maintainer      := "Jose Emilio Labra Gayo <labra@uniovi.es>",
+  sonatypeProfileName := ("es.weso"),
   homepage        := Some(url("https://github.com/labra/umlShaclex")),
   licenses        := Seq("MIT" -> url("http://opensource.org/licenses/MIT")),
   scmInfo         := Some(ScmInfo(url("https://github.com/labra/umlShaclex"), "scm:git:git@github.com:labra/umlShaclex.git")),
   autoAPIMappings := true,
   apiURL          := Some(url("http://labra.github.io/umlShaclex/latest/api/")),
-  pomExtra        := <developers>
-                       <developer>
-                         <id>labra</id>
-                         <name>Jose Emilio Labra Gayo</name>
-                         <url>https://github.com/labra/</url>
-                       </developer>
-                     </developers>,
- /* scalacOptions in doc ++= Seq(
-    "-diagrams-debug",
-    "-doc-source-url",
-    scmInfo.value.get.browseUrl + "/tree/master€{FILE_PATH}.scala",
-    "-sourcepath",
-    baseDirectory.in(LocalRootProject).value.getAbsolutePath,
-    "-diagrams",
-  ), */
-  publishMavenStyle              := true,
-  // bintrayRepository in bintray   := "weso-releases",
-  // bintrayOrganization in bintray := Some("weso")
+  developers := List(
+    Developer(
+      id="labra",
+      name="Jose Emilio Labra Gayo",
+      email="jelabra@gmail.com",
+      url=url("https://weso.labra.es")
+    )),
+  publishMavenStyle := true,
 )
