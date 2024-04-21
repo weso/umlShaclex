@@ -1,6 +1,6 @@
-lazy val scala212 = "2.12.15"
-lazy val scala213 = "2.13.8"
-lazy val scala3   = "3.1.0"
+lazy val scala212 = "2.12.17"
+lazy val scala213 = "2.13.10"
+lazy val scala3   = "3.2.1"
 
 lazy val supportedScalaVersions = List(
   scala3,
@@ -10,17 +10,17 @@ lazy val supportedScalaVersions = List(
 
 val Java11 = JavaSpec.temurin("11") // "adopt@1.11"
 
-lazy val srdfVersion           = "0.1.106"
-lazy val shaclexVersion        = "0.1.103"
-lazy val shaclsVersion         = "0.1.78"
-lazy val shexsVersion          = "0.1.108"
+lazy val srdfVersion           = "0.1.122"
+lazy val shaclexVersion        = "0.2.3"
+lazy val shaclsVersion         = "0.1.83"
+lazy val shexsVersion          = "0.2.32"
 
 // Dependency versions
 lazy val munitVersion          = "0.7.29"
 lazy val munitEffectVersion    = "1.0.7"
 
 lazy val plantumlVersion       = "1.2017.12"
-lazy val logbackVersion        = "1.2.3"
+lazy val logbackVersion        = "1.2.11"
 lazy val loggingVersion        = "3.9.4"
 lazy val scallopVersion        = "4.1.0"
 
