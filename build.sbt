@@ -1,29 +1,28 @@
-lazy val scala212 = "2.12.17"
+lazy val scala212 = "2.12.19"
 lazy val scala213 = "2.13.10"
-lazy val scala3   = "3.2.1"
+lazy val scala3 = "3.2.1"
 
 lazy val supportedScalaVersions = List(
   scala3,
-  scala213, 
+  scala213,
   scala212
 )
 
 val Java11 = JavaSpec.temurin("11") // "adopt@1.11"
 
-lazy val srdfVersion           = "0.1.125"
-lazy val shaclexVersion        = "0.2.4"
-lazy val shaclsVersion         = "0.1.83"
-lazy val shexsVersion          = "0.2.33"
+lazy val srdfVersion = "0.1.125"
+lazy val shaclexVersion = "0.2.4"
+lazy val shaclsVersion = "0.1.83"
+lazy val shexsVersion = "0.2.33"
 
 // Dependency versions
-lazy val munitVersion          = "0.7.29"
-lazy val munitEffectVersion    = "1.0.7"
+lazy val munitVersion = "0.7.29"
+lazy val munitEffectVersion = "1.0.7"
 
-lazy val plantumlVersion       = "1.2017.12"
-lazy val logbackVersion        = "1.2.11"
-lazy val loggingVersion        = "3.9.4"
-lazy val scallopVersion        = "4.1.0"
-
+lazy val plantumlVersion = "1.2017.12"
+lazy val logbackVersion = "1.2.11"
+lazy val loggingVersion = "3.9.4"
+lazy val scallopVersion = "4.1.0"
 
 // Compiler plugin dependency versions
 // lazy val simulacrumVersion    = "0.19.0"
@@ -32,24 +31,25 @@ lazy val scallopVersion        = "4.1.0"
 
 // Dependency modules
 // lazy val logbackClassic    = "ch.qos.logback"             % "logback-classic"      % logbackVersion
-lazy val munit             = "org.scalameta"              %% "munit"               % munitVersion
-lazy val munitEffect       = "org.typelevel"     %% "munit-cats-effect-3" % munitEffectVersion
+lazy val munit = "org.scalameta" %% "munit" % munitVersion
+lazy val munitEffect =
+  "org.typelevel" %% "munit-cats-effect-3" % munitEffectVersion
 
-lazy val plantuml          = "net.sourceforge.plantuml"   % "plantuml"             % plantumlVersion
-lazy val scalaLogging      = "com.typesafe.scala-logging" %% "scala-logging"       % loggingVersion
-lazy val scallop           = "org.rogach"                 %% "scallop"             % scallopVersion
+lazy val plantuml = "net.sourceforge.plantuml" % "plantuml" % plantumlVersion
+lazy val scalaLogging =
+  "com.typesafe.scala-logging" %% "scala-logging" % loggingVersion
+lazy val scallop = "org.rogach" %% "scallop" % scallopVersion
 // lazy val scalactic         = "org.scalactic"              %% "scalactic"           % scalacticVersion
 // lazy val scalaTest         = "org.scalatest"              %% "scalatest"           % scalaTestVersion
-lazy val shex              = "es.weso"                    %% "shex"                % shexsVersion
-lazy val shacl             = "es.weso"                    %% "shacl"               % shaclsVersion
-lazy val schema            = "es.weso"                    %% "schema"              % shaclexVersion
-lazy val schemaInfer       = "es.weso"                    %% "schemainfer"         % shaclexVersion
-lazy val sgraph            = "es.weso"                    %% "sgraph"              % shaclexVersion
-lazy val srdfJena          = "es.weso"                    %% "srdfjena"            % srdfVersion
-lazy val utilsTest         = "es.weso"                    %% "utilstest"           % shaclexVersion
+lazy val shex = "es.weso" %% "shex" % shexsVersion
+lazy val shacl = "es.weso" %% "shacl" % shaclsVersion
+lazy val schema = "es.weso" %% "schema" % shaclexVersion
+lazy val schemaInfer = "es.weso" %% "schemainfer" % shaclexVersion
+lazy val sgraph = "es.weso" %% "sgraph" % shaclexVersion
+lazy val srdfJena = "es.weso" %% "srdfjena" % srdfVersion
+lazy val utilsTest = "es.weso" %% "utilstest" % shaclexVersion
 
 lazy val MUnitFramework = new TestFramework("munit.Framework")
-
 
 // Compiler plugin modules
 // lazy val simulacrum          = "com.github.mpilquist" %% "simulacrum"     % simulacrumVersion
@@ -58,23 +58,31 @@ ThisBuild / githubWorkflowJavaVersions := Seq(Java11)
 
 lazy val umlShaclex = project
   .in(file("."))
-  .enablePlugins(ScalaUnidocPlugin,
-     SiteScaladocPlugin,
-     AsciidoctorPlugin,
-     SbtNativePackager,
-     WindowsPlugin,
-     JavaAppPackaging
-     )
+  .enablePlugins(
+    ScalaUnidocPlugin,
+    SiteScaladocPlugin,
+    AsciidoctorPlugin,
+    SbtNativePackager,
+    WindowsPlugin,
+    JavaAppPackaging
+  )
 //  .settings(
 //    buildInfoKeys := BuildInfoKey.ofN(name, version, scalaVersion, sbtVersion),
 //    buildInfoPackage := "es.weso.shaclex.buildinfo"
 //  )
   .settings(commonSettings, publishSettings)
   .settings(
-    unidocProjectFilter in (ScalaUnidoc, unidoc) := inAnyProject -- inProjects(noDocProjects: _*),
+    unidocProjectFilter in (ScalaUnidoc, unidoc) := inAnyProject -- inProjects(
+      noDocProjects: _*
+    ),
     siteSubdirName in ScalaUnidoc := "scaladoc/latest",
-    addMappingsToSiteDir(mappings in (ScalaUnidoc, packageDoc), siteSubdirName in ScalaUnidoc),
-    unidocProjectFilter in (ScalaUnidoc, unidoc) := inAnyProject -- inProjects(noDocProjects: _*),
+    addMappingsToSiteDir(
+      mappings in (ScalaUnidoc, packageDoc),
+      siteSubdirName in ScalaUnidoc
+    ),
+    unidocProjectFilter in (ScalaUnidoc, unidoc) := inAnyProject -- inProjects(
+      noDocProjects: _*
+    ),
     mappings in makeSite ++= Seq(
       file("src/assets/favicon.ico") -> "favicon.ico"
     ),
@@ -91,9 +99,9 @@ lazy val umlShaclex = project
       srdfJena
     ),
     testFrameworks += MUnitFramework,
-    cancelable in Global      := true,
-    fork                      := true,
-    crossScalaVersions := supportedScalaVersions,
+    cancelable in Global := true,
+    fork := true,
+    crossScalaVersions := supportedScalaVersions
     //    crossScalaVersions := Nil,
     // publish / skip := true
   )
@@ -156,17 +164,23 @@ lazy val commonSettings = compilationSettings ++ sharedDependencies ++ Seq(
 
 lazy val publishSettings = Seq(
   sonatypeProfileName := ("es.weso"),
-  homepage        := Some(url("https://github.com/labra/umlShaclex")),
-  licenses        := Seq("MIT" -> url("http://opensource.org/licenses/MIT")),
-  scmInfo         := Some(ScmInfo(url("https://github.com/labra/umlShaclex"), "scm:git:git@github.com:labra/umlShaclex.git")),
+  homepage := Some(url("https://github.com/labra/umlShaclex")),
+  licenses := Seq("MIT" -> url("http://opensource.org/licenses/MIT")),
+  scmInfo := Some(
+    ScmInfo(
+      url("https://github.com/labra/umlShaclex"),
+      "scm:git:git@github.com:labra/umlShaclex.git"
+    )
+  ),
   autoAPIMappings := true,
-  apiURL          := Some(url("http://labra.github.io/umlShaclex/latest/api/")),
+  apiURL := Some(url("http://labra.github.io/umlShaclex/latest/api/")),
   developers := List(
     Developer(
-      id="labra",
-      name="Jose Emilio Labra Gayo",
-      email="jelabra@gmail.com",
-      url=url("https://weso.labra.es")
-    )),
-  publishMavenStyle := true,
+      id = "labra",
+      name = "Jose Emilio Labra Gayo",
+      email = "jelabra@gmail.com",
+      url = url("https://weso.labra.es")
+    )
+  ),
+  publishMavenStyle := true
 )
