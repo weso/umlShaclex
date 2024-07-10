@@ -113,7 +113,6 @@ object ShEx2UML {
   private def shapeExprId(se: ShapeExpr): Option[ShapeLabel] = {
     se match {
       case sd: ShapeDecl => {
-        println(s"Obtaining id from shape decl: ${sd.lbl}")
         Some(sd.lbl)
       }
       case _ => se.id
